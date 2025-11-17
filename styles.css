@@ -38,35 +38,56 @@
   --glow-lg: 0 0 30px var(--neon-intensity-4), 0 0 50px var(--neon-intensity-3), 0 0 70px var(--neon-intensity-2);
   --glow-xl: 0 0 40px var(--neon-intensity-5), 0 0 60px var(--neon-intensity-4), 0 0 90px var(--neon-intensity-3);
   
-  /* Spacing Scale - 8pt Grid */
+  /* Spacing Scale - 8pt Grid - VERBESSERT für bessere UX */
   --space-1: 0.25rem;   /* 4px */
   --space-2: 0.5rem;    /* 8px */
   --space-3: 0.75rem;   /* 12px */
   --space-4: 1rem;      /* 16px */
-  --space-5: 1.25rem;   /* 20px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-8: 2rem;      /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-20: 5rem;     /* 80px */
-  --space-24: 6rem;     /* 96px */
-  --space-32: 8rem;     /* 128px */
+  --space-5: 1.5rem;    /* 24px - ERHÖHT */
+  --space-6: 2rem;      /* 32px - ERHÖHT */
+  --space-8: 2.5rem;    /* 40px - ERHÖHT */
+  --space-10: 3rem;     /* 48px - ERHÖHT */
+  --space-12: 4rem;     /* 64px - ERHÖHT */
+  --space-16: 5rem;     /* 80px - ERHÖHT */
+  --space-20: 6rem;     /* 96px - ERHÖHT */
+  --space-24: 8rem;     /* 128px - ERHÖHT */
+  --space-32: 10rem;    /* 160px - ERHÖHT */
+
+  /* Zusätzliche Größen für noch mehr Flexibilität */
+  --space-xs: 0.5rem;   /* 8px */
+  --space-sm: 1rem;     /* 16px */
+  --space-md: 1.5rem;   /* 24px */
+  --space-lg: 2rem;     /* 32px */
+  --space-xl: 3rem;     /* 48px */
+  --space-2xl: 4rem;    /* 64px */
+  --space-3xl: 5rem;    /* 80px */
+  --space-4xl: 6rem;    /* 96px */
+  --space-5xl: 8rem;    /* 128px */
+  --space-6xl: 10rem;   /* 160px */
   
-  /* Typography Scale */
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  --text-4xl: 2.25rem;     /* 36px */
-  --text-5xl: 3rem;        /* 48px */
-  --text-6xl: 3.75rem;     /* 60px */
-  --text-7xl: 4.5rem;      /* 72px */
-  --text-8xl: 6rem;        /* 96px */
-  --text-9xl: 8rem;        /* 128px */
+  /* Typography Scale - VERBESSERT für bessere Lesbarkeit */
+  --text-xs: 0.875rem;     /* 14px - ERHÖHT */
+  --text-sm: 1rem;         /* 16px - ERHÖHT */
+  --text-base: 1.125rem;   /* 18px - ERHÖHT */
+  --text-lg: 1.25rem;      /* 20px - ERHÖHT */
+  --text-xl: 1.5rem;       /* 24px - ERHÖHT */
+  --text-2xl: 1.875rem;    /* 30px - ERHÖHT */
+  --text-3xl: 2.25rem;     /* 36px - ERHÖHT */
+  --text-4xl: 3rem;        /* 48px - ERHÖHT */
+  --text-5xl: 3.75rem;     /* 60px - ERHÖHT */
+  --text-6xl: 4.5rem;      /* 72px - ERHÖHT */
+  --text-7xl: 6rem;        /* 96px - ERHÖHT */
+  --text-8xl: 8rem;        /* 128px - ERHÖHT */
+  --text-9xl: 10rem;       /* 160px - ERHÖHT */
+
+  /* Zusätzliche Font Sizes */
+  --font-size-xs: 0.875rem;    /* 14px */
+  --font-size-sm: 1rem;        /* 16px */
+  --font-size-base: 1.125rem;  /* 18px */
+  --font-size-lg: 1.5rem;      /* 24px */
+  --font-size-xl: 2rem;        /* 32px */
+  --font-size-2xl: 2.5rem;     /* 40px */
+  --font-size-3xl: 3rem;       /* 48px */
   
   /* Font Families */
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
@@ -222,7 +243,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   font-weight: var(--weight-normal);
-  line-height: var(--leading-normal);
+  line-height: 1.7; /* ERHÖHT für bessere Lesbarkeit */
   color: var(--text-primary);
   background: var(--bg-primary);
   overflow-x: hidden;
@@ -312,18 +333,18 @@ code {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--space-lg); /* VERBESSERT */
 }
 
 @media (min-width: 640px) {
   .container {
-    padding: 0 var(--space-8);
+    padding: 0 var(--space-xl); /* VERBESSERT */
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 0 var(--space-12);
+    padding: 0 var(--space-2xl); /* VERBESSERT */
   }
 }
 
@@ -716,10 +737,10 @@ code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-8);
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-2xl); /* VERGRÖSSERT für bessere UX */
   font-family: var(--font-display);
-  font-size: var(--text-base);
+  font-size: var(--text-lg); /* VERGRÖSSERT */
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
@@ -730,6 +751,7 @@ code {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  min-height: 56px; /* HINZUGEFÜGT für bessere Touch-Targets */
 }
 
 .btn:focus-visible {
@@ -818,13 +840,15 @@ code {
 
 /* Button Sizes */
 .btn-sm {
-  padding: var(--space-3) var(--space-6);
-  font-size: var(--text-sm);
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--text-base);
+  min-height: 48px; /* HINZUGEFÜGT */
 }
 
 .btn-lg {
-  padding: var(--space-6) var(--space-12);
-  font-size: var(--text-lg);
+  padding: var(--space-2xl) var(--space-4xl);
+  font-size: var(--text-2xl); /* VERGRÖSSERT */
+  min-height: 64px; /* HINZUGEFÜGT */
 }
 
 /* ==========================================
@@ -834,7 +858,7 @@ code {
   background: var(--bg-elevated);
   border: 2px solid var(--border-primary);
   border-radius: var(--radius-2xl);
-  padding: var(--space-8);
+  padding: var(--space-2xl); /* VERGRÖSSERT */
   transition: all var(--duration-normal) var(--ease-out);
   position: relative;
   overflow: hidden;
@@ -865,8 +889,8 @@ code {
 }
 
 .card-icon {
-  font-size: var(--text-5xl);
-  margin-bottom: var(--space-6);
+  font-size: var(--text-7xl); /* VERGRÖSSERT von 5xl zu 7xl */
+  margin-bottom: var(--space-xl);
   display: inline-block;
   transition: transform var(--duration-normal) var(--ease-spring);
 }
@@ -880,16 +904,17 @@ code {
 }
 
 .card-title {
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl); /* VERGRÖSSERT */
   font-weight: var(--weight-bold);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-lg);
   color: var(--text-primary);
 }
 
 .card-description {
   color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-6);
+  font-size: var(--text-lg); /* HINZUGEFÜGT */
+  line-height: 1.8; /* ERHÖHT */
+  margin-bottom: var(--space-xl);
 }
 
 .card-link {
@@ -926,14 +951,15 @@ code {
 .form-textarea,
 .form-select {
   width: 100%;
-  padding: var(--space-4);
+  padding: var(--space-lg); /* VERGRÖSSERT */
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--text-lg); /* VERGRÖSSERT */
   color: var(--text-primary);
   background: var(--bg-tertiary);
   border: 2px solid var(--border-primary);
   border-radius: var(--radius-lg);
   transition: all var(--duration-fast) var(--ease-out);
+  min-height: 56px; /* HINZUGEFÜGT für bessere Touch-Targets */
 }
 
 .form-input:focus,
@@ -951,7 +977,7 @@ code {
 }
 
 .form-textarea {
-  min-height: 120px;
+  min-height: 180px; /* VERGRÖSSERT */
   resize: vertical;
 }
 
