@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professionelle Fotografie-Services von Benjamin Gillmann – Sport, Musik, Events. Transparente Preise und flexible Pakete.">
+    <title>Services & Preise – Benjamin Gillmann | Professionelle Fotografie</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="photography.css">
+    <link rel="stylesheet" href="ui-components.css">
+    <link rel="stylesheet" href="typography.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="spacing.css">
+    <link rel="stylesheet" href="modals.css">
+    <link rel="stylesheet" href="advanced-components.css">
+    <link rel="stylesheet" href="extra-components.css">
+</head>
+<body>
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-text">BG</div>
+        </div>
+    </div>
+    
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+    
+    <nav id="navbar" role="navigation" aria-label="Hauptnavigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Über mich</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">☀️</button>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <section class="hero" style="min-height: 65vh; background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('https://picsum.photos/1920/1080?random=services') center/cover; display: flex; align-items: center; justify-content: center;">
+            <div class="hero-content" style="text-align: center; max-width: 900px; padding: 0 var(--space-lg);">
+                <div style="display: inline-block; padding: var(--space-sm) var(--space-lg); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-sm); font-weight: 600; color: var(--white); margin-bottom: var(--space-lg); text-transform: uppercase; letter-spacing: 0.1em;">💼 Professionelle Services</div>
+                <h1 class="hero-title" style="font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg); line-height: 1.1;">Services & Preise</h1>
+                <p class="hero-subtitle" style="color: var(--gray-300); font-size: clamp(1.125rem, 2.5vw, 1.5rem); margin-bottom: 0; line-height: 1.6;">Transparente Preise · Flexible Pakete · Professionelle Qualität</p>
+            </div>
+        </section>
+        
+        <!-- Pricing Section -->
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: var(--space-5xl);">
+                    <h2 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; color: var(--text-primary); margin-bottom: var(--space-lg);">Pricing Pakete</h2>
+                    <p style="font-size: var(--font-size-xl); color: var(--text-secondary); max-width: 700px; margin: 0 auto;">Wählen Sie das perfekte Paket für Ihr Projekt. Alle Pakete inkl. professioneller Bearbeitung.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: var(--space-2xl); margin-bottom: var(--space-5xl);">
+                    <!-- Basic Package -->
+                    <div style="background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 24px; padding: var(--space-3xl); position: relative; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">📸</div>
+                        <h3 style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Basic</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); font-size: var(--font-size-sm);">Perfekt für kleinere Events</p>
+                        <div style="margin-bottom: var(--space-2xl);">
+                            <span style="font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 900; color: var(--text-primary);">€499</span>
+                            <span style="color: var(--text-secondary); font-size: var(--font-size-sm);">ab</span>
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-2xl) 0; color: var(--text-secondary);">
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Bis zu 2 Stunden Shooting</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>50 bearbeitete Fotos</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Online-Galerie</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>7 Tage Lieferzeit</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Nutzungsrechte</span></li>
+                        </ul>
+                        <a href="contact.html" style="display: block; text-align: center; padding: var(--space-md) var(--space-xl); background: var(--text-primary); color: var(--bg-primary); text-decoration: none; border-radius: 100px; font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Jetzt Buchen</a>
+                    </div>
+                    
+                    <!-- Professional Package (Featured) -->
+                    <div style="background: var(--text-primary); border: 2px solid var(--text-primary); border-radius: 24px; padding: var(--space-3xl); position: relative; transform: scale(1.05); box-shadow: 0 20px 60px rgba(0,0,0,0.2);">
+                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); padding: var(--space-xs) var(--space-lg); background: var(--bg-primary); color: var(--text-primary); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">Beliebt</div>
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">⭐</div>
+                        <h3 style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--bg-primary); margin-bottom: var(--space-sm);">Professional</h3>
+                        <p style="color: rgba(255,255,255,0.8); margin-bottom: var(--space-xl); font-size: var(--font-size-sm);">Ideal für professionelle Events</p>
+                        <div style="margin-bottom: var(--space-2xl);">
+                            <span style="font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 900; color: var(--bg-primary);">€999</span>
+                            <span style="color: rgba(255,255,255,0.7); font-size: var(--font-size-sm);">ab</span>
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-2xl) 0; color: rgba(255,255,255,0.9);">
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>Bis zu 4 Stunden Shooting</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>150 bearbeitete Fotos</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>Premium Online-Galerie</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>5 Tage Lieferzeit</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>Erweiterte Nutzungsrechte</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--bg-primary); font-weight: 700;">✓</span> <span>Backup-Fotograf Option</span></li>
+                        </ul>
+                        <a href="contact.html" style="display: block; text-align: center; padding: var(--space-md) var(--space-xl); background: var(--bg-primary); color: var(--text-primary); text-decoration: none; border-radius: 100px; font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Jetzt Buchen</a>
+                    </div>
+                    
+                    <!-- Premium Package -->
+                    <div style="background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 24px; padding: var(--space-3xl); position: relative; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">🚀</div>
+                        <h3 style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Premium</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); font-size: var(--font-size-sm);">Rundum-sorglos-Paket</p>
+                        <div style="margin-bottom: var(--space-2xl);">
+                            <span style="font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 900; color: var(--text-primary);">€1.999</span>
+                            <span style="color: var(--text-secondary); font-size: var(--font-size-sm);">ab</span>
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-2xl) 0; color: var(--text-secondary);">
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Ganztags-Shooting</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>300+ bearbeitete Fotos</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Premium Galerie + App</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>3 Tage Express-Lieferung</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Kommerzielle Nutzung</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Backup-Fotograf inklusive</span></li>
+                            <li style="padding: var(--space-sm) 0; display: flex; align-items: flex-start; gap: var(--space-sm);"><span style="color: var(--text-primary); font-weight: 700;">✓</span> <span>Drohnen-Aufnahmen Option</span></li>
+                        </ul>
+                        <a href="contact.html" style="display: block; text-align: center; padding: var(--space-md) var(--space-xl); background: var(--text-primary); color: var(--bg-primary); text-decoration: none; border-radius: 100px; font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Jetzt Buchen</a>
+                    </div>
+                </div>
+                
+                <!-- Additional Services -->
+                <div style="background: var(--bg-secondary); padding: var(--space-3xl); border-radius: 24px; border: 1px solid var(--border);">
+                    <h3 style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-xl); text-align: center;">Zusatz-Services</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: var(--space-xl);">
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div style="flex-shrink: 0; width: 48px; height: 48px; background: var(--bg-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚡</div>
+                            <div>
+                                <h4 style="font-size: var(--font-size-base); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-xs);">Express-Bearbeitung</h4>
+                                <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0;">Lieferung in 24-48h (+€200)</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div style="flex-shrink: 0; width: 48px; height: 48px; background: var(--bg-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎥</div>
+                            <div>
+                                <h4 style="font-size: var(--font-size-base); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-xs);">Video-Highlights</h4>
+                                <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0;">1-2 Min. Highlight-Reel (+€300)</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div style="flex-shrink: 0; width: 48px; height: 48px; background: var(--bg-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🖼️</div>
+                            <div>
+                                <h4 style="font-size: var(--font-size-base); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-xs);">Print-Pakete</h4>
+                                <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0;">Hochwertige Prints (ab €150)</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                            <div style="flex-shrink: 0; width: 48px; height: 48px; background: var(--bg-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🚁</div>
+                            <div>
+                                <h4 style="font-size: var(--font-size-base); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-xs);">Drohnen-Aufnahmen</h4>
+                                <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0;">Luftaufnahmen (ab €400)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <div style="background: linear-gradient(135deg, var(--text-primary), rgba(0,0,0,0.9)); padding: clamp(var(--space-3xl), 8vw, var(--space-5xl)); border-radius: 24px; text-align: center; position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 1;">
+                        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg); line-height: 1.2;">Individuelles Angebot gewünscht?</h2>
+                        <p style="font-size: clamp(1.125rem, 2.5vw, 1.5rem); color: rgba(255,255,255,0.9); margin-bottom: var(--space-3xl); max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">Kontaktieren Sie mich für ein auf Ihre Bedürfnisse zugeschnittenes Angebot.</p>
+                        <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">Jetzt Anfragen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
+                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="about.html">Über mich</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Kontakt</h4>
+                        <ul>
+                            <li><a href="mailto:contact@benjamingillmann.com">E-Mail</a></li>
+                            <li><a href="https://www.instagram.com/benjamin_gillmann/" target="_blank">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="preloader.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

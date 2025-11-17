@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /*.pdf$
+
+Sitemap: https://www.benjamin-gillmann.com/sitemap.xml

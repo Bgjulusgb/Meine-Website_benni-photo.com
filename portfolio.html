@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio von Benjamin Gillmann – Professionelle Sport- und Musikfotografie. Entdecken Sie meine besten Arbeiten.">
+    <meta name="keywords" content="Portfolio, Benjamin Gillmann, Fotografie, Sport, Musik, Galerie">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Portfolio – Benjamin Gillmann">
+    <meta property="og:description" content="Ausgewählte Arbeiten aus Sport- und Musikfotografie">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/images/portfolio-og-image.jpg">
+    <meta name="theme-color" content="#000000">
+    <title>Portfolio – Benjamin Gillmann | Ausgewählte Arbeiten</title>
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="effects.css">
+    <!-- Photography Styles -->
+    <link rel="stylesheet" href="photography.css">
+    <link rel="stylesheet" href="ui-components.css">
+    <link rel="stylesheet" href="typography.css">
+    <!-- Forms & Buttons -->
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="spacing.css">
+    <!-- Advanced Components -->
+    <link rel="stylesheet" href="modals.css">
+    <link rel="stylesheet" href="advanced-components.css">
+    <link rel="stylesheet" href="extra-components.css">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="canonical" href="https://benjamingillmann.com/portfolio.html">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        .gallery-filters {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            margin-bottom: var(--space-3xl);
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: var(--space-md) var(--space-2xl);
+            border-radius: 100px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            touch-action: manipulation;
+        }
+        .filter-btn:hover {
+            border-color: var(--text-primary);
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        @media (hover: none) {
+            .filter-btn:active {
+                transform: scale(0.95);
+            }
+        }
+        @media (max-width: 640px) {
+            .filter-btn {
+                flex: 1 1 auto;
+                min-width: 100px;
+                font-size: var(--font-size-sm);
+                padding: var(--space-sm) var(--space-lg);
+            }
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-xl);
+        }
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .gallery-item:hover .gallery-placeholder {
+            filter: brightness(1.1);
+        }
+        @media (hover: none) {
+            .gallery-item:active {
+                transform: scale(0.98);
+            }
+        }
+        @media (max-width: 768px) {
+            .gallery-item:hover {
+                transform: translateY(-4px);
+            }
+        }
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+            color: var(--gray-500);
+            font-size: var(--font-size-sm);
+        }
+        .gallery-item[data-category="sport"] .gallery-placeholder {
+            background: linear-gradient(135deg, var(--gray-700), var(--gray-500));
+            color: var(--white);
+        }
+        .gallery-item[data-category="musik"] .gallery-placeholder {
+            background: linear-gradient(135deg, var(--gray-600), var(--gray-400));
+            color: var(--white);
+        }
+        .gallery-item[data-category="event"] .gallery-placeholder {
+            background: linear-gradient(135deg, var(--gray-800), var(--gray-600));
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-text">BG</div>
+        </div>
+    </div>
+    
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+    
+    <nav id="navbar" role="navigation" aria-label="Hauptnavigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Über mich</a></li>
+                <li><a href="portfolio.html" class="active">Portfolio</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <section class="hero" style="min-height: 60vh; background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.7)), url('https://picsum.photos/1920/1080?random=portfolio') center/cover; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="hero-content" style="text-align: center;">
+                <h1 class="hero-title" style="font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg);"><span class="hero-line">Meine Arbeit</span></h1>
+                <p class="hero-subtitle" style="font-size: clamp(1.125rem, 2vw, 1.5rem); color: var(--gray-300); max-width: 700px; margin: 0 auto var(--space-2xl);">500+ erfolgreiche Projekte · Sport, Musik & Events · Professionelle Portfolio-Fotografie</p>
+                <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-8); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 700; font-size: var(--font-size-base); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <path d="m21 15-5-5L5 21"/>
+                    </svg>
+                    Ihr Projekt starten
+                </a>
+            </div>
+        </section>
+        
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: var(--space-4xl);">
+                    <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-md);">Projekt-Kategorien</h2>
+                    <p style="font-size: var(--font-size-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Durchstöbern Sie meine professionellen Arbeiten nach Kategorie</p>
+                </div>
+                
+                <div class="gallery-filters" style="margin-bottom: var(--space-4xl);">
+                    <button class="filter-btn active" data-filter="all" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Alle Projekte</button>
+                    <button class="filter-btn" data-filter="sport" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🏆 Sport</button>
+                    <button class="filter-btn" data-filter="musik" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🎵 Musik</button>
+                    <button class="filter-btn" data-filter="event" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🎪 Events</button>
+                </div>
+                
+                <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr)); gap: var(--space-2xl);">
+                    <!-- Projekt 1: Fußball Bundesliga -->
+                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
+                            Bundesliga Finale 2024
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Bundesliga Meisterschaftsfinale</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">200+ professionelle Action-Shots vom entscheidenden Spiel. Komplette Dokumentation mit Spieler-Porträts und Fanreaktionen.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Action</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Porträts</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">200+ Bilder</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projekt 2: Rock Festival -->
+                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
+                            Rock am Ring 2024
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Rock am Ring Festival</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">3-tägige Festival-Coverage mit 15+ Bands. Live-Performances, Backstage-Momente und Crowd-Atmosphäre.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Live</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Backstage</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">3 Tage</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projekt 3: Corporate Event -->
+                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
+                            Corporate Gala 2024
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Corporate Gala 2024</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Elegante Business-Veranstaltung mit 300+ Gästen. Keynote-Speeches, Networking und Award-Zeremonie.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Corporate</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">300+ Gäste</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Awards</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projekt 4: Basketball -->
+                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
+                            BBL Playoff Game
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">BBL Basketball Playoffs</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Intensives Playoff-Spiel mit dramatischen Momenten. Team-Porträts und Fan-Emotionen inklusive.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Basketball</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Playoffs</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">150+ Bilder</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projekt 5: International Jazz Night -->
+                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
+                            Jazz Night 2024
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">International Jazz Night</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Intime Jazz-Performances in Club-Atmosphäre. Künstler-Porträts und Live-Momente am Instrument.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Jazz</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Live</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Porträts</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projekt 6: Wedding Event -->
+                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
+                        <div class="gallery-placeholder" style="width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: var(--font-size-xl); font-weight: 700; position: relative;">
+                            <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
+                            Luxury Wedding
+                        </div>
+                        <div style="padding: var(--space-lg);">
+                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Exklusive Hochzeit</h3>
+                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Emotionale Hochzeitsreportage von Zeremonie bis Party. Natürliche Momente und inszenierte Gruppenfotos.</p>
+                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Hochzeit</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Ganztag</span>
+                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">400+ Bilder</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA Section -->
+                <div style="text-align: center; margin-top: var(--space-5xl); padding: var(--space-4xl); background: var(--bg-secondary); border-radius: 24px;">
+                    <h3 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-md);">Begeistert von meiner Arbeit?</h3>
+                    <p style="font-size: var(--font-size-lg); color: var(--text-secondary); margin-bottom: var(--space-2xl); max-width: 600px; margin-left: auto; margin-right: auto;">Lassen Sie uns Ihr nächstes Projekt gemeinsam realisieren. Buchen Sie jetzt Ihr professionelles Shooting.</p>
+                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-10); background: var(--black); color: var(--white); text-decoration: none; border-radius: 100px; font-weight: 700; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <path d="m21 15-5-5L5 21"/>
+                        </svg>
+                        Jetzt Buchen
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                    <div class="gallery-item" data-category="sport">
+                        <div class="gallery-placeholder">Sport #3</div>
+                    </div>
+                    <div class="gallery-item" data-category="musik">
+                        <div class="gallery-placeholder">Musik #3</div>
+                    </div>
+                    <div class="gallery-item" data-category="event">
+                        <div class="gallery-placeholder">Event #3</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Interessiert?</h2>
+                    <p>Lassen Sie uns gemeinsam an Ihrem Projekt arbeiten.</p>
+                    <a href="contact.html" class="btn-primary">Kontakt aufnehmen</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
+                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                    <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="about.html">Über mich</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Kontakt</h4>
+                        <ul>
+                            <li><a href="mailto:contact@benjamingillmann.com">E-Mail</a></li>
+                            <li><a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="preloader.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

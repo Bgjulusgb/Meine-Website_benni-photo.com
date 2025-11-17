@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Über Benjamin Gillmann – Professioneller Fotograf mit Leidenschaft für Sport und Musik. Erfahren Sie mehr über meine Geschichte, Vision und Arbeitsweise.">
+    <meta name="keywords" content="Benjamin Gillmann, Fotograf, Sport, Musik, Über mich, Biografie, Portfolio">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Über mich – Benjamin Gillmann">
+    <meta property="og:description" content="Professioneller Fotograf mit Leidenschaft für Sport- und Musikfotografie.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/images/about-og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Über mich – Benjamin Gillmann">
+    <meta name="twitter:description" content="Professioneller Fotograf mit Leidenschaft für Sport- und Musikfotografie.">
+    <meta name="twitter:image" content="/images/about-og-image.jpg">
+    <meta name="theme-color" content="#000000">
+    <title>Über mich – Benjamin Gillmann | Fotograf aus Leidenschaft</title>
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="effects.css">
+    <!-- Photography Styles -->
+    <link rel="stylesheet" href="photography.css">
+    <link rel="stylesheet" href="ui-components.css">
+    <link rel="stylesheet" href="typography.css">
+    <!-- Forms & Buttons -->
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="spacing.css">
+    <!-- Advanced Components -->
+    <link rel="stylesheet" href="modals.css">
+    <link rel="stylesheet" href="advanced-components.css">
+    <link rel="stylesheet" href="extra-components.css">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="canonical" href="https://benjamingillmann.com/about.html">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-text">BG</div>
+        </div>
+    </div>
+    
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+    
+    <nav id="navbar" role="navigation" aria-label="Hauptnavigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">Über mich</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="Brotkrümelnavigation" style="background: var(--bg-secondary); padding: var(--space-md) 0;">
+            <div class="container">
+                <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display: flex; gap: var(--space-sm); list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); color: var(--text-secondary);">
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="index.html" style="color: var(--text-secondary); text-decoration: none;">
+                            <span itemprop="name">Home</span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                        <span style="margin: 0 var(--space-xs);">›</span>
+                    </li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <span itemprop="name" style="color: var(--text-primary); font-weight: 600;">Über mich</span>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                </ol>
+            </div>
+        </nav>
+        
+        <section class="hero" style="min-height: 70vh; background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.6)), url('https://picsum.photos/1920/1080?random=portrait') center/cover; position: relative; display: flex; align-items: center; justify-content: center;">
+            <div class="hero-content" style="text-align: center; max-width: 800px; padding: 0 var(--space-lg);">
+                <div style="display: inline-block; padding: var(--space-sm) var(--space-lg); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-sm); font-weight: 600; color: var(--white); margin-bottom: var(--space-lg); text-transform: uppercase; letter-spacing: 0.1em;">📸 Professioneller Fotograf</div>
+                <h1 class="hero-title" style="font-size: clamp(3rem, 8vw, 5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg); line-height: 1.1;"><span class="hero-line">Benjamin Gillmann</span></h1>
+                <p class="hero-subtitle" style="color: var(--gray-300); font-size: clamp(1.125rem, 2.5vw, 1.5rem); margin-bottom: var(--space-2xl); line-height: 1.6;">5+ Jahre Erfahrung · 500+ Events · Sport, Musik & Live-Momente</p>
+                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                    <a href="#story" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Meine Geschichte</a>
+                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: transparent; color: var(--white); text-decoration: none; border-radius: 100px; border: 2px solid var(--white); font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Jetzt Buchen</a>
+                </div>
+            </div>
+            <div class="scroll-hint" style="position: absolute; bottom: var(--space-2xl); left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: var(--font-size-xl); cursor: pointer; transition: all 0.3s ease;">↓</div>
+        </section>
+        
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container" style="max-width: 900px;">
+                <div style="font-size: var(--font-size-lg); line-height: 1.8; color: var(--text-secondary);">
+                    <h2 style="font-size: var(--font-size-3xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2xl); text-align: center;">Meine Geschichte</h2>
+                    
+                    <p style="margin-bottom: var(--space-xl); color: var(--text-primary); font-size: var(--font-size-xl); text-align: center; font-weight: 500;">
+                        Ich bin Benjamin Gillmann, professioneller Fotograf mit tiefgreifender Leidenschaft für Sport- und Musikfotografie.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--space-xl);">
+                        Seit über 5 Jahren dokumentiere ich die intensivsten Momente im Sport und in der Musik – von entscheidenden Sportspielen bis zu energiegeladenen Live-Konzerten. Meine Reise begann mit der einfachen Faszination für die Dynamik menschlicher Bewegung und die rohe Energie live performter Musik.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--space-xl);">
+                        Was als Hobby begann, entwickelte sich schnell zu meiner Berufung. Jede Veranstaltung ist für mich eine neue Herausforderung, bei der es darum geht, den perfekten Moment einzufangen – diesen Bruchteil einer Sekunde, der eine ganze Geschichte erzählt. Ob es der entscheidende Torschuss, der emotionale Ausdruck eines Musikers auf der Bühne oder die Euphorie der Fans ist – ich bin dort, um diese Momente für die Ewigkeit festzuhalten.
+                    </p>
+                    
+                    <div style="background: var(--bg-secondary); padding: var(--space-2xl); border-radius: 16px; margin: var(--space-3xl) 0;">
+                        <h3 style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-lg); text-align: center;">Meine Vision</h3>
+                        <p style="text-align: center; font-style: italic; font-size: var(--font-size-lg); color: var(--text-secondary);">
+                            "Fotografie ist mehr als nur das Drücken eines Auslösers. Es geht darum, Emotionen einzufangen, Geschichten zu erzählen und Momente zu schaffen, die für immer bleiben. Jedes Bild soll nicht nur dokumentieren, sondern berühren und inspirieren."
+                        </p>
+                    </div>
+                    
+                    <p style="margin-bottom: var(--space-xl);">
+                        Meine Arbeit zeichnet sich durch Präzision, perfektes Timing und ein geschultes Auge für das Wesentliche aus. Mit modernster Ausrüstung, technischem Know-how und einer unermüdlichen Hingabe gehe ich jedes Projekt mit voller Begeisterung an. Von intimen Club-Konzerten bis zu großen Stadionevents – ich passe mich jeder Situation an und liefere konstant außergewöhnliche Ergebnisse.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--space-xl);">
+                        Verfügbar für Projekte in ganz Deutschland und Europa. Lass uns gemeinsam deine Vision Wirklichkeit werden lassen.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills & Equipment Section -->
+        <section style="background: var(--bg-secondary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <h2 class="section-title">Expertise & Ausrüstung</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-2xl); margin-top: var(--space-3xl);">
+                    <div style="background: var(--bg-primary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-lg); text-align: center;">📷</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--space-md); text-align: center; color: var(--text-primary);">Equipment</h3>
+                        <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2;">
+                            <li>✓ Professionelle Vollformat-Kameras</li>
+                            <li>✓ Lichtstarke Objektive (f/1.4 - f/2.8)</li>
+                            <li>✓ Spezial-Equipment für Low-Light</li>
+                            <li>✓ Backup-Systeme vor Ort</li>
+                            <li>✓ Hochleistungs-Bildbearbeitung</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--bg-primary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-lg); text-align: center;">⚡</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--space-md); text-align: center; color: var(--text-primary);">Spezialisierungen</h3>
+                        <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2;">
+                            <li>✓ Action & Sports Photography</li>
+                            <li>✓ Live-Konzerte & Festivals</li>
+                            <li>✓ Event-Dokumentation</li>
+                            <li>✓ Porträt & Promo-Shootings</li>
+                            <li>✓ Backstage & Behind-the-Scenes</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--bg-primary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-lg); text-align: center;">🎯</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--space-md); text-align: center; color: var(--text-primary);">Workflow</h3>
+                        <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2;">
+                            <li>✓ RAW-Format Fotografie</li>
+                            <li>✓ Professionelle Bildbearbeitung</li>
+                            <li>✓ Schnelle Lieferzeiten</li>
+                            <li>✓ Sichere Online-Galerien</li>
+                            <li>✓ Nutzungsrechte inklusive</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="stats-section" style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <h2 class="section-title">Erfolge in Zahlen</h2>
+                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-2xl); margin-top: var(--space-3xl);">
+                    <div class="stat-item" style="text-align: center; padding: var(--space-xl); background: var(--bg-secondary); border-radius: 12px;">
+                        <div class="stat-number" data-target="500" style="font-size: var(--font-size-4xl); font-weight: 800; color: var(--accent); margin-bottom: var(--space-sm);">500+</div>
+                        <div class="stat-label" style="font-size: var(--font-size-base); color: var(--text-secondary); font-weight: 600;">Events dokumentiert</div>
+                    </div>
+                    <div class="stat-item" style="text-align: center; padding: var(--space-xl); background: var(--bg-secondary); border-radius: 12px;">
+                        <div class="stat-number" data-target="10000" style="font-size: var(--font-size-4xl); font-weight: 800; color: var(--accent); margin-bottom: var(--space-sm);">10K+</div>
+                        <div class="stat-label" style="font-size: var(--font-size-base); color: var(--text-secondary); font-weight: 600;">Aufgenommene Fotos</div>
+                    </div>
+                    <div class="stat-item" style="text-align: center; padding: var(--space-xl); background: var(--bg-secondary); border-radius: 12px;">
+                        <div class="stat-number" data-target="100" style="font-size: var(--font-size-4xl); font-weight: 800; color: var(--accent); margin-bottom: var(--space-sm);">100+</div>
+                        <div class="stat-label" style="font-size: var(--font-size-base); color: var(--text-secondary); font-weight: 600;">Zufriedene Kunden</div>
+                    </div>
+                    <div class="stat-item" style="text-align: center; padding: var(--space-xl); background: var(--bg-secondary); border-radius: 12px;">
+                        <div class="stat-number" data-target="5" style="font-size: var(--font-size-4xl); font-weight: 800; color: var(--accent); margin-bottom: var(--space-sm);">5+</div>
+                        <div class="stat-label" style="font-size: var(--font-size-base); color: var(--text-secondary); font-weight: 600;">Jahre Erfahrung</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Bereit für Ihr Projekt?</h2>
+                    <p>Lassen Sie uns gemeinsam außergewöhnliche Bilder schaffen.</p>
+                    <a href="contact.html" class="btn-primary">Jetzt Kontakt aufnehmen</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
+                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                    <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="about.html">Über mich</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Kontakt</h4>
+                        <ul>
+                            <li><a href="mailto:contact@benjamingillmann.com">E-Mail</a></li>
+                            <li><a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="preloader.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

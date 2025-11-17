@@ -1,0 +1,155 @@
+/* ==========================================
+   RESPONSIVE DESIGN SYSTEM
+   Mobile-First Approach - Komplett neu
+   ========================================== */
+
+/* Breakpoints */
+:root {
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Mobile Optimierungen (< 640px) */
+@media (max-width: 639px) {
+  :root {
+    --space-section: var(--space-16);
+  }
+  
+  .hero {
+    min-height: 80vh;
+    padding: var(--space-12) var(--space-4);
+  }
+  
+  .hero-title {
+    font-size: clamp(var(--text-4xl), 10vw, var(--text-6xl));
+  }
+  
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .grid {
+    gap: var(--space-4);
+  }
+  
+  .card {
+    padding: var(--space-6);
+  }
+  
+  .navbar-container {
+    height: 64px;
+  }
+  
+  .section {
+    padding: var(--space-16) 0;
+  }
+}
+
+/* Tablet (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero {
+    min-height: 90vh;
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (≥ 1024px) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1400px;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+  }
+}
+
+/* Large Desktop (≥ 1280px) */
+@media (min-width: 1280px) {
+  .hero-title {
+    font-size: var(--text-9xl);
+  }
+}
+
+/* Touch Device Optimierungen */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  .navbar-link {
+    padding: var(--space-4);
+  }
+  
+  .card:hover {
+    transform: none;
+  }
+  
+  .card:active {
+    transform: translateY(-4px);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .scroll-snap {
+    scroll-behavior: auto;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .theme-toggle,
+  .btn,
+  .neon-background,
+  .grid-overlay,
+  .scanline,
+  .particles {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .hero {
+    min-height: auto;
+    page-break-after: always;
+  }
+  
+  .card {
+    page-break-inside: avoid;
+    border: 1px solid #000;
+  }
+}

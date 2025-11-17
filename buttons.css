@@ -1,0 +1,641 @@
+/* ==========================================
+   BUTTONS & INTERACTIVE ELEMENTS
+   Alle Button-Varianten & States
+   ========================================== */
+
+/* ==========================================
+   BASE BUTTON STYLES
+   ========================================== */
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+button[class*="btn-"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1.5;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================
+   PRIMARY BUTTON
+   ========================================== */
+
+.btn-primary,
+.btn-hover-effect {
+  background: var(--photo-white);
+  color: var(--photo-black);
+  border-color: var(--photo-white);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary::before,
+.btn-hover-effect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--photo-black);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.btn-primary:hover,
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  color: var(--photo-white);
+}
+
+.btn-primary:hover::before,
+.btn-hover-effect:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn-primary:active,
+.btn-hover-effect:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   SECONDARY BUTTON
+   ========================================== */
+
+.btn-secondary {
+  background: transparent;
+  color: var(--photo-white);
+  border-color: var(--photo-white);
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--photo-white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.btn-secondary:hover {
+  color: var(--photo-black);
+  border-color: var(--photo-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary:hover::before {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   GHOST BUTTON
+   ========================================== */
+
+.btn-ghost {
+  background: transparent;
+  color: var(--photo-lightgray);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-ghost:hover {
+  color: var(--photo-white);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-ghost:active {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(0);
+}
+
+/* ==========================================
+   ICON BUTTON
+   ========================================== */
+
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--photo-white);
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon:active {
+  transform: scale(1);
+}
+
+/* ==========================================
+   BUTTON SIZES
+   ========================================== */
+
+.btn-xs {
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  min-height: 32px;
+  letter-spacing: 0.05em;
+}
+
+.btn-sm {
+  padding: var(--space-3) var(--space-6);
+  font-size: 0.875rem;
+  min-height: 40px;
+}
+
+.btn-lg {
+  padding: var(--space-6) var(--space-12);
+  font-size: 1.125rem;
+  min-height: 56px;
+}
+
+.btn-xl {
+  padding: var(--space-8) var(--space-16);
+  font-size: 1.25rem;
+  min-height: 64px;
+  border-radius: var(--radius-lg);
+}
+
+.btn-icon.btn-sm {
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+}
+
+.btn-icon.btn-lg {
+  width: 56px;
+  height: 56px;
+  min-height: 56px;
+}
+
+.btn-icon.btn-xl {
+  width: 64px;
+  height: 64px;
+  min-height: 64px;
+}
+
+/* ==========================================
+   BUTTON FULL WIDTH
+   ========================================== */
+
+.btn-block {
+  width: 100%;
+  display: flex;
+}
+
+/* ==========================================
+   BUTTON GROUP
+   ========================================== */
+
+.btn-group {
+  display: inline-flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  border-right: none;
+}
+
+.btn-group .btn.active {
+  background: var(--photo-white);
+  color: var(--photo-black);
+}
+
+/* ==========================================
+   FLOATING ACTION BUTTON
+   ========================================== */
+
+.fab {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  width: 64px;
+  height: 64px;
+  background: var(--photo-white);
+  color: var(--photo-black);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xl);
+  box-shadow: var(--photo-shadow-strong);
+  cursor: pointer;
+  z-index: var(--z-sticky);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 12px 48px rgba(255, 255, 255, 0.3);
+}
+
+.fab:active {
+  transform: scale(1.05) rotate(90deg);
+}
+
+/* ==========================================
+   LOADING BUTTON
+   ========================================== */
+
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+
+.btn-primary.btn-loading::after {
+  border-top-color: var(--photo-black);
+}
+
+.btn-secondary.btn-loading::after,
+.btn-ghost.btn-loading::after {
+  border-top-color: var(--photo-white);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   RIPPLE EFFECT
+   ========================================== */
+
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width var(--duration-normal) var(--ease-out),
+              height var(--duration-normal) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out);
+  opacity: 0;
+}
+
+.btn-ripple:active::after {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+  transition: none;
+}
+
+/* ==========================================
+   PAGINATION
+   ========================================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-12) 0;
+}
+
+.pagination-item {
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--photo-lightgray);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+}
+
+.pagination-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--photo-white);
+  transform: translateY(-2px);
+}
+
+.pagination-item.active {
+  background: var(--photo-white);
+  color: var(--photo-black);
+  border-color: var(--photo-white);
+  pointer-events: none;
+}
+
+.pagination-item.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-prev,
+.pagination-next {
+  padding: 0 var(--space-4);
+}
+
+.pagination-dots {
+  pointer-events: none;
+  border: none;
+  background: transparent;
+}
+
+/* ==========================================
+   LOAD MORE BUTTON
+   ========================================== */
+
+.load-more-container {
+  text-align: center;
+  padding: var(--space-12) 0;
+}
+
+.btn-load-more {
+  min-width: 200px;
+}
+
+/* ==========================================
+   MODAL TRIGGERS
+   ========================================== */
+
+.btn-modal-trigger {
+  position: relative;
+}
+
+.btn-modal-trigger[aria-expanded="true"] {
+  z-index: calc(var(--z-modal) + 1);
+}
+
+/* ==========================================
+   DROPDOWN BUTTON
+   ========================================== */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dropdown-toggle::after {
+  content: '▼';
+  font-size: var(--text-xs);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.dropdown.active .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 200px;
+  background: var(--photo-darkgray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--photo-shadow-strong);
+  padding: var(--space-2);
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.dropdown.active .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  color: var(--photo-lightgray);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--photo-white);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: var(--space-2) 0;
+}
+
+/* ==========================================
+   SHARE BUTTONS
+   ========================================== */
+
+.share-buttons {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.share-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: var(--photo-lightgray);
+  font-size: var(--text-lg);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.share-btn:hover {
+  background: var(--photo-white);
+  color: var(--photo-black);
+  transform: translateY(-4px);
+  box-shadow: var(--photo-shadow-medium);
+}
+
+/* ==========================================
+   COPY BUTTON
+   ========================================== */
+
+.btn-copy {
+  position: relative;
+}
+
+.btn-copy.copied::after {
+  content: 'Kopiert!';
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-2) var(--space-3);
+  background: var(--photo-white);
+  color: var(--photo-black);
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+/* ==========================================
+   RESPONSIVE BUTTONS
+   ========================================== */
+
+@media (max-width: 639px) {
+  .btn {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+  }
+  
+  .btn-lg {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
+  }
+  
+  .btn-xl {
+    padding: var(--space-6) var(--space-12);
+    font-size: var(--text-lg);
+  }
+  
+  .fab {
+    width: 56px;
+    height: 56px;
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+  
+  .btn-group {
+    flex-wrap: wrap;
+  }
+  
+  .btn-group .btn {
+    flex: 1 1 auto;
+  }
+  
+  .pagination-item {
+    min-width: 40px;
+    height: 40px;
+    font-size: var(--text-sm);
+  }
+  
+  .share-buttons {
+    justify-content: center;
+  }
+}
+
+/* Touch Devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .pagination-item,
+  .btn-icon,
+  .share-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .btn:active {
+    transform: scale(0.95);
+  }
+}

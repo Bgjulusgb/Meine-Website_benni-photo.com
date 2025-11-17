@@ -1,0 +1,607 @@
+/* ==========================================
+   FOTOGRAFIE WEBSITE - CSS
+   Perfektes modernes dunkles BW Design
+   ========================================== */
+
+/* ==========================================
+   FOTOGRAFIE DESIGN TOKENS
+   ========================================== */
+:root {
+  /* Fotografie Farbpalette - Dunkles BW */
+  --photo-black: #0a0a0a;
+  --photo-darkgray: #1a1a1a;
+  --photo-charcoal: #2a2a2a;
+  --photo-midgray: #505050;
+  --photo-lightgray: #a0a0a0;
+  --photo-silver: #d0d0d0;
+  --photo-offwhite: #f5f5f5;
+  --photo-white: #ffffff;
+  
+  /* Akzentfarben für Hover States */
+  --photo-accent: rgba(255, 255, 255, 0.08);
+  --photo-accent-hover: rgba(255, 255, 255, 0.12);
+  
+  /* Fotografie-spezifische Schatten */
+  --photo-shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --photo-shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --photo-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.8);
+  
+  /* Abstände für Fotografie Layout */
+  --photo-gap-sm: 0.5rem;
+  --photo-gap-md: 1rem;
+  --photo-gap-lg: 2rem;
+  --photo-gap-xl: 3rem;
+}
+
+/* ==========================================
+   GLOBALES FOTOGRAFIE THEME
+   ========================================== */
+body {
+  background: var(--photo-black);
+  color: var(--photo-offwhite);
+  font-family: var(--font-sans);
+  line-height: var(--leading-normal);
+  overflow-x: hidden;
+}
+
+/* Dunkles Theme als Standard */
+:root {
+  --bg-primary: var(--photo-black);
+  --bg-secondary: var(--photo-darkgray);
+  --bg-tertiary: var(--photo-charcoal);
+  --text-primary: var(--photo-offwhite);
+  --text-secondary: var(--photo-lightgray);
+  --text-tertiary: var(--photo-midgray);
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================
+   FOTOGRAFIE GRID SYSTEM
+   ========================================== */
+
+/* Masonry Grid für Portfolio */
+.photo-grid {
+  display: grid;
+  gap: var(--photo-gap-md);
+  padding: var(--space-8);
+}
+
+/* 1 Spalte mobil */
+.photo-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+/* 2 Spalten */
+.photo-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* 3 Spalten Desktop */
+.photo-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+/* 4 Spalten Large Desktop */
+.photo-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Full-Width Hero Grid */
+.photo-grid-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* ==========================================
+   FOTO CARD KOMPONENTEN
+   ========================================== */
+
+/* Basis Foto Card */
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--photo-darkgray);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.photo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--photo-shadow-medium);
+}
+
+/* Foto Image */
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-out),
+              filter var(--duration-normal) var(--ease-out);
+}
+
+.photo-card:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Foto Overlay */
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.9) 0%,
+    rgba(10, 10, 10, 0.6) 40%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-6);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.photo-card:hover .photo-overlay {
+  opacity: 1;
+}
+
+/* Foto Titel & Info */
+.photo-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--photo-white);
+  margin: 0 0 var(--space-2);
+  letter-spacing: var(--tracking-tight);
+}
+
+.photo-subtitle {
+  font-size: var(--text-sm);
+  color: var(--photo-lightgray);
+  font-weight: var(--weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+/* ==========================================
+   LIGHTBOX / MODAL
+   ========================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: var(--photo-shadow-strong);
+  border-radius: var(--radius-md);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  color: var(--photo-white);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-light);
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* Lightbox Navigation */
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  color: var(--photo-white);
+  font-size: var(--text-xl);
+}
+
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-nav.prev {
+  left: var(--space-8);
+}
+
+.lightbox-nav.next {
+  right: var(--space-8);
+}
+
+/* ==========================================
+   FOTOGRAFIE HERO SECTION
+   ========================================== */
+
+.photo-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--photo-black);
+}
+
+.photo-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  filter: grayscale(100%) contrast(1.1);
+}
+
+.photo-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--space-8);
+  max-width: 900px;
+}
+
+.photo-hero-title {
+  font-size: clamp(var(--text-5xl), 8vw, var(--text-9xl));
+  font-weight: var(--weight-black);
+  color: var(--photo-white);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  margin-bottom: var(--space-6);
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.8);
+}
+
+.photo-hero-subtitle {
+  font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+  color: var(--photo-lightgray);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* ==========================================
+   KATEGORIEN / FILTER
+   ========================================== */
+
+.photo-categories {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  justify-content: center;
+  flex-wrap: wrap;
+  background: var(--photo-darkgray);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.category-btn {
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  color: var(--photo-lightgray);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background: var(--photo-white);
+  color: var(--photo-black);
+  border-color: var(--photo-white);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   ABOUT / BIO SECTION
+   ========================================== */
+
+.photo-bio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--photo-gap-xl);
+  padding: var(--space-24) var(--space-8);
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.photo-bio-image {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  filter: grayscale(100%) contrast(1.1);
+  box-shadow: var(--photo-shadow-medium);
+}
+
+.photo-bio-content {
+  padding: var(--space-8);
+}
+
+.photo-bio-title {
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-black);
+  color: var(--photo-white);
+  margin-bottom: var(--space-6);
+  letter-spacing: var(--tracking-tight);
+}
+
+.photo-bio-text {
+  font-size: var(--text-lg);
+  color: var(--photo-lightgray);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-6);
+}
+
+/* ==========================================
+   FULL-BLEED IMAGES
+   ========================================== */
+
+.full-bleed-image {
+  width: 100vw;
+  height: 70vh;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%) contrast(1.05);
+  margin: var(--space-16) 0;
+}
+
+/* ==========================================
+   CONTACT SECTION
+   ========================================== */
+
+.photo-contact {
+  padding: var(--space-24) var(--space-8);
+  background: var(--photo-darkgray);
+  text-align: center;
+}
+
+.photo-contact-title {
+  font-size: var(--text-6xl);
+  font-weight: var(--weight-black);
+  color: var(--photo-white);
+  margin-bottom: var(--space-8);
+  letter-spacing: var(--tracking-tight);
+}
+
+.photo-contact-links {
+  display: flex;
+  gap: var(--space-6);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  padding: var(--space-4) var(--space-8);
+  background: transparent;
+  border: 2px solid var(--photo-white);
+  border-radius: var(--radius-full);
+  color: var(--photo-white);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  transition: all var(--duration-fast) var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.contact-link:hover {
+  background: var(--photo-white);
+  color: var(--photo-black);
+  transform: translateY(-4px);
+  box-shadow: var(--photo-shadow-medium);
+}
+
+/* ==========================================
+   IMAGE ASPECT RATIOS
+   ========================================== */
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.aspect-landscape {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-wide {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ultrawide {
+  aspect-ratio: 21 / 9;
+}
+
+/* ==========================================
+   RESPONSIVE OPTIMIERUNGEN
+   ========================================== */
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .photo-grid-3,
+  .photo-grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .photo-bio {
+    grid-template-columns: 1fr;
+    gap: var(--photo-gap-lg);
+  }
+  
+  .photo-bio-image {
+    height: 400px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 639px) {
+  .photo-grid {
+    gap: var(--photo-gap-sm);
+    padding: var(--space-4);
+  }
+  
+  .photo-grid-2,
+  .photo-grid-3,
+  .photo-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .photo-hero-title {
+    font-size: var(--text-4xl);
+  }
+  
+  .photo-hero-subtitle {
+    font-size: var(--text-base);
+  }
+  
+  .photo-categories {
+    padding: var(--space-4);
+    gap: var(--space-2);
+  }
+  
+  .category-btn {
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-lg);
+  }
+  
+  .lightbox-nav.prev {
+    left: var(--space-4);
+  }
+  
+  .lightbox-nav.next {
+    right: var(--space-4);
+  }
+  
+  .photo-bio {
+    padding: var(--space-12) var(--space-4);
+  }
+  
+  .photo-bio-title {
+    font-size: var(--text-3xl);
+  }
+  
+  .photo-bio-text {
+    font-size: var(--text-base);
+  }
+  
+  .photo-contact-title {
+    font-size: var(--text-4xl);
+  }
+  
+  .full-bleed-image {
+    height: 50vh;
+    margin: var(--space-8) 0;
+  }
+}
+
+/* Touch Optimierungen */
+@media (hover: none) and (pointer: coarse) {
+  .photo-card:hover {
+    transform: none;
+  }
+  
+  .photo-overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(10, 10, 10, 0.8) 0%,
+      rgba(10, 10, 10, 0.3) 40%,
+      transparent 100%
+    );
+  }
+  
+  .category-btn,
+  .contact-link,
+  .lightbox-nav,
+  .lightbox-close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Print */
+@media print {
+  .lightbox,
+  .photo-categories,
+  .lightbox-nav,
+  .lightbox-close {
+    display: none !important;
+  }
+  
+  .photo-card {
+    page-break-inside: avoid;
+  }
+}

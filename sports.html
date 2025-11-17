@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sportfotografie von Benjamin Gillmann – Action, Präzision, Emotion. Professionelle Aufnahmen vom entscheidenden Moment.">
+    <title>Sportfotografie – Benjamin Gillmann</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="photography.css">
+    <link rel="stylesheet" href="ui-components.css">
+    <link rel="stylesheet" href="typography.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="spacing.css">
+    <link rel="stylesheet" href="modals.css">
+    <link rel="stylesheet" href="advanced-components.css">
+    <link rel="stylesheet" href="extra-components.css">
+</head>
+<body>
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-text">BG</div>
+        </div>
+    </div>
+    
+    <nav id="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Über mich</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">☀️</button>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <section class="hero" style="min-height: 80vh; background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('https://picsum.photos/1920/1080?random=sports') center/cover; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="hero-content" style="text-align: center; max-width: 900px; padding: 0 var(--space-lg);">
+                <div style="font-size: 4rem; margin-bottom: var(--space-lg);">⚽</div>
+                <h1 style="font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg); line-height: 1; text-transform: uppercase; letter-spacing: -0.02em;">Sport<br>Fotografie</h1>
+                <p style="font-size: clamp(1.25rem, 3vw, 2rem); color: var(--gray-300); margin-bottom: var(--space-3xl); font-weight: 600;">Der entscheidende Moment. Festgehalten.</p>
+                <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">Jetzt Buchen</a>
+            </div>
+        </section>
+        
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--space-3xl);">
+                    <div style="text-align: center; padding: var(--space-2xl);">
+                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">⚽</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Fußball</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7;">Bundesliga, Regionalliga, Amateur – jedes Spiel mit voller Intensität dokumentiert.</p>
+                    </div>
+                    <div style="text-align: center; padding: var(--space-2xl);">
+                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🏀</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Basketball</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7;">BBL, Playoffs, Derbys – dynamische Action aus perfekter Perspektive.</p>
+                    </div>
+                    <div style="text-align: center; padding: var(--space-2xl);">
+                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🏃</div>
+                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Leichtathletik</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7;">Wettkämpfe, Meisterschaften – Geschwindigkeit und Präzision eingefangen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section style="background: var(--bg-secondary); padding: var(--space-5xl) 0;">
+            <div class="container" style="text-align: center;">
+                <h2 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; color: var(--text-primary); margin-bottom: var(--space-2xl);">200+ Spiele<br>dokumentiert</h2>
+                <p style="font-size: var(--font-size-xl); color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-3xl); line-height: 1.7;">Von Amateurspielen bis zur Bundesliga – ich kenne jeden Winkel des Spielfelds und weiß genau, wo der nächste entscheidende Moment passiert.</p>
+                <a href="portfolio.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: transparent; color: var(--text-primary); text-decoration: none; border-radius: 100px; border: 2px solid var(--text-primary); font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Portfolio ansehen</a>
+            </div>
+        </section>
+        
+        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+            <div class="container">
+                <div style="background: linear-gradient(135deg, var(--text-primary), rgba(0,0,0,0.9)); padding: clamp(var(--space-3xl), 8vw, var(--space-5xl)); border-radius: 24px; text-align: center;">
+                    <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg);">Bereit für Action?</h2>
+                    <p style="font-size: clamp(1.125rem, 2.5vw, 1.5rem); color: rgba(255,255,255,0.9); margin-bottom: var(--space-3xl); max-width: 600px; margin-left: auto; margin-right: auto;">Buchen Sie mich für Ihr nächstes Sportevent – professionelle Aufnahmen garantiert.</p>
+                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">Jetzt Buchen</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
+                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="about.html">Über mich</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Kontakt</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="preloader.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
