@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="buttons.css">
     <link rel="stylesheet" href="spacing.css">
     <link rel="stylesheet" href="advanced-components.css">
+    <link rel="stylesheet" href="custom-components.css">
 </head>
 <body>
     <div id="preloader" class="preloader" aria-hidden="true">
@@ -21,11 +22,13 @@
             <div class="spinner-text">BG</div>
         </div>
     </div>
-    
+
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+
     <nav id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Menü">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
             <ul class="nav-links" id="navLinks">
@@ -35,22 +38,26 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Kontakt</a></li>
             </ul>
-            <button id="themeToggle" class="theme-toggle">☀️</button>
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
         </div>
     </nav>
-    
+
     <main id="main">
         <!-- Hero -->
-        <section class="hero" style="min-height: 100vh; background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(0,0,0,0.85)), url('https://picsum.photos/1920/1080?random=hero') center/cover; display: flex; align-items: center; justify-content: center; position: relative;">
-            <div style="text-align: center; max-width: 1000px; padding: 0 var(--space-lg);">
-                <div style="display: inline-block; padding: var(--space-xs) var(--space-lg); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; color: var(--white); margin-bottom: var(--space-2xl); text-transform: uppercase; letter-spacing: 0.1em;">📸 Professioneller Fotograf</div>
-                
-                <h1 style="font-size: clamp(4rem, 12vw, 8rem); font-weight: 900; color: var(--white); line-height: 0.95; margin-bottom: var(--space-xl); letter-spacing: -0.03em;">BENJAMIN<br>GILLMANN</h1>
-                
-                <p style="font-size: clamp(1.25rem, 3vw, 2.25rem); color: rgba(255,255,255,0.85); margin-bottom: var(--space-4xl); font-weight: 600; max-width: 800px; margin-left: auto; margin-right: auto;">Sport · Musik · Events<br><span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; opacity: 0.7;">Momente, die bleiben.</span></p>
-                
-                <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-5xl);">
-                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 24px rgba(255,255,255,0.2);">
+        <section class="hero-main">
+            <div class="hero-content">
+                <div class="hero-badge">📸 Professioneller Fotograf</div>
+
+                <h1 class="hero-title">BENJAMIN<br>GILLMANN</h1>
+
+                <p class="hero-subtitle">Sport · Musik · Events<br><span class="hero-subtitle-small">Momente, die bleiben.</span></p>
+
+                <div class="hero-cta-group">
+                    <a href="contact.html" class="btn-primary">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <rect x="3" y="4" width="18" height="18" rx="2"/>
                             <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -58,118 +65,118 @@
                         </svg>
                         Jetzt Buchen
                     </a>
-                    <a href="portfolio.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: transparent; color: var(--white); text-decoration: none; border-radius: 100px; border: 2px solid var(--white); font-weight: 700; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">Portfolio</a>
+                    <a href="portfolio.html" class="btn-secondary">Portfolio</a>
                 </div>
-                
+
                 <!-- Stats -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-xl); max-width: 700px; margin: 0 auto;">
-                    <div style="text-align: center;">
-                        <div style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-xs);">500+</div>
-                        <div style="font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">Events</div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">500+</div>
+                        <div class="hero-stat-label">Events</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-xs);">10K+</div>
-                        <div style="font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">Fotos</div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">10K+</div>
+                        <div class="hero-stat-label">Fotos</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-xs);">100+</div>
-                        <div style="font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">Kunden</div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">100+</div>
+                        <div class="hero-stat-label">Kunden</div>
                     </div>
                 </div>
             </div>
-            
-            <div style="position: absolute; bottom: var(--space-3xl); left: 50%; transform: translateX(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: var(--font-size-xl); cursor: pointer; animation: bounce 2s infinite;">↓</div>
+
+            <div class="hero-scroll-indicator" aria-hidden="true">↓</div>
         </section>
-        
+
         <!-- Services Quick -->
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+        <section class="section-bg-primary">
             <div class="container">
-                <h2 style="font-size: clamp(3rem, 7vw, 5rem); font-weight: 900; color: var(--text-primary); text-align: center; margin-bottom: var(--space-4xl); line-height: 1.1;">Was ich<br>fotografiere</h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: var(--space-2xl);">
-                    <a href="sports.html" style="text-decoration: none; background: var(--bg-secondary); padding: var(--space-3xl); border-radius: 24px; transition: all 0.3s ease; border: 2px solid transparent;" onmouseover="this.style.borderColor='var(--text-primary)'; this.style.transform='translateY(-8px)'" onmouseout="this.style.borderColor='transparent'; this.style.transform='translateY(0)'">
-                        <div style="font-size: 4rem; margin-bottom: var(--space-lg); text-align: center;">⚽</div>
-                        <h3 style="font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm); text-align: center;">Sport</h3>
-                        <p style="color: var(--text-secondary); text-align: center; line-height: 1.7;">Action, Präzision, Emotion – der entscheidende Moment.</p>
+                <h2 class="section-heading">Was ich<br>fotografiere</h2>
+
+                <div class="grid-3-cols">
+                    <a href="sports.html" class="service-card">
+                        <div class="service-card-icon">⚽</div>
+                        <h3 class="service-card-title">Sport</h3>
+                        <p class="service-card-text">Action, Präzision, Emotion – der entscheidende Moment.</p>
                     </a>
-                    
-                    <a href="music.html" style="text-decoration: none; background: var(--bg-secondary); padding: var(--space-3xl); border-radius: 24px; transition: all 0.3s ease; border: 2px solid transparent;" onmouseover="this.style.borderColor='var(--text-primary)'; this.style.transform='translateY(-8px)'" onmouseout="this.style.borderColor='transparent'; this.style.transform='translateY(0)'">
-                        <div style="font-size: 4rem; margin-bottom: var(--space-lg); text-align: center;">🎵</div>
-                        <h3 style="font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm); text-align: center;">Musik</h3>
-                        <p style="color: var(--text-secondary); text-align: center; line-height: 1.7;">Live-Konzerte, Festivals, Backstage – die Energie der Bühne.</p>
+
+                    <a href="music.html" class="service-card">
+                        <div class="service-card-icon">🎵</div>
+                        <h3 class="service-card-title">Musik</h3>
+                        <p class="service-card-text">Live-Konzerte, Festivals, Backstage – die Energie der Bühne.</p>
                     </a>
-                    
-                    <a href="portfolio.html" style="text-decoration: none; background: var(--bg-secondary); padding: var(--space-3xl); border-radius: 24px; transition: all 0.3s ease; border: 2px solid transparent;" onmouseover="this.style.borderColor='var(--text-primary)'; this.style.transform='translateY(-8px)'" onmouseout="this.style.borderColor='transparent'; this.style.transform='translateY(0)'">
-                        <div style="font-size: 4rem; margin-bottom: var(--space-lg); text-align: center;">🎪</div>
-                        <h3 style="font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm); text-align: center;">Events</h3>
-                        <p style="color: var(--text-secondary); text-align: center; line-height: 1.7;">Corporate, Galas, Feiern – professionelle Event-Dokumentation.</p>
+
+                    <a href="portfolio.html" class="service-card">
+                        <div class="service-card-icon">🎪</div>
+                        <h3 class="service-card-title">Events</h3>
+                        <p class="service-card-text">Corporate, Galas, Feiern – professionelle Event-Dokumentation.</p>
                     </a>
                 </div>
             </div>
         </section>
-        
+
         <!-- Portfolio Preview -->
-        <section style="background: var(--bg-secondary); padding: var(--space-5xl) 0;">
+        <section class="section-bg-secondary">
             <div class="container">
-                <div style="text-align: center; margin-bottom: var(--space-4xl);">
-                    <h2 style="font-size: clamp(3rem, 7vw, 5rem); font-weight: 900; color: var(--text-primary); margin-bottom: var(--space-lg);">Portfolio</h2>
-                    <p style="font-size: var(--font-size-xl); color: var(--text-secondary);">Eine Auswahl meiner Arbeiten</p>
+                <div class="section-heading-centered">
+                    <h2 class="section-title">Portfolio</h2>
+                    <p class="section-subtitle">Eine Auswahl meiner Arbeiten</p>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--space-lg);">
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=1'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Bundesliga Finale</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Sport Fotografie</p>
+
+                <div class="grid-portfolio">
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=1');" tabindex="0" role="button" aria-label="Bundesliga Finale Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Bundesliga Finale</h3>
+                            <p class="portfolio-preview-category">Sport Fotografie</p>
                         </div>
                     </div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=2'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Rock Festival</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Musik Fotografie</p>
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=2');" tabindex="0" role="button" aria-label="Rock Festival Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Rock Festival</h3>
+                            <p class="portfolio-preview-category">Musik Fotografie</p>
                         </div>
                     </div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=3'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Corporate Gala</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Event Fotografie</p>
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=3');" tabindex="0" role="button" aria-label="Corporate Gala Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Corporate Gala</h3>
+                            <p class="portfolio-preview-category">Event Fotografie</p>
                         </div>
                     </div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=4'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Basketball Playoffs</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Sport Fotografie</p>
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=4');" tabindex="0" role="button" aria-label="Basketball Playoffs Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Basketball Playoffs</h3>
+                            <p class="portfolio-preview-category">Sport Fotografie</p>
                         </div>
                     </div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=5'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Jazz Night</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Musik Fotografie</p>
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=5');" tabindex="0" role="button" aria-label="Jazz Night Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Jazz Night</h3>
+                            <p class="portfolio-preview-category">Musik Fotografie</p>
                         </div>
                     </div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://picsum.photos/600/450?random=6'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-lg); background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
-                            <h3 style="font-size: var(--font-size-lg); font-weight: 800; margin-bottom: var(--space-xs);">Hochzeit Deluxe</h3>
-                            <p style="font-size: var(--font-size-sm); opacity: 0.9;">Event Fotografie</p>
+                    <div class="portfolio-preview-item" style="background-image: url('https://picsum.photos/600/450?random=6');" tabindex="0" role="button" aria-label="Hochzeit Deluxe Projekt ansehen">
+                        <div class="portfolio-preview-content">
+                            <h3 class="portfolio-preview-title">Hochzeit Deluxe</h3>
+                            <p class="portfolio-preview-category">Event Fotografie</p>
                         </div>
                     </div>
                 </div>
-                
-                <div style="text-align: center; margin-top: var(--space-4xl);">
-                    <a href="portfolio.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: transparent; color: var(--text-primary); text-decoration: none; border-radius: 100px; border: 2px solid var(--text-primary); font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Alle Projekte ansehen</a>
+
+                <div class="text-center mt-4xl">
+                    <a href="portfolio.html" class="btn-outline">Alle Projekte ansehen</a>
                 </div>
             </div>
         </section>
-        
+
         <!-- CTA -->
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+        <section class="section-bg-primary">
             <div class="container">
-                <div style="background: linear-gradient(135deg, var(--text-primary), rgba(0,0,0,0.9)); padding: clamp(var(--space-4xl), 10vw, var(--space-6xl)); border-radius: 32px; text-align: center; position: relative; overflow: hidden;">
-                    <div style="position: absolute; inset: 0; opacity: 0.05; background: url('https://picsum.photos/1920/1080?random=pattern') center/cover;"></div>
-                    <div style="position: relative; z-index: 1;">
-                        <h2 style="font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-xl); line-height: 1.1;">Bereit für Ihr<br>nächstes Projekt?</h2>
-                        <p style="font-size: clamp(1.125rem, 2.5vw, 1.75rem); color: rgba(255,255,255,0.9); margin-bottom: var(--space-4xl); max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">Buchen Sie jetzt Ihr professionelles Shooting.<br>Antwort innerhalb von 24 Stunden.</p>
-                        <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-md); padding: var(--space-xl) var(--space-4xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 900; font-size: clamp(1rem, 2.5vw, 1.5rem); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 12px 32px rgba(0,0,0,0.3);">
+                <div class="cta-section">
+                    <div class="cta-bg-pattern"></div>
+                    <div class="cta-content">
+                        <h2 class="cta-title">Bereit für Ihr<br>nächstes Projekt?</h2>
+                        <p class="cta-text">Buchen Sie jetzt Ihr professionelles Shooting.<br>Antwort innerhalb von 24 Stunden.</p>
+                        <a href="contact.html" class="btn-cta-large">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                 <rect x="3" y="4" width="18" height="18" rx="2"/>
                                 <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -182,7 +189,7 @@
             </div>
         </section>
     </main>
-    
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -207,7 +214,7 @@
             </div>
         </div>
     </footer>
-    
+
     <script src="preloader.js"></script>
     <script src="utils.js"></script>
     <script src="script.js" defer></script>

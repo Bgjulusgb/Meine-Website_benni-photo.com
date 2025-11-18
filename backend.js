@@ -91,7 +91,6 @@ const initContactForm = () => {
         throw new Error('Server error');
       }
     } catch (error) {
-      console.error('Form submission error:', error);
       showNotification('❌ Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie mich direkt per E-Mail.', 'error');
       trackEvent('Contact', 'Form Submit', 'Error');
     } finally {
@@ -172,7 +171,6 @@ const initNewsletter = () => {
         throw new Error('Subscription failed');
       }
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
       showNotification('Fehler bei der Anmeldung. Bitte versuchen Sie es später erneut.', 'error');
       trackEvent('Newsletter', 'Subscribe Error', email);
     } finally {
@@ -209,9 +207,7 @@ const initSocialSharing = () => {
           await navigator.share(shareData);
           showNotification('Danke fürs Teilen!', 'success');
         } catch (error) {
-          if (error.name !== 'AbortError') {
-            console.error('Error sharing:', error);
-          }
+          // Silently handle share errors
         }
         return;
       }
@@ -265,9 +261,6 @@ const trackEvent = (category, action, label, value) => {
   if (typeof _paq !== 'undefined') {
     _paq.push(['trackEvent', category, action, label, value]);
   }
-
-  // Console log for debugging
-  console.log('Event tracked:', { category, action, label, value });
 };
 
 const trackPageView = () => {
@@ -289,8 +282,6 @@ const initPerformanceMonitoring = () => {
       if (perfData) {
         const loadTime = Math.round(perfData.loadEventEnd - perfData.fetchStart);
         trackEvent('Performance', 'Page Load', 'Load Time', loadTime);
-        
-        console.log('Page Load Time:', loadTime + 'ms');
       }
 
       // Track Core Web Vitals
@@ -302,11 +293,10 @@ const initPerformanceMonitoring = () => {
             const lastEntry = entries[entries.length - 1];
             const lcp = Math.round(lastEntry.renderTime || lastEntry.loadTime);
             trackEvent('Performance', 'LCP', 'Value', lcp);
-            console.log('LCP:', lcp + 'ms');
           });
           lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
         } catch (e) {
-          console.warn('LCP observation failed:', e);
+          // LCP tracking failed
         }
 
         // First Input Delay (FID)
@@ -316,12 +306,11 @@ const initPerformanceMonitoring = () => {
             entries.forEach((entry) => {
               const fid = Math.round(entry.processingStart - entry.startTime);
               trackEvent('Performance', 'FID', 'Value', fid);
-              console.log('FID:', fid + 'ms');
             });
           });
           fidObserver.observe({ entryTypes: ['first-input'] });
         } catch (e) {
-          console.warn('FID observation failed:', e);
+          // FID tracking failed
         }
 
         // Cumulative Layout Shift (CLS)
@@ -339,10 +328,9 @@ const initPerformanceMonitoring = () => {
           // Report CLS on page unload
           window.addEventListener('beforeunload', () => {
             trackEvent('Performance', 'CLS', 'Value', Math.round(clsValue * 1000));
-            console.log('CLS:', clsValue.toFixed(3));
           });
         } catch (e) {
-          console.warn('CLS observation failed:', e);
+          // CLS tracking failed
         }
       }
     }, 0);
@@ -469,8 +457,6 @@ const initAnalytics = () => {
     // function gtag(){dataLayer.push(arguments);}
     // gtag('js', new Date());
     // gtag('config', 'GA_MEASUREMENT_ID');
-    
-    console.log('Analytics initialized');
   }
 };
 
@@ -481,12 +467,10 @@ const initAnalytics = () => {
 const initErrorTracking = () => {
   window.addEventListener('error', (event) => {
     trackEvent('Error', 'JavaScript Error', event.message, 0);
-    console.error('Global error:', event.error);
   });
 
   window.addEventListener('unhandledrejection', (event) => {
     trackEvent('Error', 'Unhandled Promise Rejection', event.reason, 0);
-    console.error('Unhandled rejection:', event.reason);
   });
 };
 
@@ -604,9 +588,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPerformanceMonitoring();
   initErrorTracking();
   trackPageView();
-  
-  // Log initialization for debugging
-  console.log('Backend initialized successfully');
 });
 
 // Export for use in other scripts
