@@ -32,9 +32,14 @@
     <link rel="stylesheet" href="advanced-components.css">
     <link rel="stylesheet" href="extra-components.css">
     <link rel="stylesheet" href="custom-components.css">
+    <link rel="stylesheet" href="contact-form.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="canonical" href="https://benjamingillmann.com/contact.html">
     <link rel="manifest" href="/manifest.json">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Preloader -->
@@ -97,21 +102,21 @@
             <div class="hero-content" style="text-align: center;">
                 <h1 class="hero-title" style="color: var(--white); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; margin-bottom: var(--space-lg);">Buchen Sie Ihr Shooting</h1>
                 <p class="hero-subtitle" style="color: var(--gray-300); font-size: var(--font-size-xl); max-width: 700px; margin: 0 auto;">Starten Sie Ihr Projekt mit einer kostenlosen Beratung · Antwort innerhalb von 24 Stunden</p>
-                <div style="display: flex; gap: var(--space-md); justify-content: center; margin-top: var(--space-2xl); flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--white); font-size: var(--font-size-sm);">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="hero-benefits">
+                    <div class="hero-benefit-item">
+                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
                         <span>Kostenlose Beratung</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--white); font-size: var(--font-size-sm);">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="hero-benefit-item">
+                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
                         <span>Flexible Pakete</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--white); font-size: var(--font-size-sm);">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="hero-benefit-item">
+                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
                         <span>Schnelle Lieferung</span>
@@ -127,64 +132,36 @@
                     <p style="font-size: var(--font-size-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Teilen Sie mir die Details zu Ihrem Projekt mit. Ich erstelle Ihnen ein maßgeschneidertes Angebot innerhalb von 24 Stunden.</p>
                 </div>
                 
-                <form id="contactForm" style="background: var(--bg-secondary); padding: clamp(var(--space-xl), 5vw, var(--space-3xl)); border-radius: 16px; box-shadow: var(--shadow-lg);" novalidate>
-                    <style>
-                        #contactForm input:focus,
-                        #contactForm select:focus,
-                        #contactForm textarea:focus {
-                            outline: none;
-                            border-color: var(--text-primary);
-                            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
-                        }
-                        #contactForm input,
-                        #contactForm select,
-                        #contactForm textarea {
-                            transition: all 0.3s ease;
-                        }
-                        #contactForm label {
-                            transition: color 0.2s ease;
-                        }
-                        #contactForm input:focus + label,
-                        #contactForm select:focus + label,
-                        #contactForm textarea:focus + label {
-                            color: var(--text-primary);
-                        }
-                        @media (max-width: 640px) {
-                            #contactForm {
-                                padding: var(--space-lg) !important;
-                            }
-                        }
-                    </style>
+                <form id="contactForm" class="contact-form-wrapper" novalidate>
                     <!-- Persönliche Daten -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
-                        <div class="form-group">
-                            <label for="name" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Vor- und Nachname *</label>
-                            <input type="text" id="name" name="name" required style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" placeholder="Max Mustermann" aria-required="true">
+                    <div class="form-grid">
+                        <div class="form-group-modern">
+                            <input type="text" id="name" name="name" required placeholder=" " aria-required="true">
+                            <label for="name">Vor- und Nachname <span class="required-indicator">*</span></label>
                         </div>
-                        <div class="form-group">
-                            <label for="email" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">E-Mail-Adresse *</label>
-                            <input type="email" id="email" name="email" required style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" placeholder="max@beispiel.de" aria-required="true">
+                        <div class="form-group-modern">
+                            <input type="email" id="email" name="email" required placeholder=" " aria-required="true">
+                            <label for="email">E-Mail-Adresse <span class="required-indicator">*</span></label>
                         </div>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
-                        <div class="form-group">
-                            <label for="phone" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Telefon (optional)</label>
-                            <input type="tel" id="phone" name="phone" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" placeholder="+49 123 456789">
+                    <div class="form-grid">
+                        <div class="form-group-modern">
+                            <input type="tel" id="phone" name="phone" placeholder=" ">
+                            <label for="phone">Telefon (optional)</label>
                         </div>
-                        <div class="form-group">
-                            <label for="company" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Firma/Organisation (optional)</label>
-                            <input type="text" id="company" name="company" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" placeholder="Ihre Firma">
+                        <div class="form-group-modern">
+                            <input type="text" id="company" name="company" placeholder=" ">
+                            <label for="company">Firma/Organisation (optional)</label>
                         </div>
                     </div>
                     
                     <!-- Projekt-Details -->
-                    <div style="border-top: 2px solid var(--border); padding-top: var(--space-xl); margin-bottom: var(--space-xl);">
-                        <h3 style="font-size: var(--font-size-xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-lg);">Projekt-Details</h3>
+                    <div class="form-section-divider">
+                        <h3 class="form-section-title">Projekt-Details</h3>
                         
-                        <div class="form-group" style="margin-bottom: var(--space-lg);">
-                            <label for="service" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Art der Fotografie *</label>
-                            <select id="service" name="service" required style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" aria-required="true">
+                        <div class="form-group-modern">
+                            <select id="service" name="service" required aria-required="true">
                                 <option value="">Bitte wählen Sie eine Kategorie</option>
                                 <option value="sport">🏆 Sportfotografie</option>
                                 <option value="music">🎵 Musikfotografie (Live/Studio)</option>
@@ -193,16 +170,16 @@
                                 <option value="corporate">💼 Corporate/Business</option>
                                 <option value="other">✨ Sonstiges</option>
                             </select>
+                            <label for="service">Art der Fotografie <span class="required-indicator">*</span></label>
                         </div>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-lg);">
-                            <div class="form-group">
-                                <label for="eventDate" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Wunschdatum *</label>
-                                <input type="date" id="eventDate" name="eventDate" required style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" aria-required="true">
+                        <div class="form-grid">
+                            <div class="form-group-modern">
+                                <input type="date" id="eventDate" name="eventDate" required placeholder=" " aria-required="true">
+                                <label for="eventDate">Wunschdatum <span class="required-indicator">*</span></label>
                             </div>
-                            <div class="form-group">
-                                <label for="duration" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Voraussichtliche Dauer</label>
-                                <select id="duration" name="duration" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);">
+                            <div class="form-group-modern">
+                                <select id="duration" name="duration">
                                     <option value="">Bitte wählen</option>
                                     <option value="1-2">1-2 Stunden</option>
                                     <option value="3-4">3-4 Stunden (Halber Tag)</option>
@@ -210,17 +187,17 @@
                                     <option value="multiple">Mehrere Tage</option>
                                     <option value="flexible">Noch unklar</option>
                                 </select>
+                                <label for="duration">Voraussichtliche Dauer</label>
                             </div>
                         </div>
                         
-                        <div class="form-group" style="margin-bottom: var(--space-lg);">
-                            <label for="location" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Veranstaltungsort/Location</label>
-                            <input type="text" id="location" name="location" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);" placeholder="Stadt, Venue, Adresse">
+                        <div class="form-group-modern">
+                            <input type="text" id="location" name="location" placeholder=" ">
+                            <label for="location">Veranstaltungsort/Location</label>
                         </div>
-                        
-                        <div class="form-group" style="margin-bottom: var(--space-lg);">
-                            <label for="budget" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Budget-Vorstellung (optional)</label>
-                            <select id="budget" name="budget" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base);">
+
+                        <div class="form-group-modern">
+                            <select id="budget" name="budget">
                                 <option value="">Bitte wählen</option>
                                 <option value="under-500">Unter 500 €</option>
                                 <option value="500-1000">500 - 1.000 €</option>
@@ -229,78 +206,80 @@
                                 <option value="over-5000">Über 5.000 €</option>
                                 <option value="flexible">Flexibel - Angebot erwünscht</option>
                             </select>
+                            <label for="budget">Budget-Vorstellung (optional)</label>
                         </div>
                     </div>
                     
                     <!-- Zusätzliche Anforderungen -->
-                    <div style="border-top: 2px solid var(--border); padding-top: var(--space-xl); margin-bottom: var(--space-xl);">
-                        <h3 style="font-size: var(--font-size-xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-lg);">Zusätzliche Optionen</h3>
-                        
-                        <div style="display: grid; gap: var(--space-md); margin-bottom: var(--space-lg);">
-                            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; padding: var(--space-md); background: var(--bg-primary); border-radius: 8px; border: 2px solid var(--border);">
-                                <input type="checkbox" name="options[]" value="editing" style="width: 20px; height: 20px;">
-                                <span style="color: var(--text-primary);">Professionelle Bildbearbeitung & Retusche</span>
+                    <div class="form-section-divider">
+                        <h3 class="form-section-title">Zusätzliche Optionen</h3>
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="options[]" value="editing" class="checkbox-input">
+                                <span class="checkbox-text">Professionelle Bildbearbeitung & Retusche</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; padding: var(--space-md); background: var(--bg-primary); border-radius: 8px; border: 2px solid var(--border);">
-                                <input type="checkbox" name="options[]" value="rush" style="width: 20px; height: 20px;">
-                                <span style="color: var(--text-primary);">Express-Lieferung (24-48h)</span>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="options[]" value="rush" class="checkbox-input">
+                                <span class="checkbox-text">Express-Lieferung (24-48h)</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; padding: var(--space-md); background: var(--bg-primary); border-radius: 8px; border: 2px solid var(--border);">
-                                <input type="checkbox" name="options[]" value="prints" style="width: 20px; height: 20px;">
-                                <span style="color: var(--text-primary);">Druck & physische Abzüge</span>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="options[]" value="prints" class="checkbox-input">
+                                <span class="checkbox-text">Druck & physische Abzüge</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; padding: var(--space-md); background: var(--bg-primary); border-radius: 8px; border: 2px solid var(--border);">
-                                <input type="checkbox" name="options[]" value="video" style="width: 20px; height: 20px;">
-                                <span style="color: var(--text-primary);">Video-Content/Behind-the-Scenes</span>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="options[]" value="video" class="checkbox-input">
+                                <span class="checkbox-text">Video-Content/Behind-the-Scenes</span>
                             </label>
                         </div>
                     </div>
                     
-                    <div class="form-group" style="margin-bottom: var(--space-2xl);">
-                        <label for="message" style="display: block; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">Projektbeschreibung *</label>
-                        <textarea id="message" name="message" required rows="6" style="width: 100%; padding: var(--space-md); border: 2px solid var(--border); border-radius: 8px; font-size: var(--font-size-base); resize: vertical; font-family: inherit;" placeholder="Beschreiben Sie Ihr Projekt im Detail: Was wird fotografiert? Welche Stimmung soll eingefangen werden? Besondere Wünsche oder Anforderungen?" aria-required="true"></textarea>
-                        <small style="display: block; margin-top: var(--space-sm); color: var(--text-secondary); font-size: var(--font-size-sm);">Je mehr Details Sie teilen, desto präziser kann ich Ihr Angebot erstellen.</small>
+                    <div class="form-group-modern has-textarea">
+                        <textarea id="message" name="message" required rows="6" placeholder=" " aria-required="true"></textarea>
+                        <label for="message">Projektbeschreibung <span class="required-indicator">*</span></label>
+                        <small class="form-helper-text">Je mehr Details Sie teilen, desto präziser kann ich Ihr Angebot erstellen.</small>
                     </div>
                     
-                    <div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: var(--space-lg); border-radius: 8px; margin-bottom: var(--space-2xl);">
-                        <p style="color: var(--text-primary); font-size: var(--font-size-sm); line-height: 1.6; margin: 0;">
+                    <div class="form-info-box">
+                        <p>
                             <strong>💡 Was passiert nach dem Absenden?</strong><br>
                             Sie erhalten innerhalb von 24 Stunden eine Antwort mit einem detaillierten Angebot und Verfügbarkeitsbestätigung.
                         </p>
                     </div>
-                    
-                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        </svg>
-                        Buchungsanfrage senden
-                    </button>
+
+                    <div class="form-submit-wrapper">
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            Buchungsanfrage senden
+                        </button>
+                    </div>
                     <div id="form-feedback" style="margin-top: var(--space-md); padding: var(--space-md); border-radius: 8px; display: none;" role="alert"></div>
                 </form>
                 
                 <div style="margin-top: var(--space-5xl); text-align: center;">
                     <h3 style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2xl);">Weitere Kontaktmöglichkeiten</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-2xl);">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-2xl);">
-                        <div style="background: var(--bg-secondary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
-                            <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">📧</div>
-                            <strong style="display: block; color: var(--text-primary); margin-bottom: var(--space-sm); font-size: var(--font-size-lg);">E-Mail</strong>
-                            <a href="mailto:contact@benjamingillmann.com" style="color: var(--accent); text-decoration: none; font-weight: 600;">contact@benjamingillmann.com</a>
+                    <div class="contact-methods-grid">
+                        <div class="contact-method-card">
+                            <span class="contact-method-icon">📧</span>
+                            <strong class="contact-method-title">E-Mail</strong>
+                            <a href="mailto:contact@benjamingillmann.com" class="contact-method-link">contact@benjamingillmann.com</a>
                         </div>
-                        <div style="background: var(--bg-secondary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
-                            <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">📱</div>
-                            <strong style="display: block; color: var(--text-primary); margin-bottom: var(--space-sm); font-size: var(--font-size-lg);">Instagram</strong>
-                            <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600;">@benjamin_gillmann</a>
+                        <div class="contact-method-card">
+                            <span class="contact-method-icon">📱</span>
+                            <strong class="contact-method-title">Instagram</strong>
+                            <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="contact-method-link">@benjamin_gillmann</a>
                         </div>
-                        <div style="background: var(--bg-secondary); padding: var(--space-2xl); border-radius: 12px; box-shadow: var(--shadow-md);">
-                            <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">📍</div>
-                            <strong style="display: block; color: var(--text-primary); margin-bottom: var(--space-sm); font-size: var(--font-size-lg);">Standort</strong>
+                        <div class="contact-method-card">
+                            <span class="contact-method-icon">📍</span>
+                            <strong class="contact-method-title">Standort</strong>
                             <span style="color: var(--text-secondary);">Deutschland · Deutschlandweit verfügbar</span>
                         </div>
                     </div>
-                    <div style="margin-top: var(--space-3xl); padding: var(--space-2xl); background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid var(--accent);">
-                        <p style="font-size: var(--font-size-base); color: var(--text-secondary); margin: 0;">
-                            <strong style="color: var(--text-primary);">Antwortzeit:</strong> Ich antworte in der Regel innerhalb von 24 Stunden. Bei dringenden Anfragen kontaktieren Sie mich bitte direkt per E-Mail oder Instagram.
+                    <div class="response-time-box">
+                        <p>
+                            <strong>Antwortzeit:</strong> Ich antworte in der Regel innerhalb von 24 Stunden. Bei dringenden Anfragen kontaktieren Sie mich bitte direkt per E-Mail oder Instagram.
                         </p>
                     </div>
                 </div>
