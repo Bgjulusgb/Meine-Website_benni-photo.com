@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="advanced-components.css">
     <link rel="stylesheet" href="extra-components.css">
     <link rel="stylesheet" href="custom-components.css">
+    <link rel="stylesheet" href="enhanced-components.css">
     <link rel="stylesheet" href="contact-form.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="canonical" href="https://benjamingillmann.com/contact.html">
@@ -80,28 +81,28 @@
     
     <main id="main">
         <!-- Breadcrumb Navigation -->
-        <nav class="breadcrumb" aria-label="Brotkrümelnavigation" style="background: var(--bg-secondary); padding: var(--space-md) 0;">
+        <nav class="breadcrumb-wrapper" aria-label="Brotkrümelnavigation">
             <div class="container">
-                <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display: flex; gap: var(--space-sm); list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); color: var(--text-secondary);">
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                        <a itemprop="item" href="index.html" style="color: var(--text-secondary); text-decoration: none;">
+                <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb-list">
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item">
+                        <a itemprop="item" href="index.html" class="breadcrumb-link">
                             <span itemprop="name">Home</span>
                         </a>
                         <meta itemprop="position" content="1" />
-                        <span style="margin: 0 var(--space-xs);">›</span>
+                        <span class="breadcrumb-separator">›</span>
                     </li>
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                        <span itemprop="name" style="color: var(--text-primary); font-weight: 600;">Kontakt</span>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item">
+                        <span itemprop="name" class="breadcrumb-current">Kontakt</span>
                         <meta itemprop="position" content="2" />
                     </li>
                 </ol>
             </div>
         </nav>
         
-        <section class="hero" style="min-height: 50vh; background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.7)), url('https://picsum.photos/1920/1080?random=contact') center/cover; position: relative; display: flex; align-items: center; justify-content: center;">
-            <div class="hero-content" style="text-align: center;">
-                <h1 class="hero-title" style="color: var(--white); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; margin-bottom: var(--space-lg);">Buchen Sie Ihr Shooting</h1>
-                <p class="hero-subtitle" style="color: var(--gray-300); font-size: var(--font-size-xl); max-width: 700px; margin: 0 auto;">Starten Sie Ihr Projekt mit einer kostenlosen Beratung · Antwort innerhalb von 24 Stunden</p>
+        <section class="hero-standard">
+            <div class="hero-content-center">
+                <h1 class="hero-title-large">Buchen Sie Ihr Shooting</h1>
+                <p class="hero-subtitle-large">Starten Sie Ihr Projekt mit einer kostenlosen Beratung · Antwort innerhalb von 24 Stunden</p>
                 <div class="hero-benefits">
                     <div class="hero-benefit-item">
                         <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -125,11 +126,11 @@
             </div>
         </section>
         
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+        <section class="section-container">
             <div class="container" style="max-width: 900px;">
-                <div style="text-align: center; margin-bottom: var(--space-3xl);">
-                    <h2 style="font-size: var(--font-size-3xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-md);">Buchungsanfrage starten</h2>
-                    <p style="font-size: var(--font-size-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Teilen Sie mir die Details zu Ihrem Projekt mit. Ich erstelle Ihnen ein maßgeschneidertes Angebot innerhalb von 24 Stunden.</p>
+                <div class="section-header">
+                    <h2 class="section-title">Buchungsanfrage starten</h2>
+                    <p class="section-subtitle">Teilen Sie mir die Details zu Ihrem Projekt mit. Ich erstelle Ihnen ein maßgeschneidertes Angebot innerhalb von 24 Stunden.</p>
                 </div>
                 
                 <form id="contactForm" class="contact-form-wrapper" novalidate>
@@ -258,9 +259,10 @@
                     <div id="form-feedback" style="margin-top: var(--space-md); padding: var(--space-md); border-radius: 8px; display: none;" role="alert"></div>
                 </form>
                 
-                <div style="margin-top: var(--space-5xl); text-align: center;">
-                    <h3 style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2xl);">Weitere Kontaktmöglichkeiten</h3>
-                    <div class="contact-methods-grid">
+                <div class="section-header" style="margin-top: var(--space-5xl);">
+                    <h3 class="section-title" style="font-size: var(--font-size-2xl);">Weitere Kontaktmöglichkeiten</h3>
+                </div>
+                <div class="contact-methods-grid">
                         <div class="contact-method-card">
                             <span class="contact-method-icon">📧</span>
                             <strong class="contact-method-title">E-Mail</strong>
