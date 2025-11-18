@@ -1,0 +1,532 @@
+/* ==========================================
+   CONTACT FORM - MODERN UI/UX
+   Verbesserte Kontaktformular-Styles
+   ========================================== */
+
+/* Form Container */
+.contact-form-wrapper {
+  background: var(--bg-secondary);
+  padding: clamp(var(--space-xl), 5vw, var(--space-3xl));
+  border-radius: 24px;
+  box-shadow: var(--shadow-2xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glassmorphism Effect */
+.contact-form-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-form-wrapper > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Form Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+/* Form Group - Modern Floating Label Design */
+.form-group-modern {
+  position: relative;
+  margin-bottom: var(--space-lg);
+}
+
+.form-group-modern input,
+.form-group-modern select,
+.form-group-modern textarea {
+  width: 100%;
+  padding: var(--space-md) var(--space-md);
+  padding-top: calc(var(--space-md) + 8px);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: var(--font-size-base);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  outline: none;
+  min-height: 56px; /* Touch-optimiert */
+}
+
+.form-group-modern textarea {
+  min-height: 140px;
+  resize: vertical;
+  padding-top: calc(var(--space-lg) + 4px);
+}
+
+/* Floating Label */
+.form-group-modern label {
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  background: var(--bg-primary);
+  padding: 0 var(--space-xs);
+  font-size: var(--font-size-base);
+}
+
+/* Floating Label für Textarea */
+.form-group-modern.has-textarea label {
+  top: calc(var(--space-lg) + 4px);
+  transform: translateY(0);
+}
+
+/* Label Animation - Wenn Fokus oder Wert vorhanden */
+.form-group-modern input:focus + label,
+.form-group-modern select:focus + label,
+.form-group-modern textarea:focus + label,
+.form-group-modern input:not(:placeholder-shown) + label,
+.form-group-modern select:not([value=""]) + label,
+.form-group-modern textarea:not(:placeholder-shown) + label,
+.form-group-modern.has-value label {
+  top: 0;
+  transform: translateY(0);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Focus State */
+.form-group-modern input:focus,
+.form-group-modern select:focus,
+.form-group-modern textarea:focus {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+  background: var(--bg-primary);
+}
+
+/* Validierungs-States */
+.form-group-modern input:valid:not(:placeholder-shown),
+.form-group-modern select:valid:not([value=""]),
+.form-group-modern textarea:valid:not(:placeholder-shown) {
+  border-color: #10b981; /* Grün */
+}
+
+.form-group-modern input:invalid:not(:placeholder-shown):not(:focus),
+.form-group-modern select:invalid:not([value=""]):not(:focus),
+.form-group-modern textarea:invalid:not(:placeholder-shown):not(:focus) {
+  border-color: #ef4444; /* Rot */
+}
+
+/* Validierungs-Icon */
+.form-group-modern::after {
+  content: '';
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.form-group-modern.has-textarea::after {
+  top: calc(var(--space-lg) + 28px);
+  transform: translateY(0);
+}
+
+.form-group-modern input:valid:not(:placeholder-shown) ~ .validation-icon.success,
+.form-group-modern select:valid:not([value=""]) ~ .validation-icon.success,
+.form-group-modern textarea:valid:not(:placeholder-shown) ~ .validation-icon.success {
+  opacity: 1;
+}
+
+/* Validation Icons */
+.validation-icon {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.validation-icon.success {
+  color: #10b981;
+}
+
+.validation-icon.error {
+  color: #ef4444;
+}
+
+/* Section Divider */
+.form-section-divider {
+  border-top: 2px solid var(--border);
+  padding-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.form-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.form-section-title::before {
+  content: '';
+  width: 4px;
+  height: 28px;
+  background: var(--text-primary);
+  border-radius: 2px;
+}
+
+/* Checkbox Group - Modern Design */
+.checkbox-group {
+  display: grid;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-primary);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.checkbox-label:hover {
+  border-color: var(--text-primary);
+  background: var(--bg-secondary);
+  transform: translateX(4px);
+}
+
+.checkbox-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+  transition: width 0.3s ease;
+}
+
+.checkbox-label:hover::before {
+  width: 100%;
+}
+
+/* Custom Checkbox */
+.checkbox-input {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.checkbox-input:checked {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.checkbox-input:checked::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 10px;
+  border: solid var(--bg-primary);
+  border-width: 0 2px 2px 0;
+}
+
+.checkbox-text {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  flex: 1;
+}
+
+/* Info Box */
+.form-info-box {
+  background: rgba(59, 130, 246, 0.08);
+  border-left: 4px solid #3b82f6;
+  padding: var(--space-lg);
+  border-radius: 12px;
+  margin-bottom: var(--space-2xl);
+}
+
+.form-info-box p {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.form-info-box strong {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-weight: 700;
+  font-size: var(--font-size-base);
+}
+
+/* Helper Text */
+.form-helper-text {
+  display: block;
+  margin-top: var(--space-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+/* Submit Button Container */
+.form-submit-wrapper {
+  margin-top: var(--space-2xl);
+}
+
+/* Error Message */
+.form-error-message {
+  display: none;
+  margin-top: var(--space-xs);
+  color: #ef4444;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.form-group-modern.error .form-error-message {
+  display: block;
+}
+
+/* Required Indicator */
+.required-indicator {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+/* Contact Methods Grid */
+.contact-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-2xl);
+  margin-top: var(--space-3xl);
+}
+
+.contact-method-card {
+  background: var(--bg-secondary);
+  padding: var(--space-2xl);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.contact-method-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--text-primary);
+}
+
+.contact-method-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.contact-method-title {
+  display: block;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.contact-method-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.contact-method-link:hover {
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+/* Response Time Box */
+.response-time-box {
+  margin-top: var(--space-3xl);
+  padding: var(--space-2xl);
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border-left: 4px solid var(--accent);
+}
+
+.response-time-box p {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.7;
+}
+
+.response-time-box strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Hero Benefits List */
+.hero-benefits {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.hero-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--white);
+  font-size: var(--font-size-sm);
+  background: rgba(255,255,255,0.1);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
+.hero-benefit-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Mobile Optimierungen */
+@media (max-width: 768px) {
+  .contact-form-wrapper {
+    padding: var(--space-lg);
+    border-radius: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-section-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .checkbox-label {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .contact-methods-grid {
+    gap: var(--space-lg);
+  }
+
+  .contact-method-card {
+    padding: var(--space-lg);
+  }
+
+  .hero-benefits {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Tablet Optimierungen */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Dark Mode Optimierungen */
+@media (prefers-color-scheme: dark) {
+  .form-group-modern input,
+  .form-group-modern select,
+  .form-group-modern textarea {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .form-group-modern input:focus,
+  .form-group-modern select:focus,
+  .form-group-modern textarea:focus {
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.05);
+  }
+
+  .checkbox-label {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .checkbox-label:hover {
+    background: rgba(255,255,255,0.05);
+  }
+}
+
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.form-group-modern.error input,
+.form-group-modern.error select,
+.form-group-modern.error textarea {
+  animation: shake 0.3s ease;
+  border-color: #ef4444;
+}
+
+/* Focus Within - Besseres UX für gesamtes Form Group */
+.form-group-modern:focus-within {
+  z-index: 10;
+}
+
+/* Accessibility - Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
