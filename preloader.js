@@ -8,9 +8,8 @@
 (function() {
   const initPreloader = () => {
     const preloader = document.getElementById('preloader');
-    
+
     if (!preloader) {
-      console.warn('Preloader element not found');
       return;
     }
     
@@ -29,10 +28,9 @@
           preloader.remove();
         }
         document.body.classList.add('loaded');
-        
+
         // Trigger custom event for other scripts
         window.dispatchEvent(new CustomEvent('preloaderHidden'));
-        console.log('Preloader hidden successfully');
       }, 600);
     };
     
@@ -92,7 +90,6 @@
     
     // Fallback: Hide preloader after max 8 seconds
     const fallbackTimeout = setTimeout(() => {
-      console.warn('Preloader fallback timeout triggered');
       clearInterval(progressInterval);
       hidePreloader();
     }, 8000);
