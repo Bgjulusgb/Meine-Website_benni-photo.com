@@ -8,12 +8,12 @@ Kreatives, Responsives & Elegantes Design
 
 /* === ROOT VARIABLES === */
 :root {
-  /* Colors - Modern Palette */
+  /* Colors - Pure Black & White Design */
   --color-primary: #000000;
   --color-secondary: #ffffff;
-  --color-accent: #ff6b6b;
-  --color-accent-2: #4ecdc4;
-  --color-accent-3: #ffe66d;
+  --color-accent: #000000;
+  --color-accent-2: #ffffff;
+  --color-accent-3: #404040;
 
   /* Grayscale */
   --gray-50: #fafafa;
@@ -31,17 +31,17 @@ Kreatives, Responsives & Elegantes Design
   --bg-primary: #ffffff;
   --bg-secondary: #fafafa;
   --bg-tertiary: #f5f5f5;
-  --text-primary: #171717;
-  --text-secondary: #525252;
-  --text-tertiary: #a3a3a3;
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-tertiary: #737373;
   --border-color: #e5e5e5;
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-warm: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-cool: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  --gradient-dark: linear-gradient(135deg, #000000 0%, #434343 100%);
+  /* Gradients - Black & White Only */
+  --gradient-primary: linear-gradient(135deg, #000000 0%, #404040 100%);
+  --gradient-warm: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+  --gradient-cool: linear-gradient(135deg, #404040 0%, #000000 100%);
+  --gradient-sunset: linear-gradient(135deg, #262626 0%, #000000 100%);
+  --gradient-dark: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -49,7 +49,7 @@ Kreatives, Responsives & Elegantes Design
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-glow: 0 0 20px rgba(103, 126, 234, 0.5);
+  --shadow-glow: 0 0 20px rgba(0, 0, 0, 0.3);
 
   /* Spacing */
   --space-xs: 0.5rem;
@@ -223,10 +223,7 @@ section {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -0.03em;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .nav-menu {
@@ -382,7 +379,7 @@ section {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(103, 126, 234, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
   animation: rotate 30s linear infinite;
   pointer-events: none;
 }
@@ -417,10 +414,7 @@ section {
   font-weight: 900;
   line-height: 1;
   margin-bottom: var(--space-lg);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
   animation: fadeInUp 0.6s ease 0.2s both;
 }
 
@@ -537,7 +531,7 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, transparent 100%);
   opacity: 0;
   transition: opacity var(--transition-base);
 }
@@ -545,11 +539,11 @@ section {
 .card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-2xl);
-  border-color: transparent;
+  border-color: var(--text-primary);
 }
 
 .card:hover::before {
-  opacity: 0.05;
+  opacity: 1;
 }
 
 [data-theme="dark"] .card:hover {
