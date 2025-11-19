@@ -3,43 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Musikfotografie von Benjamin Gillmann – Live-Konzerte, Festivals, Band-Shootings. Die Energie der Musik in Bildern.">
+    <meta name="description" content="Musikfotografie von Benjamin Gillmann – Live-Konzerte, Festivals, Band-Shootings">
     <title>Musikfotografie – Benjamin Gillmann</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="effects.css">
-    <link rel="stylesheet" href="photography.css">
-    <link rel="stylesheet" href="ui-components.css">
-    <link rel="stylesheet" href="typography.css">
-    <link rel="stylesheet" href="forms.css">
-    <link rel="stylesheet" href="buttons.css">
-    <link rel="stylesheet" href="spacing.css">
-    <link rel="stylesheet" href="modals.css">
-    <link rel="stylesheet" href="advanced-components.css">
-    <link rel="stylesheet" href="custom-components.css">
-    <link rel="stylesheet" href="enhanced-components.css">
-    <link rel="stylesheet" href="responsive-gallery.css">
-    <link rel="stylesheet" href="gallery-modal.css">
-    <link rel="stylesheet" href="utilities.css">
-    <link rel="stylesheet" href="extra-components.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="typing-animations.css">
+    <style>
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
+            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
+            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
+            --purple: #8b008b; --neon-glow: 0 0 20px rgba(139, 0, 139, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
+            --text-primary: #000000; --text-secondary: #666666;
+            --border-color: #e5e5e5;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000; --bg-secondary: #141414;
+            --text-primary: #ffffff; --text-secondary: #b3b3b3;
+            --border-color: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-primary);
+            color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition);
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--black); display: flex; align-items: center;
+            justify-content: center; z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-spinner { position: relative; width: 80px; height: 80px; }
+        .spinner-circle {
+            position: absolute; width: 100%; height: 100%;
+            border: 3px solid transparent; border-top-color: var(--white);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        .spinner-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 1.5rem;
+            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color); z-index: 1000;
+            transition: var(--transition);
+        }
+        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
+            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
+        }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; transition: var(--transition); position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+        .nav-links a.active::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 100%; height: 2px; background: var(--text-primary);
+        }
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 5px;
+        }
+        .menu-toggle span {
+            width: 25px; height: 2px; background: var(--text-primary); transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border-color);
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--text-primary); transition: var(--transition);
+        }
+        .theme-toggle:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+
+        /* Main */
+        main { margin-top: 80px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Hero */
+        .music-hero {
+            min-height: 70vh; display: flex; align-items: center;
+            justify-content: center; text-align: center; padding: 6rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 0, 139, 0.9), rgba(0, 0, 0, 0.8)),
+                        url('https://picsum.photos/1920/1080?random=concert') center/cover;
+            position: relative;
+        }
+        .music-hero-icon {
+            font-size: 4rem; margin-bottom: 1.5rem;
+        }
+        .music-hero h1 {
+            font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+            color: var(--white); line-height: 1; text-transform: uppercase;
+        }
+        .music-hero p {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            color: var(--gray-200); font-weight: 600; margin-bottom: 3rem;
+        }
+        .btn-hero {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            padding: 1.25rem 3rem; background: var(--white);
+            color: var(--black); text-decoration: none;
+            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
+            transition: var(--transition); text-transform: uppercase;
+        }
+        .btn-hero:hover {
+            transform: translateY(-5px); box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Section */
+        section { padding: 6rem 0; }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 2rem; text-align: center;
+        }
+        .section-text {
+            font-size: 1.25rem; color: var(--text-secondary);
+            margin-bottom: 4rem; text-align: center; max-width: 700px;
+            margin-left: auto; margin-right: auto; line-height: 1.8;
+        }
+
+        /* Music Categories */
+        .music-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 2rem; margin-bottom: 4rem;
+        }
+        .music-category {
+            text-align: center; padding: 2rem;
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 20px; transition: var(--transition);
+        }
+        .music-category:hover {
+            transform: translateY(-10px); border-color: var(--purple);
+            box-shadow: var(--neon-glow);
+        }
+        .music-category-icon {
+            width: 100px; height: 100px; margin: 0 auto 1.5rem;
+            background: var(--bg-primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+        }
+        .music-category h3 {
+            font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .music-category p {
+            color: var(--text-secondary); line-height: 1.7;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            aspect-ratio: 4/3; border-radius: 16px; overflow: hidden;
+            cursor: pointer; transition: var(--transition); position: relative;
+            background-size: cover; background-position: center;
+        }
+        .gallery-item::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(139,0,139,0.5), rgba(0,0,0,0.3));
+            transition: var(--transition);
+        }
+        .gallery-item:hover {
+            transform: scale(1.05); box-shadow: 0 20px 60px rgba(139, 0, 139, 0.4);
+        }
+        .gallery-item:hover::before {
+            background: linear-gradient(to top, rgba(139,0,139,0.7), rgba(0,0,0,0.5));
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--bg-secondary); padding: 4rem 2rem;
+            border-radius: 24px; text-align: center;
+        }
+        .stats-title {
+            font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 2rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 5rem 3rem;
+            background: linear-gradient(135deg, var(--purple), rgba(0,0,0,0.9));
+            border-radius: 30px; text-align: center;
+        }
+        .cta-title {
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+        .cta-text {
+            font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 2.5rem;
+        }
+        .btn-cta-large {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            padding: 1.25rem 3rem; background: var(--white);
+            color: var(--black); text-decoration: none;
+            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
+            transition: var(--transition);
+        }
+        .btn-cta-large:hover {
+            transform: translateY(-5px); box-shadow: 0 10px 40px rgba(255, 255, 255, 0.4);
+        }
+        .btn-outline {
+            padding: 1rem 2rem; background: transparent;
+            color: var(--text-primary); text-decoration: none;
+            border-radius: 50px; font-weight: 600;
+            border: 2px solid var(--text-primary); display: inline-block;
+            transition: var(--transition); text-transform: uppercase;
+            font-size: 0.875rem; letter-spacing: 1px;
+        }
+        .btn-outline:hover {
+            background: var(--text-primary); color: var(--bg-primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+        .footer-content {
+            display: grid; grid-template-columns: 2fr 1fr;
+            gap: 3rem; margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-size: 1.5rem; font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+        }
+        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col a {
+            color: var(--text-secondary); text-decoration: none;
+            display: block; padding: 0.5rem 0; transition: var(--transition);
+        }
+        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
+        .footer-bottom {
+            text-align: center; padding-top: 2rem;
+            border-top: 1px solid var(--border-color); color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 80px; left: 0; width: 100%;
+                background: var(--bg-primary); flex-direction: column;
+                padding: 2rem; gap: 1rem; transform: translateX(-100%);
+                transition: var(--transition); border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active { transform: translateX(0); }
+            .menu-toggle { display: flex; }
+            .music-categories { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .cta-section { padding: 3rem 2rem; }
+            section { padding: 3rem 0; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 1rem; }
+            .container { padding: 0 1rem; }
+            .music-hero { min-height: 60vh; }
+        }
+    </style>
 </head>
 <body>
-    <div id="preloader" class="preloader" aria-hidden="true">
+    <div id="preloader" class="preloader">
         <div class="preloader-spinner">
             <div class="spinner-circle"></div>
             <div class="spinner-text">BG</div>
         </div>
     </div>
 
-    <a href="#main" class="skip-link">Zum Inhalt springen</a>
-
-    <nav id="navbar" role="navigation">
+    <nav id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
             <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -50,96 +318,112 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Kontakt</a></li>
             </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
         </div>
     </nav>
-    
-    <main id="main">
-        <section class="hero" style="min-height: 80vh; background: linear-gradient(135deg, rgba(139, 0, 139, 0.9), rgba(0, 0, 0, 0.8)), url('https://picsum.photos/1920/1080?random=concert') center/cover; display: flex; align-items: center; justify-content: center;">
-            <div class="hero-content" style="text-align: center; max-width: 900px; padding: 0 var(--space-lg);">
-                <div style="font-size: 4rem; margin-bottom: var(--space-lg);">🎵</div>
-                <h1 style="font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg); line-height: 1; text-transform: uppercase; letter-spacing: -0.02em;">Musik<br>Fotografie</h1>
-                <p style="font-size: clamp(1.25rem, 3vw, 2rem); color: var(--gray-300); margin-bottom: var(--space-3xl); font-weight: 600;">Die Energie der Bühne. Eingefangen.</p>
-                <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">Jetzt Buchen</a>
+
+    <main>
+        <section class="music-hero">
+            <div>
+                <div class="music-hero-icon">🎵</div>
+                <h1>Musik<br>Fotografie</h1>
+                <p>Die Energie der Bühne. Eingefangen.</p>
+                <a href="contact.html" class="btn-hero">Jetzt Buchen</a>
             </div>
         </section>
-        
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+
+        <section style="background: var(--bg-primary);">
             <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--space-3xl);">
-                    <div style="text-align: center; padding: var(--space-2xl);">
-                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎸</div>
-                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Live-Konzerte</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">Von Club-Gigs bis Arena-Shows – authentische Live-Momente mit perfektem Licht-Feeling.</p>
+                <h2 class="section-title">Musik-Genres</h2>
+                <div class="music-categories">
+                    <div class="music-category">
+                        <div class="music-category-icon">🎸</div>
+                        <h3>Live-Konzerte</h3>
+                        <p>Von Club-Gigs bis Arena-Shows – authentische Live-Momente mit perfektem Licht-Feeling.</p>
                     </div>
-                    <div style="text-align: center; padding: var(--space-2xl);">
-                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎪</div>
-                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Festivals</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">Rock am Ring, Hurricane, Wacken – mehrtägige Festival-Coverage mit Backstage-Zugang.</p>
+                    <div class="music-category">
+                        <div class="music-category-icon">🎪</div>
+                        <h3>Festivals</h3>
+                        <p>Rock am Ring, Hurricane, Wacken – mehrtägige Festival-Coverage mit Backstage-Zugang.</p>
                     </div>
-                    <div style="text-align: center; padding: var(--space-2xl);">
-                        <div style="width: 100px; height: 100px; margin: 0 auto var(--space-lg); background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📸</div>
-                        <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Band-Shootings</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">Promo-Fotos, Album-Cover, Press-Kits – professionelle Bilder für eure Band.</p>
+                    <div class="music-category">
+                        <div class="music-category-icon">📸</div>
+                        <h3>Band-Shootings</h3>
+                        <p>Promo-Fotos, Album-Cover, Press-Kits – professionelle Bilder für eure Band.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section style="background: var(--bg-secondary); padding: var(--space-5xl) 0;">
-            <div class="container" style="text-align: center;">
-                <h2 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; color: var(--text-primary); margin-bottom: var(--space-2xl);">150+ Konzerte<br>fotografiert</h2>
-                <p style="font-size: var(--font-size-xl); color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-3xl); line-height: 1.7;">Von Jazz über Rock bis Metal – ich verstehe Musik und weiß, wie man die Energie des Moments einfängt, ohne die Performance zu stören.</p>
-            </div>
-        </section>
 
-        <!-- Musik Galerie -->
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+        <section style="background: var(--bg-secondary);">
             <div class="container">
-                <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--text-primary); margin-bottom: var(--space-4xl); text-align: center;">Eindrücke meiner<br>Musik-Fotografie</h2>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: var(--space-lg);">
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=301'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=302'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=303'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=304'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=305'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=306'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=307'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=308'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=309'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=310'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=311'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=312'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=313'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=314'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=315'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=316'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=317'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                    <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(139,0,139,0.5), rgba(0,0,0,0.8)), url('https://picsum.photos/600/450?random=318'); background-size: cover; background-position: center; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></div>
-                </div>
-
-                <div style="text-align: center; margin-top: var(--space-4xl);">
-                    <a href="portfolio.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: transparent; color: var(--text-primary); text-decoration: none; border-radius: 100px; border: 2px solid var(--text-primary); font-weight: 700; transition: all 0.3s ease; text-transform: uppercase; font-size: var(--font-size-sm); letter-spacing: 0.05em;">Komplettes Portfolio ansehen</a>
+                <div class="stats-section">
+                    <h2 class="stats-title">150+ Konzerte<br>fotografiert</h2>
+                    <p class="section-text">
+                        Von Jazz über Rock bis Metal – ich verstehe Musik und weiß, wie man die Energie
+                        des Moments einfängt, ohne die Performance zu stören.
+                    </p>
                 </div>
             </div>
         </section>
-        
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+
+        <section style="background: var(--bg-primary);">
             <div class="container">
-                <div style="background: linear-gradient(135deg, #8b008b, rgba(0,0,0,0.9)); padding: clamp(var(--space-3xl), 8vw, var(--space-5xl)); border-radius: 24px; text-align: center;">
-                    <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg);">Let's Rock!</h2>
-                    <p style="font-size: clamp(1.125rem, 2.5vw, 1.5rem); color: rgba(255,255,255,0.9); margin-bottom: var(--space-3xl); max-width: 600px; margin-left: auto; margin-right: auto;">Buchen Sie mich für Ihr Konzert oder Festival – ich bringe die Bühne in Bilder.</p>
-                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-3xl); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 800; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">Jetzt Buchen</a>
+                <h2 class="section-title">Musik-Fotografie Galerie</h2>
+                <p class="section-text">Eindrücke meiner Musik-Fotografie</p>
+
+                <div class="gallery-grid">
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=301');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=302');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=303');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=304');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=305');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=306');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=307');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=308');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=309');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=310');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=311');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=312');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=313');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=314');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=315');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=316');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=317');"></div>
+                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=318');"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="portfolio.html" class="btn-outline">Komplettes Portfolio ansehen</a>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--bg-primary);">
+            <div class="container">
+                <div class="cta-section">
+                    <h2 class="cta-title">Let's Rock!</h2>
+                    <p class="cta-text">
+                        Buchen Sie mich für Ihr Konzert oder Festival –<br>
+                        ich bringe die Bühne in Bilder.
+                    </p>
+                    <a href="contact.html" class="btn-cta-large">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <path d="m21 15-5-5L5 21"/>
+                        </svg>
+                        Jetzt Buchen
+                    </a>
                 </div>
             </div>
         </section>
     </main>
-    
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -164,10 +448,89 @@
             </div>
         </div>
     </footer>
-    
-    <script src="preloader.js"></script>
-    <script src="utils.js"></script>
-    <script src="script.js" defer></script>
-    <script src="typing-animations.js" defer></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => preloader.classList.add('hidden'), 500);
+        });
+
+        const initTheme = () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
+
+            const setTheme = (theme) => {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                if (themeToggle) {
+                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+                }
+            };
+
+            setTheme(currentTheme);
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    setTheme(currentTheme);
+                });
+            }
+        };
+
+        const initNavigation = () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    const isOpen = navLinks.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') &&
+                        !navLinks.contains(e.target) &&
+                        !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+
+            if (navbar) {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            navbar.classList.toggle('scrolled', window.scrollY > 20);
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initNavigation();
+        });
+    </script>
 </body>
 </html>

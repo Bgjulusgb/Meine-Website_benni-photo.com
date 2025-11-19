@@ -3,155 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio von Benjamin Gillmann – Professionelle Sport- und Musikfotografie. Entdecken Sie meine besten Arbeiten.">
-    <meta name="keywords" content="Portfolio, Benjamin Gillmann, Fotografie, Sport, Musik, Galerie">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Portfolio – Benjamin Gillmann">
-    <meta property="og:description" content="Ausgewählte Arbeiten aus Sport- und Musikfotografie">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="/images/portfolio-og-image.jpg">
-    <meta name="theme-color" content="#000000">
-    <title>Portfolio – Benjamin Gillmann | Ausgewählte Arbeiten</title>
-    <!-- Core Styles -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="effects.css">
-    <!-- Photography Styles -->
-    <link rel="stylesheet" href="photography.css">
-    <link rel="stylesheet" href="ui-components.css">
-    <link rel="stylesheet" href="typography.css">
-    <!-- Forms & Buttons -->
-    <link rel="stylesheet" href="forms.css">
-    <link rel="stylesheet" href="buttons.css">
-    <link rel="stylesheet" href="spacing.css">
-    <!-- Advanced Components -->
-    <link rel="stylesheet" href="modals.css">
-    <link rel="stylesheet" href="advanced-components.css">
-    <link rel="stylesheet" href="extra-components.css">
-    <link rel="stylesheet" href="custom-components.css">
-    <link rel="stylesheet" href="enhanced-components.css">
-    <link rel="stylesheet" href="responsive-gallery.css">
-    <link rel="stylesheet" href="gallery-modal.css">
-    <link rel="stylesheet" href="utilities.css">
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="canonical" href="https://benjamingillmann.com/portfolio.html">
-    <link rel="manifest" href="/manifest.json">
-    <style>
-        .gallery-filters {
-            display: flex;
-            gap: var(--space-md);
-            justify-content: center;
-            margin-bottom: var(--space-3xl);
-            flex-wrap: wrap;
-        }
-        .filter-btn {
-            padding: var(--space-md) var(--space-2xl);
-            border-radius: 100px;
-            border: 2px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-            touch-action: manipulation;
-        }
-        .filter-btn:hover {
-            border-color: var(--text-primary);
-            background: var(--bg-secondary);
-            transform: translateY(-2px);
-        }
-        .filter-btn.active {
-            border-color: var(--text-primary);
-            color: var(--text-primary);
-            background: var(--bg-secondary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        @media (hover: none) {
-            .filter-btn:active {
-                transform: scale(0.95);
-            }
-        }
-        @media (max-width: 640px) {
-            .filter-btn {
-                flex: 1 1 auto;
-                min-width: 100px;
-                font-size: var(--font-size-sm);
-                padding: var(--space-sm) var(--space-lg);
-            }
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--space-xl);
-        }
-        .gallery-item {
-            border-radius: 16px;
-            overflow: hidden;
-            background: var(--bg-secondary);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .gallery-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-        .gallery-item:hover .gallery-placeholder {
-            filter: brightness(1.1);
-        }
-        @media (hover: none) {
-            .gallery-item:active {
-                transform: scale(0.98);
-            }
-        }
-        @media (max-width: 768px) {
-            .gallery-item:hover {
-                transform: translateY(-4px);
-            }
-        }
-        .gallery-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
-            color: var(--gray-500);
-            font-size: var(--font-size-sm);
-        }
-        .gallery-item[data-category="sport"] .gallery-placeholder {
-            background: linear-gradient(135deg, var(--gray-700), var(--gray-500));
-            color: var(--white);
-        }
-        .gallery-item[data-category="musik"] .gallery-placeholder {
-            background: linear-gradient(135deg, var(--gray-600), var(--gray-400));
-            color: var(--white);
-        }
-        .gallery-item[data-category="event"] .gallery-placeholder {
-            background: linear-gradient(135deg, var(--gray-800), var(--gray-600));
-            color: var(--white);
-        }
-    </style>
-    <!-- Google Fonts -->
+    <meta name="description" content="Portfolio von Benjamin Gillmann – Professionelle Sport- und Musikfotografie">
+    <title>Portfolio – Benjamin Gillmann</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="typing-animations.css">
+    <style>
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
+            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
+            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
+            --neon-glow: 0 0 20px rgba(255, 255, 255, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
+            --text-primary: #000000; --text-secondary: #666666;
+            --border-color: #e5e5e5;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000; --bg-secondary: #141414;
+            --text-primary: #ffffff; --text-secondary: #b3b3b3;
+            --border-color: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-primary);
+            color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition);
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--black); display: flex; align-items: center;
+            justify-content: center; z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-spinner { position: relative; width: 80px; height: 80px; }
+        .spinner-circle {
+            position: absolute; width: 100%; height: 100%;
+            border: 3px solid transparent; border-top-color: var(--white);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        .spinner-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 1.5rem;
+            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color); z-index: 1000;
+            transition: var(--transition);
+        }
+        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
+            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
+        }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; transition: var(--transition); position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+        .nav-links a.active::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 100%; height: 2px; background: var(--text-primary);
+        }
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 5px;
+        }
+        .menu-toggle span {
+            width: 25px; height: 2px; background: var(--text-primary); transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border-color);
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--text-primary); transition: var(--transition);
+        }
+        .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--neon-glow); }
+
+        /* Main */
+        main { margin-top: 80px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Hero */
+        .page-hero {
+            min-height: 50vh; display: flex; align-items: center;
+            justify-content: center; text-align: center; padding: 6rem 2rem;
+            background: var(--bg-secondary); position: relative;
+        }
+        .page-hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+        }
+        .page-hero p {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: var(--text-secondary); max-width: 700px; margin: 0 auto;
+        }
+
+        /* Section */
+        section { padding: 6rem 0; }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem; text-align: center;
+        }
+        .section-subtitle {
+            font-size: 1.25rem; color: var(--text-secondary);
+            margin-bottom: 4rem; text-align: center;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex; gap: 1rem; justify-content: center;
+            margin-bottom: 3rem; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.75rem 1.5rem; background: transparent;
+            color: var(--text-secondary); border: 2px solid var(--border-color);
+            border-radius: 50px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); font-family: 'Inter', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--bg-secondary); color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+            gap: 2rem; margin-bottom: 3rem;
+        }
+        .portfolio-card {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 20px; overflow: hidden; transition: var(--transition);
+            cursor: pointer;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-10px); box-shadow: var(--neon-glow);
+            border-color: var(--text-primary);
+        }
+        .portfolio-image {
+            width: 100%; aspect-ratio: 4/3; object-fit: cover;
+            background: var(--bg-secondary);
+        }
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+        .portfolio-category {
+            display: inline-block; padding: 0.25rem 0.75rem;
+            background: var(--bg-primary); border-radius: 50px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+            color: var(--text-secondary); margin-bottom: 0.75rem;
+        }
+        .portfolio-title {
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .portfolio-description {
+            color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 5rem 3rem; background: var(--bg-secondary);
+            border-radius: 30px; text-align: center; border: 1px solid var(--border-color);
+        }
+        .cta-title {
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1.5rem;
+        }
+        .cta-text {
+            font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2.5rem;
+        }
+        .btn-cta-large {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            padding: 1.25rem 3rem; background: var(--text-primary);
+            color: var(--bg-primary); text-decoration: none;
+            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
+            transition: var(--transition); border: 3px solid var(--text-primary);
+        }
+        .btn-cta-large:hover { transform: translateY(-5px); box-shadow: var(--neon-glow); }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+        .footer-content {
+            display: grid; grid-template-columns: 2fr 1fr;
+            gap: 3rem; margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-size: 1.5rem; font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+        }
+        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col a {
+            color: var(--text-secondary); text-decoration: none;
+            display: block; padding: 0.5rem 0; transition: var(--transition);
+        }
+        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
+        .footer-bottom {
+            text-align: center; padding-top: 2rem;
+            border-top: 1px solid var(--border-color); color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 80px; left: 0; width: 100%;
+                background: var(--bg-primary); flex-direction: column;
+                padding: 2rem; gap: 1rem; transform: translateX(-100%);
+                transition: var(--transition); border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active { transform: translateX(0); }
+            .menu-toggle { display: flex; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .cta-section { padding: 3rem 2rem; }
+            section { padding: 3rem 0; }
+            .filter-buttons { gap: 0.5rem; }
+            .filter-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 1rem; }
+            .container { padding: 0 1rem; }
+            .portfolio-content { padding: 1.25rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="preloader" class="preloader" aria-hidden="true">
+    <div id="preloader" class="preloader">
         <div class="preloader-spinner">
             <div class="spinner-circle"></div>
             <div class="spinner-text">BG</div>
         </div>
     </div>
-    
-    <a href="#main" class="skip-link">Zum Inhalt springen</a>
-    
-    <nav id="navbar" role="navigation" aria-label="Hauptnavigation">
+
+    <nav id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
             <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -162,423 +276,203 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Kontakt</a></li>
             </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
-                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
         </div>
     </nav>
-    
-    <main id="main">
-        <section class="hero" style="min-height: 60vh; background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.7)), url('https://picsum.photos/1920/1080?random=portfolio') center/cover; display: flex; align-items: center; justify-content: center; position: relative;">
-            <div class="hero-content" style="text-align: center;">
-                <h1 class="hero-title" style="font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; color: var(--white); margin-bottom: var(--space-lg);"><span class="hero-line">Meine Arbeit</span></h1>
-                <p class="hero-subtitle" style="font-size: clamp(1.125rem, 2vw, 1.5rem); color: var(--gray-300); max-width: 700px; margin: 0 auto var(--space-2xl);">500+ erfolgreiche Projekte · Sport, Musik & Events · Professionelle Portfolio-Fotografie</p>
-                <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-8); background: var(--white); color: var(--black); text-decoration: none; border-radius: 100px; font-weight: 700; font-size: var(--font-size-base); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <rect x="3" y="4" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="m21 15-5-5L5 21"/>
-                    </svg>
-                    Ihr Projekt starten
-                </a>
+
+    <main>
+        <section class="page-hero">
+            <div>
+                <h1>Portfolio</h1>
+                <p>Eine Auswahl meiner besten Arbeiten aus Sport, Musik und Events</p>
             </div>
         </section>
-        
-        <section style="background: var(--bg-primary); padding: var(--space-5xl) 0;">
+
+        <section style="background: var(--bg-primary);">
             <div class="container">
-                <div style="text-align: center; margin-bottom: var(--space-4xl);">
-                    <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-md);">Projekt-Kategorien</h2>
-                    <p style="font-size: var(--font-size-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Durchstöbern Sie meine professionellen Arbeiten nach Kategorie</p>
+                <h2 class="section-title">Meine Projekte</h2>
+                <p class="section-subtitle">500+ erfolgreiche Events dokumentiert</p>
+
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Alle</button>
+                    <button class="filter-btn" data-filter="sport">Sport</button>
+                    <button class="filter-btn" data-filter="musik">Musik</button>
+                    <button class="filter-btn" data-filter="event">Events</button>
                 </div>
-                
-                <div class="gallery-filters" style="margin-bottom: var(--space-4xl);">
-                    <button class="filter-btn active" data-filter="all" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Alle Projekte</button>
-                    <button class="filter-btn" data-filter="sport" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🏆 Sport</button>
-                    <button class="filter-btn" data-filter="musik" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🎵 Musik</button>
-                    <button class="filter-btn" data-filter="event" style="padding: var(--space-md) var(--space-2xl); border-radius: 100px; border: 2px solid var(--border); background: transparent; color: var(--text-secondary); font-size: var(--font-size-base); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">🎪 Events</button>
-                </div>
-                
-                <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr)); gap: var(--space-2xl);">
-                    <!-- Projekt 1: Fußball Bundesliga -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=101" alt="Bundesliga Finale" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Bundesliga Meisterschaftsfinale</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">200+ professionelle Action-Shots vom entscheidenden Spiel. Komplette Dokumentation mit Spieler-Porträts und Fanreaktionen.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Action</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Porträts</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">200+ Bilder</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projekt 2: Rock Festival -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=102" alt="Rock am Ring Festival" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Rock am Ring Festival</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">3-tägige Festival-Coverage mit 15+ Bands. Live-Performances, Backstage-Momente und Crowd-Atmosphäre.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Live</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Backstage</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">3 Tage</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projekt 3: Corporate Event -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=103" alt="Corporate Gala" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Corporate Gala 2024</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Elegante Business-Veranstaltung mit 300+ Gästen. Keynote-Speeches, Networking und Award-Zeremonie.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Corporate</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">300+ Gäste</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Awards</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projekt 4: Basketball -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=104" alt="BBL Basketball Playoffs" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">BBL Basketball Playoffs</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Intensives Playoff-Spiel mit dramatischen Momenten. Team-Porträts und Fan-Emotionen inklusive.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Basketball</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Playoffs</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">150+ Bilder</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projekt 5: International Jazz Night -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=105" alt="Jazz Night" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">International Jazz Night</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Intime Jazz-Performances in Club-Atmosphäre. Künstler-Porträts und Live-Momente am Instrument.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Jazz</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Live</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Porträts</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projekt 6: Wedding Event -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=106" alt="Luxury Wedding" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Exklusive Hochzeit</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Emotionale Hochzeitsreportage von Zeremonie bis Party. Natürliche Momente und inszenierte Gruppenfotos.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Hochzeit</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Ganztag</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">400+ Bilder</span>
-                            </div>
+
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- Sport Projekte -->
+                    <div class="portfolio-card" data-category="sport">
+                        <img src="https://picsum.photos/600/450?random=1" alt="Bundesliga Finale" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Sport</span>
+                            <h3 class="portfolio-title">Bundesliga Finale</h3>
+                            <p class="portfolio-description">Dramatisches Meisterschaftsfinale mit 200+ Action-Shots und Emotionen.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 7: Tennis Turnier -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=107" alt="Tennis Turnier" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">ATP Masters Turnier</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Spektakuläre Rallys und emotionale Momente vom Center Court.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tennis</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Action</span>
-                            </div>
+                    <div class="portfolio-card" data-category="sport">
+                        <img src="https://picsum.photos/600/450?random=2" alt="Basketball Playoffs" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Sport</span>
+                            <h3 class="portfolio-title">Basketball Playoffs</h3>
+                            <p class="portfolio-description">BBL Playoff-Spiel mit intensiven Momenten und Team-Porträts.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 8: Hip Hop Konzert -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=108" alt="Hip Hop Konzert" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Hip Hop Arena Show</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Explosive Energie und grandiose Bühnenshow einer Rap-Legende.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Hip Hop</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Arena</span>
-                            </div>
+                    <div class="portfolio-card" data-category="sport">
+                        <img src="https://picsum.photos/600/450?random=3" alt="Tennis Turnier" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Sport</span>
+                            <h3 class="portfolio-title">ATP Masters</h3>
+                            <p class="portfolio-description">Spektakuläre Rallys und emotionale Momente vom Center Court.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 9: Produktlaunch -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=109" alt="Produktlaunch" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Tech Produktlaunch 2024</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Innovatives Launch-Event mit Keynote und Live-Demos.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tech</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Launch</span>
-                            </div>
+                    <div class="portfolio-card" data-category="sport">
+                        <img src="https://picsum.photos/600/450?random=4" alt="Marathon" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Sport</span>
+                            <h3 class="portfolio-title">Berlin Marathon</h3>
+                            <p class="portfolio-description">40.000 Läufer, emotionale Geschichten und der Kampf gegen die Uhr.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 10: Handball EM -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=110" alt="Handball EM" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Handball EM Halbfinale</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Packende Action und dramatische Momente bei der Europameisterschaft.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Handball</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">EM</span>
-                            </div>
+                    <!-- Musik Projekte -->
+                    <div class="portfolio-card" data-category="musik">
+                        <img src="https://picsum.photos/600/450?random=5" alt="Rock Festival" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Musik</span>
+                            <h3 class="portfolio-title">Rock am Ring Festival</h3>
+                            <p class="portfolio-description">3-tägige Festival-Coverage mit 15+ Bands und Backstage-Momenten.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 11: Electronic Music Festival -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=111" alt="Electronic Music Festival" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Electronic Beats Festival</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Spektakuläre Lichtshows und weltbekannte DJs auf drei Stages.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Electronic</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Festival</span>
-                            </div>
+                    <div class="portfolio-card" data-category="musik">
+                        <img src="https://picsum.photos/600/450?random=6" alt="Jazz Night" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Musik</span>
+                            <h3 class="portfolio-title">International Jazz Night</h3>
+                            <p class="portfolio-description">Intime Jazz-Performances in Club-Atmosphäre mit Künstler-Porträts.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 12: Fashion Show -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=112" alt="Fashion Show" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Berlin Fashion Week</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Runway-Highlights und Backstage-Einblicke der Fashion Week.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Fashion</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Runway</span>
-                            </div>
+                    <div class="portfolio-card" data-category="musik">
+                        <img src="https://picsum.photos/600/450?random=7" alt="Hip Hop Konzert" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Musik</span>
+                            <h3 class="portfolio-title">Hip Hop Arena Show</h3>
+                            <p class="portfolio-description">Explosive Energie und grandiose Bühnenshow einer Rap-Legende.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 13: Marathon -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=113" alt="Marathon" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Berlin Marathon 2024</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">40.000 Läufer, emotionale Geschichten und der Kampf gegen die Uhr.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Marathon</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Lauf</span>
-                            </div>
+                    <div class="portfolio-card" data-category="musik">
+                        <img src="https://picsum.photos/600/450?random=8" alt="Electronic Festival" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Musik</span>
+                            <h3 class="portfolio-title">Electronic Beats Festival</h3>
+                            <p class="portfolio-description">Spektakuläre Lichtshows und weltbekannte DJs auf drei Stages.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 14: Indie Band Tour -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=114" alt="Indie Band Tour" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Indie Band Deutschland-Tour</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Intimität und Authentizität kleiner Venues, große Emotionen.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Indie</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tour</span>
-                            </div>
+                    <!-- Event Projekte -->
+                    <div class="portfolio-card" data-category="event">
+                        <img src="https://picsum.photos/600/450?random=9" alt="Corporate Gala" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Event</span>
+                            <h3 class="portfolio-title">Corporate Gala 2024</h3>
+                            <p class="portfolio-description">Elegante Business-Veranstaltung mit 300+ Gästen und Award-Zeremonie.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 15: Charity Gala -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=115" alt="Charity Gala" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Charity Gala 2024</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Glamouröses Fundraising-Event mit prominenten Gästen.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Charity</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Gala</span>
-                            </div>
+                    <div class="portfolio-card" data-category="event">
+                        <img src="https://picsum.photos/600/450?random=10" alt="Hochzeit" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Event</span>
+                            <h3 class="portfolio-title">Exklusive Hochzeit</h3>
+                            <p class="portfolio-description">Emotionale Hochzeitsreportage von Zeremonie bis Party.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 16: Eishockey DEL -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=116" alt="Eishockey DEL" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">DEL Playoff Finale</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Harte Checks, schnelle Tore - Eishockey at its best.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Eishockey</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Playoffs</span>
-                            </div>
+                    <div class="portfolio-card" data-category="event">
+                        <img src="https://picsum.photos/600/450?random=11" alt="Produktlaunch" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Event</span>
+                            <h3 class="portfolio-title">Tech Produktlaunch</h3>
+                            <p class="portfolio-description">Innovatives Launch-Event mit Keynote und Live-Demos.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 17: Classical Concert -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=117" alt="Classical Concert" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Philharmonie Konzert</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Klassische Musik mit Weltklasse-Orchester und Solisten.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Klassik</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Orchester</span>
-                            </div>
+                    <div class="portfolio-card" data-category="event">
+                        <img src="https://picsum.photos/600/450?random=12" alt="Fashion Show" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Event</span>
+                            <h3 class="portfolio-title">Berlin Fashion Week</h3>
+                            <p class="portfolio-description">Runway-Highlights und Backstage-Einblicke der Fashion Week.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 18: Firmen Jubiläum -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=118" alt="Firmen Jubiläum" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">50 Jahre Firmen-Jubiläum</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Große Jubiläumsfeier mit Team, Kunden und Partnern.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Corporate</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Jubiläum</span>
-                            </div>
+                    <div class="portfolio-card" data-category="sport">
+                        <img src="https://picsum.photos/600/450?random=13" alt="Handball EM" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Sport</span>
+                            <h3 class="portfolio-title">Handball EM</h3>
+                            <p class="portfolio-description">Packende Action bei der Europameisterschaft.</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 19: Volleyball WM -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=119" alt="Volleyball WM" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Volleyball WM Qualifikation</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Hochspannung bei der WM-Qualifikation mit spektakulären Rallys.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Volleyball</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">WM</span>
-                            </div>
+                    <div class="portfolio-card" data-category="musik">
+                        <img src="https://picsum.photos/600/450?random=14" alt="Metal Festival" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Musik</span>
+                            <h3 class="portfolio-title">Wacken Open Air</h3>
+                            <p class="portfolio-description">Das größte Heavy Metal Festival der Welt – Pure Power!</p>
                         </div>
                     </div>
 
-                    <!-- Projekt 20: Metal Festival -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=120" alt="Metal Festival" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Wacken Open Air</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Das größte Heavy Metal Festival der Welt - Pure Power!</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Metal</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Festival</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Projekt 21: Konferenz -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=121" alt="Tech Konferenz" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Tech Summit Europe</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Internationale Konferenz mit Top-Speakern und Networking.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Konferenz</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tech</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Projekt 22: Radsport -->
-                    <div class="gallery-item" data-category="sport" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=122" alt="Radsport" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Sport</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Tour de Deutschland</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Etappenrennen mit internationalen Top-Teams durch Deutschland.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Radsport</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tour</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Projekt 23: Country Music -->
-                    <div class="gallery-item" data-category="musik" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=123" alt="Country Music" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Musik</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">Country Festival Bayern</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Authentische Country-Vibes mit internationalen Stars.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Country</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Festival</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Projekt 24: Messe -->
-                    <div class="gallery-item" data-category="event" style="background: var(--bg-secondary); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; cursor: pointer;">
-                        <img src="https://picsum.photos/600/450?random=124" alt="Messe" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
-                        <div style="position: absolute; top: var(--space-md); left: var(--space-md); padding: var(--space-xs) var(--space-md); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 100px; font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white);">Event</div>
-                        <div style="padding: var(--space-lg);">
-                            <h3 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-sm);">IFA Berlin 2024</h3>
-                            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">Die größte Consumer Electronics Messe Europas.</p>
-                            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Messe</span>
-                                <span style="padding: var(--space-xs) var(--space-sm); background: var(--bg-primary); border-radius: 6px; font-size: var(--font-size-xs); color: var(--text-secondary);">Tech</span>
-                            </div>
+                    <div class="portfolio-card" data-category="event">
+                        <img src="https://picsum.photos/600/450?random=15" alt="Charity Gala" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-category">Event</span>
+                            <h3 class="portfolio-title">Charity Gala</h3>
+                            <p class="portfolio-description">Glamouröses Fundraising-Event mit prominenten Gästen.</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- CTA Section -->
-                <div style="text-align: center; margin-top: var(--space-5xl); padding: var(--space-4xl); background: var(--bg-secondary); border-radius: 24px;">
-                    <h3 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-md);">Begeistert von meiner Arbeit?</h3>
-                    <p style="font-size: var(--font-size-lg); color: var(--text-secondary); margin-bottom: var(--space-2xl); max-width: 600px; margin-left: auto; margin-right: auto;">Lassen Sie uns Ihr nächstes Projekt gemeinsam realisieren. Buchen Sie jetzt Ihr professionelles Shooting.</p>
-                    <a href="contact.html" style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-10); background: var(--black); color: var(--white); text-decoration: none; border-radius: 100px; font-weight: 700; font-size: var(--font-size-lg); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
+        <section style="background: var(--bg-primary);">
+            <div class="container">
+                <div class="cta-section">
+                    <h2 class="cta-title">Begeistert von<br>meiner Arbeit?</h2>
+                    <p class="cta-text">
+                        Lassen Sie uns Ihr nächstes Projekt gemeinsam realisieren.<br>
+                        Buchen Sie jetzt Ihr professionelles Shooting.
+                    </p>
+                    <a href="contact.html" class="btn-cta-large">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <rect x="3" y="4" width="18" height="18" rx="2"/>
                             <circle cx="8.5" cy="8.5" r="1.5"/>
                             <path d="m21 15-5-5L5 21"/>
                         </svg>
                         Jetzt Buchen
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
                     </a>
                 </div>
             </div>
         </section>
     </main>
-    
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
                     <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
                     <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
-                    <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
                 </div>
                 <div class="footer-links">
                     <div class="footer-col">
@@ -590,13 +484,6 @@
                             <li><a href="contact.html">Kontakt</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
-                        <h4>Kontakt</h4>
-                        <ul>
-                            <li><a href="mailto:contact@benjamingillmann.com">E-Mail</a></li>
-                            <li><a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener">Instagram</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -604,10 +491,115 @@
             </div>
         </div>
     </footer>
-    
-    <script src="preloader.js"></script>
-    <script src="utils.js"></script>
-    <script src="script.js" defer></script>
-    <script src="typing-animations.js" defer></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => preloader.classList.add('hidden'), 500);
+        });
+
+        const initTheme = () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
+
+            const setTheme = (theme) => {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                if (themeToggle) {
+                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+                }
+            };
+
+            setTheme(currentTheme);
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    setTheme(currentTheme);
+                });
+            }
+        };
+
+        const initNavigation = () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    const isOpen = navLinks.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') &&
+                        !navLinks.contains(e.target) &&
+                        !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+
+            if (navbar) {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            navbar.classList.toggle('scrolled', window.scrollY > 20);
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            }
+        };
+
+        // Portfolio Filter
+        const initPortfolioFilter = () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filter cards
+                    portfolioCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initNavigation();
+            initPortfolioFilter();
+        });
+    </script>
 </body>
 </html>

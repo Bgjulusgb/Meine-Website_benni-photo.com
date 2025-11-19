@@ -3,60 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kontaktieren Sie Benjamin Gillmann für professionelle Fotografie-Projekte. Egal ob Sport, Musik oder Events – ich freue mich auf Ihre Anfrage.">
-    <meta name="keywords" content="Kontakt, Benjamin Gillmann, Fotograf buchen, Anfrage, Sport Fotografie, Musik Fotografie">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Kontakt – Benjamin Gillmann">
-    <meta property="og:description" content="Kontaktieren Sie Benjamin Gillmann für professionelle Fotografie-Projekte.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="/images/contact-og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kontakt – Benjamin Gillmann">
-    <meta name="twitter:description" content="Kontaktieren Sie Benjamin Gillmann für professionelle Fotografie-Projekte.">
-    <meta name="twitter:image" content="/images/contact-og-image.jpg">
-    <meta name="theme-color" content="#000000">
-    <title>Kontakt – Benjamin Gillmann | Jetzt Anfragen</title>
-    <!-- Core Styles -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="effects.css">
-    <!-- Photography Styles -->
-    <link rel="stylesheet" href="photography.css">
-    <link rel="stylesheet" href="ui-components.css">
-    <link rel="stylesheet" href="typography.css">
-    <!-- Forms & Buttons -->
-    <link rel="stylesheet" href="forms.css">
-    <link rel="stylesheet" href="buttons.css">
-    <link rel="stylesheet" href="spacing.css">
-    <!-- Advanced Components -->
-    <link rel="stylesheet" href="modals.css">
-    <link rel="stylesheet" href="advanced-components.css">
-    <link rel="stylesheet" href="extra-components.css">
-    <link rel="stylesheet" href="custom-components.css">
-    <link rel="stylesheet" href="enhanced-components.css">
-    <link rel="stylesheet" href="contact-form.css">
-    <link rel="stylesheet" href="typing-animations.css">
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="canonical" href="https://benjamingillmann.com/contact.html">
-    <link rel="manifest" href="/manifest.json">
-    <!-- Google Fonts -->
+    <meta name="description" content="Kontaktieren Sie Benjamin Gillmann für Ihre Fotografie-Projekte. Schnelle Antwort garantiert.">
+    <title>Kontakt – Benjamin Gillmann</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
+            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
+            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
+            --neon-glow: 0 0 20px rgba(255, 255, 255, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
+            --text-primary: #000000; --text-secondary: #666666;
+            --border-color: #e5e5e5;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000; --bg-secondary: #141414;
+            --text-primary: #ffffff; --text-secondary: #b3b3b3;
+            --border-color: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-primary);
+            color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition);
+        }
+
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--black); display: flex; align-items: center;
+            justify-content: center; z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-spinner { position: relative; width: 80px; height: 80px; }
+        .spinner-circle {
+            position: absolute; width: 100%; height: 100%;
+            border: 3px solid transparent; border-top-color: var(--white);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        .spinner-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 1.5rem;
+            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        nav {
+            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color); z-index: 1000; transition: var(--transition);
+        }
+        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
+            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
+        }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; transition: var(--transition); position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+        .nav-links a.active::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 100%; height: 2px; background: var(--text-primary);
+        }
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 5px;
+        }
+        .menu-toggle span {
+            width: 25px; height: 2px; background: var(--text-primary); transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border-color);
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--text-primary); transition: var(--transition);
+        }
+        .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--neon-glow); }
+
+        main { margin-top: 80px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        .page-hero {
+            min-height: 40vh; display: flex; align-items: center;
+            justify-content: center; text-align: center; padding: 5rem 2rem;
+            background: var(--bg-secondary);
+        }
+        .page-hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem); font-weight: 900;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+        }
+        .page-hero p {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: var(--text-secondary); max-width: 700px; margin: 0 auto;
+        }
+
+        section { padding: 6rem 0; }
+
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            align-items: start; margin-top: 2rem;
+        }
+
+        .contact-info h2 {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 2rem;
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+        }
+        .info-item h3 {
+            font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;
+        }
+        .info-item p {
+            color: var(--text-secondary); font-size: 1.125rem;
+        }
+
+        .contact-form {
+            background: var(--bg-secondary); padding: 3rem;
+            border-radius: 20px; border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block; margin-bottom: 0.5rem;
+            font-weight: 500; font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px; font-family: 'Inter', sans-serif;
+            font-size: 1rem; color: var(--text-primary);
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none; border-color: var(--text-primary);
+            box-shadow: var(--neon-glow);
+        }
+        .form-group textarea {
+            resize: vertical; min-height: 150px;
+        }
+
+        .btn-submit {
+            width: 100%; padding: 1.25rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none; border-radius: 50px;
+            font-weight: 700; font-size: 1.125rem;
+            cursor: pointer; transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow);
+        }
+        .btn-submit:disabled {
+            opacity: 0.5; cursor: not-allowed;
+        }
+
+        .form-message {
+            margin-top: 1rem; padding: 1rem;
+            border-radius: 10px; text-align: center;
+            font-weight: 500; display: none;
+        }
+        .form-message.success {
+            background: #d4edda; color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .form-message.error {
+            background: #f8d7da; color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .form-message.show {
+            display: block;
+        }
+
+        .footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+        .footer-content {
+            display: grid; grid-template-columns: 2fr 1fr;
+            gap: 3rem; margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-size: 1.5rem; font-weight: 800;
+            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
+        }
+        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col a {
+            color: var(--text-secondary); text-decoration: none;
+            display: block; padding: 0.5rem 0; transition: var(--transition);
+        }
+        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
+        .footer-bottom {
+            text-align: center; padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 80px; left: 0; width: 100%;
+                background: var(--bg-primary); flex-direction: column;
+                padding: 2rem; gap: 1rem; transform: translateX(-100%);
+                transition: var(--transition); border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active { transform: translateX(0); }
+            .menu-toggle { display: flex; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .contact-form { padding: 2rem; }
+            .footer-content { grid-template-columns: 1fr; }
+            section { padding: 3rem 0; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 1rem; }
+            .container { padding: 0 1rem; }
+            .contact-form { padding: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="preloader" class="preloader" aria-hidden="true">
+    <div id="preloader" class="preloader">
         <div class="preloader-spinner">
             <div class="spinner-circle"></div>
             <div class="spinner-text">BG</div>
         </div>
     </div>
-    
-    <a href="#main" class="skip-link">Zum Inhalt springen</a>
-    
-    <nav id="navbar" role="navigation" aria-label="Hauptnavigation">
+
+    <nav id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><span class="logo-text">BENJAMIN GILLMANN</span></a>
+            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
             <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -67,240 +271,90 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html" class="active">Kontakt</a></li>
             </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode" type="button">
-                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
         </div>
     </nav>
-    
-    <main id="main">
-        <!-- Breadcrumb Navigation -->
-        <nav class="breadcrumb-wrapper" aria-label="Brotkrümelnavigation">
-            <div class="container">
-                <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb-list">
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item">
-                        <a itemprop="item" href="index.html" class="breadcrumb-link">
-                            <span itemprop="name">Home</span>
-                        </a>
-                        <meta itemprop="position" content="1" />
-                        <span class="breadcrumb-separator">›</span>
-                    </li>
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item">
-                        <span itemprop="name" class="breadcrumb-current">Kontakt</span>
-                        <meta itemprop="position" content="2" />
-                    </li>
-                </ol>
-            </div>
-        </nav>
-        
-        <section class="hero-standard">
-            <div class="hero-content-center">
-                <h1 class="hero-title-large">Buchen Sie Ihr Shooting</h1>
-                <p class="hero-subtitle-large">Starten Sie Ihr Projekt mit einer kostenlosen Beratung · Antwort innerhalb von 24 Stunden</p>
-                <div class="hero-benefits">
-                    <div class="hero-benefit-item">
-                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>Kostenlose Beratung</span>
-                    </div>
-                    <div class="hero-benefit-item">
-                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>Flexible Pakete</span>
-                    </div>
-                    <div class="hero-benefit-item">
-                        <svg class="hero-benefit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>Schnelle Lieferung</span>
-                    </div>
-                </div>
+
+    <main>
+        <section class="page-hero">
+            <div>
+                <h1>Kontakt</h1>
+                <p>Lassen Sie uns über Ihr Projekt sprechen</p>
             </div>
         </section>
-        
-        <section class="section-container">
-            <div class="container" style="max-width: 900px;">
-                <div class="section-header">
-                    <h2 class="section-title">Buchungsanfrage starten</h2>
-                    <p class="section-subtitle">Teilen Sie mir die Details zu Ihrem Projekt mit. Ich erstelle Ihnen ein maßgeschneidertes Angebot innerhalb von 24 Stunden.</p>
-                </div>
-                
-                <form id="contactForm" class="contact-form-wrapper" novalidate>
-                    <!-- Persönliche Daten -->
-                    <div class="form-grid">
-                        <div class="form-group-modern">
-                            <input type="text" id="name" name="name" required placeholder=" " aria-required="true">
-                            <label for="name">Vor- und Nachname <span class="required-indicator">*</span></label>
+
+        <section>
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Kontaktieren Sie mich</h2>
+                        <div class="info-item">
+                            <h3>📧 Email</h3>
+                            <p>info@benjamingillmann.com</p>
                         </div>
-                        <div class="form-group-modern">
-                            <input type="email" id="email" name="email" required placeholder=" " aria-required="true">
-                            <label for="email">E-Mail-Adresse <span class="required-indicator">*</span></label>
+                        <div class="info-item">
+                            <h3>📞 Telefon</h3>
+                            <p>+49 123 456 7890</p>
                         </div>
-                    </div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group-modern">
-                            <input type="tel" id="phone" name="phone" placeholder=" ">
-                            <label for="phone">Telefon (optional)</label>
+                        <div class="info-item">
+                            <h3>⏰ Verfügbarkeit</h3>
+                            <p>Mo-Fr: 9:00 - 18:00 Uhr<br>Sa-So: Nach Vereinbarung</p>
                         </div>
-                        <div class="form-group-modern">
-                            <input type="text" id="company" name="company" placeholder=" ">
-                            <label for="company">Firma/Organisation (optional)</label>
+                        <div class="info-item">
+                            <h3>⚡ Antwortzeit</h3>
+                            <p>Innerhalb von 24 Stunden</p>
                         </div>
                     </div>
-                    
-                    <!-- Projekt-Details -->
-                    <div class="form-section-divider">
-                        <h3 class="form-section-title">Projekt-Details</h3>
-                        
-                        <div class="form-group-modern">
-                            <select id="service" name="service" required aria-required="true">
-                                <option value="">Bitte wählen Sie eine Kategorie</option>
-                                <option value="sport">🏆 Sportfotografie</option>
-                                <option value="music">🎵 Musikfotografie (Live/Studio)</option>
-                                <option value="event">🎪 Event-Dokumentation</option>
-                                <option value="portrait">📸 Porträt & Promo-Shooting</option>
-                                <option value="corporate">💼 Corporate/Business</option>
-                                <option value="other">✨ Sonstiges</option>
-                            </select>
-                            <label for="service">Art der Fotografie <span class="required-indicator">*</span></label>
-                        </div>
-                        
-                        <div class="form-grid">
-                            <div class="form-group-modern">
-                                <input type="date" id="eventDate" name="eventDate" required placeholder=" " aria-required="true">
-                                <label for="eventDate">Wunschdatum <span class="required-indicator">*</span></label>
+
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" required>
                             </div>
-                            <div class="form-group-modern">
-                                <select id="duration" name="duration">
-                                    <option value="">Bitte wählen</option>
-                                    <option value="1-2">1-2 Stunden</option>
-                                    <option value="3-4">3-4 Stunden (Halber Tag)</option>
-                                    <option value="5-8">5-8 Stunden (Ganzer Tag)</option>
-                                    <option value="multiple">Mehrere Tage</option>
-                                    <option value="flexible">Noch unklar</option>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Telefon</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service</label>
+                                <select id="service" name="service">
+                                    <option value="">Bitte wählen...</option>
+                                    <option value="sport">Sportfotografie</option>
+                                    <option value="music">Musikfotografie</option>
+                                    <option value="event">Event-Fotografie</option>
+                                    <option value="other">Sonstiges</option>
                                 </select>
-                                <label for="duration">Voraussichtliche Dauer</label>
                             </div>
-                        </div>
-                        
-                        <div class="form-group-modern">
-                            <input type="text" id="location" name="location" placeholder=" ">
-                            <label for="location">Veranstaltungsort/Location</label>
-                        </div>
-
-                        <div class="form-group-modern">
-                            <select id="budget" name="budget">
-                                <option value="">Bitte wählen</option>
-                                <option value="under-500">Unter 500 €</option>
-                                <option value="500-1000">500 - 1.000 €</option>
-                                <option value="1000-2000">1.000 - 2.000 €</option>
-                                <option value="2000-5000">2.000 - 5.000 €</option>
-                                <option value="over-5000">Über 5.000 €</option>
-                                <option value="flexible">Flexibel - Angebot erwünscht</option>
-                            </select>
-                            <label for="budget">Budget-Vorstellung (optional)</label>
-                        </div>
-                    </div>
-                    
-                    <!-- Zusätzliche Anforderungen -->
-                    <div class="form-section-divider">
-                        <h3 class="form-section-title">Zusätzliche Optionen</h3>
-
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="options[]" value="editing" class="checkbox-input">
-                                <span class="checkbox-text">Professionelle Bildbearbeitung & Retusche</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="options[]" value="rush" class="checkbox-input">
-                                <span class="checkbox-text">Express-Lieferung (24-48h)</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="options[]" value="prints" class="checkbox-input">
-                                <span class="checkbox-text">Druck & physische Abzüge</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="options[]" value="video" class="checkbox-input">
-                                <span class="checkbox-text">Video-Content/Behind-the-Scenes</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group-modern has-textarea">
-                        <textarea id="message" name="message" required rows="6" placeholder=" " aria-required="true"></textarea>
-                        <label for="message">Projektbeschreibung <span class="required-indicator">*</span></label>
-                        <small class="form-helper-text">Je mehr Details Sie teilen, desto präziser kann ich Ihr Angebot erstellen.</small>
-                    </div>
-                    
-                    <div class="form-info-box">
-                        <p>
-                            <strong>💡 Was passiert nach dem Absenden?</strong><br>
-                            Sie erhalten innerhalb von 24 Stunden eine Antwort mit einem detaillierten Angebot und Verfügbarkeitsbestätigung.
-                        </p>
-                    </div>
-
-                    <div class="form-submit-wrapper">
-                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
-                            Buchungsanfrage senden
-                        </button>
-                    </div>
-                    <div id="form-feedback" style="margin-top: var(--space-md); padding: var(--space-md); border-radius: 8px; display: none;" role="alert"></div>
-                </form>
-                
-                <div class="section-header" style="margin-top: var(--space-5xl);">
-                    <h3 class="section-title" style="font-size: var(--font-size-2xl);">Weitere Kontaktmöglichkeiten</h3>
-                </div>
-                <div class="contact-methods-grid">
-                        <div class="contact-method-card">
-                            <span class="contact-method-icon">📧</span>
-                            <strong class="contact-method-title">E-Mail</strong>
-                            <a href="mailto:contact@benjamingillmann.com" class="contact-method-link">contact@benjamingillmann.com</a>
-                        </div>
-                        <div class="contact-method-card">
-                            <span class="contact-method-icon">📱</span>
-                            <strong class="contact-method-title">Instagram</strong>
-                            <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="contact-method-link">@benjamin_gillmann</a>
-                        </div>
-                        <div class="contact-method-card">
-                            <span class="contact-method-icon">📍</span>
-                            <strong class="contact-method-title">Standort</strong>
-                            <span style="color: var(--text-secondary);">Deutschland · Deutschlandweit verfügbar</span>
-                        </div>
-                    </div>
-                    <div class="response-time-box">
-                        <p>
-                            <strong>Antwortzeit:</strong> Ich antworte in der Regel innerhalb von 24 Stunden. Bei dringenden Anfragen kontaktieren Sie mich bitte direkt per E-Mail oder Instagram.
-                        </p>
+                            <div class="form-group">
+                                <label for="message">Nachricht *</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                Nachricht senden
+                            </button>
+                            <div class="form-message" id="formMessage"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
                     <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
                     <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
-                    <a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
                 </div>
                 <div class="footer-links">
                     <div class="footer-col">
@@ -312,13 +366,6 @@
                             <li><a href="contact.html">Kontakt</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
-                        <h4>Kontakt</h4>
-                        <ul>
-                            <li><a href="mailto:contact@benjamingillmann.com">E-Mail</a></li>
-                            <li><a href="https://www.instagram.com/benjamin_gillmann/" target="_blank" rel="noopener">Instagram</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -326,11 +373,137 @@
             </div>
         </div>
     </footer>
-    
-    <script src="preloader.js"></script>
-    <script src="utils.js"></script>
-    <script src="script.js" defer></script>
-    <script src="form-enhancements.js" defer></script>
-    <script src="typing-animations.js" defer></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => preloader.classList.add('hidden'), 500);
+        });
+
+        const initTheme = () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
+
+            const setTheme = (theme) => {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                if (themeToggle) {
+                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+                }
+            };
+
+            setTheme(currentTheme);
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    setTheme(currentTheme);
+                });
+            }
+        };
+
+        const initNavigation = () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    const isOpen = navLinks.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') &&
+                        !navLinks.contains(e.target) &&
+                        !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+
+            if (navbar) {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            navbar.classList.toggle('scrolled', window.scrollY > 20);
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            }
+        };
+
+        // Contact Form Handler
+        const initContactForm = () => {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+
+                // Validation
+                if (!data.name || !data.email || !data.message) {
+                    showMessage('Bitte füllen Sie alle Pflichtfelder aus.', 'error');
+                    return;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(data.email)) {
+                    showMessage('Bitte geben Sie eine gültige Email-Adresse ein.', 'error');
+                    return;
+                }
+
+                // Disable button
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Wird gesendet...';
+
+                // Simulate form submission (replace with actual backend call)
+                setTimeout(() => {
+                    showMessage('Vielen Dank für Ihre Nachricht! Wir melden uns innerhalb von 24 Stunden bei Ihnen.', 'success');
+                    form.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Nachricht senden';
+                }, 1500);
+            });
+
+            function showMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.className = `form-message ${type} show`;
+                setTimeout(() => {
+                    formMessage.classList.remove('show');
+                }, 5000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initNavigation();
+            initContactForm();
+        });
+    </script>
 </body>
 </html>
