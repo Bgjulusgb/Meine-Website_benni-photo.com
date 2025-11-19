@@ -3,530 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sportfotografie von Benjamin Gillmann – Action, Präzision, Emotion">
-    <title>Sportfotografie – Benjamin Gillmann</title>
+    <meta name="description" content="Sport Fotografie – Dynamische Action-Aufnahmen von Wettkämpfen und Sportevents.">
+    <title>Sport Fotografie – Benjamin Gillmann Photography</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
-            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
-            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
-            --neon-glow: 0 0 20px rgba(255, 255, 255, 0.3);
-            --transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
-            --text-primary: #000000; --text-secondary: #666666;
-            --border-color: #e5e5e5;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #000000; --bg-secondary: #141414;
-            --text-primary: #ffffff; --text-secondary: #b3b3b3;
-            --border-color: #2d2d2d;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif; background: var(--bg-primary);
-            color: var(--text-primary); line-height: 1.6;
-            overflow-x: hidden; transition: var(--transition);
-        }
-
-        /* Preloader */
-        .preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--black); display: flex; align-items: center;
-            justify-content: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        .preloader.hidden { opacity: 0; visibility: hidden; }
-        .preloader-spinner { position: relative; width: 80px; height: 80px; }
-        .spinner-circle {
-            position: absolute; width: 100%; height: 100%;
-            border: 3px solid transparent; border-top-color: var(--white);
-            border-radius: 50%; animation: spin 1s linear infinite;
-        }
-        .spinner-text {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); font-size: 1.5rem;
-            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color); z-index: 1000;
-            transition: var(--transition);
-        }
-        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-        .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo {
-            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
-            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
-        }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: var(--text-secondary); text-decoration: none;
-            font-weight: 500; transition: var(--transition); position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
-        .nav-links a.active::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 100%; height: 2px; background: var(--text-primary);
-        }
-        .menu-toggle {
-            display: none; flex-direction: column; gap: 5px;
-            background: none; border: none; cursor: pointer; padding: 5px;
-        }
-        .menu-toggle span {
-            width: 25px; height: 2px; background: var(--text-primary); transition: var(--transition);
-        }
-        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
-        .theme-toggle {
-            background: none; border: 1px solid var(--border-color);
-            border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-primary); transition: var(--transition);
-        }
-        .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--neon-glow); }
-
-        /* Main */
-        main { margin-top: 80px; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-        /* Hero */
-        .sport-hero {
-            min-height: 70vh; display: flex; align-items: center;
-            justify-content: center; text-align: center; padding: 6rem 2rem;
-            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5)),
-                        url('https://picsum.photos/1920/1080?random=sport') center/cover;
-            position: relative;
-        }
-        .sport-hero-icon {
-            font-size: 4rem; margin-bottom: 1.5rem;
-        }
-        .sport-hero h1 {
-            font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-            color: var(--white); line-height: 1; text-transform: uppercase;
-        }
-        .sport-hero p {
-            font-size: clamp(1.25rem, 3vw, 2rem);
-            color: var(--gray-200); font-weight: 600; margin-bottom: 3rem;
-        }
-        .btn-hero {
-            display: inline-flex; align-items: center; gap: 0.75rem;
-            padding: 1.25rem 3rem; background: var(--white);
-            color: var(--black); text-decoration: none;
-            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
-            transition: var(--transition); text-transform: uppercase;
-        }
-        .btn-hero:hover {
-            transform: translateY(-5px); box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Section */
-        section { padding: 6rem 0; }
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 2rem; text-align: center;
-        }
-        .section-text {
-            font-size: 1.25rem; color: var(--text-secondary);
-            margin-bottom: 4rem; text-align: center; max-width: 700px;
-            margin-left: auto; margin-right: auto; line-height: 1.8;
-        }
-
-        /* Sport Categories */
-        .sport-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-            gap: 2rem; margin-bottom: 4rem;
-        }
-        .sport-category {
-            text-align: center; padding: 2rem;
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: 20px; transition: var(--transition);
-        }
-        .sport-category:hover {
-            transform: translateY(-10px); border-color: var(--text-primary);
-            box-shadow: var(--neon-glow);
-        }
-        .sport-category-icon {
-            width: 100px; height: 100px; margin: 0 auto 1.5rem;
-            background: var(--bg-primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 3rem;
-        }
-        .sport-category h3 {
-            font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        .sport-category p {
-            color: var(--text-secondary); line-height: 1.7;
-        }
-
-        /* Gallery Grid */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-            gap: 1.5rem;
-        }
-        .gallery-item {
-            aspect-ratio: 4/3; border-radius: 16px; overflow: hidden;
-            cursor: pointer; transition: var(--transition); position: relative;
-            background-size: cover; background-position: center;
-        }
-        .gallery-item::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-            transition: var(--transition);
-        }
-        .gallery-item:hover {
-            transform: scale(1.05); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        .gallery-item:hover::before {
-            background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: var(--bg-secondary); padding: 4rem 2rem;
-            border-radius: 24px; text-align: center;
-        }
-        .stats-title {
-            font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 2rem;
-        }
-
-        /* CTA */
-        .cta-section {
-            padding: 5rem 3rem; background: var(--bg-secondary);
-            border-radius: 30px; text-align: center; border: 1px solid var(--border-color);
-        }
-        .cta-title {
-            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1.5rem;
-        }
-        .cta-text {
-            font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2.5rem;
-        }
-        .btn-cta-large {
-            display: inline-flex; align-items: center; gap: 0.75rem;
-            padding: 1.25rem 3rem; background: var(--text-primary);
-            color: var(--bg-primary); text-decoration: none;
-            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
-            transition: var(--transition); border: 3px solid var(--text-primary);
-        }
-        .btn-cta-large:hover { transform: translateY(-5px); box-shadow: var(--neon-glow); }
-        .btn-outline {
-            padding: 1rem 2rem; background: transparent;
-            color: var(--text-primary); text-decoration: none;
-            border-radius: 50px; font-weight: 600;
-            border: 2px solid var(--text-primary); display: inline-block;
-            transition: var(--transition); text-transform: uppercase;
-            font-size: 0.875rem; letter-spacing: 1px;
-        }
-        .btn-outline:hover {
-            background: var(--text-primary); color: var(--bg-primary);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem;
-        }
-        .footer-content {
-            display: grid; grid-template-columns: 2fr 1fr;
-            gap: 3rem; margin-bottom: 3rem;
-        }
-        .footer-logo {
-            font-size: 1.5rem; font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-        }
-        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
-        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col a {
-            color: var(--text-secondary); text-decoration: none;
-            display: block; padding: 0.5rem 0; transition: var(--transition);
-        }
-        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
-        .footer-bottom {
-            text-align: center; padding-top: 2rem;
-            border-top: 1px solid var(--border-color); color: var(--text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed; top: 80px; left: 0; width: 100%;
-                background: var(--bg-primary); flex-direction: column;
-                padding: 2rem; gap: 1rem; transform: translateX(-100%);
-                transition: var(--transition); border-bottom: 1px solid var(--border-color);
-            }
-            .nav-links.active { transform: translateX(0); }
-            .menu-toggle { display: flex; }
-            .sport-categories { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-            .cta-section { padding: 3rem 2rem; }
-            section { padding: 3rem 0; }
-        }
-        @media (max-width: 480px) {
-            .nav-container { padding: 1rem; }
-            .container { padding: 0 1rem; }
-            .sport-hero { min-height: 60vh; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id="preloader" class="preloader">
-        <div class="preloader-spinner">
-            <div class="spinner-circle"></div>
-            <div class="spinner-text">BG</div>
+    <div class="preloader"><div class="preloader-spinner"></div></div>
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">BG</a>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menü">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">Über mich</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="contact.html" class="nav-link">Kontakt</a></li>
+                    <li><button id="themeToggle" class="theme-toggle" aria-label="Theme umschalten"><div class="theme-toggle-slider">🌙</div></button></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">Über mich</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
-            </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <main>
-        <section class="sport-hero">
-            <div>
-                <div class="sport-hero-icon">⚽</div>
-                <h1>Sport<br>Fotografie</h1>
-                <p>Der entscheidende Moment. Festgehalten.</p>
-                <a href="contact.html" class="btn-hero">Jetzt Buchen</a>
+    </header>
+    <main id="main">
+        <section class="hero" style="min-height: 60vh;">
+            <div class="hero-content">
+                <div class="hero-badge">⚽ Sport Photography</div>
+                <h1 class="hero-title">SPORT</h1>
+                <p class="hero-subtitle">Action, Präzision & Emotionen</p>
             </div>
         </section>
-
-        <section style="background: var(--bg-primary);">
+        <section>
             <div class="container">
-                <h2 class="section-title">Sportarten</h2>
-                <div class="sport-categories">
-                    <div class="sport-category">
-                        <div class="sport-category-icon">⚽</div>
-                        <h3>Fußball</h3>
-                        <p>Bundesliga, Regionalliga, Amateur – jedes Spiel mit voller Intensität dokumentiert.</p>
+                <div class="grid grid-3">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=600&fit=crop" alt="Fußball" loading="lazy">
+                        <div class="gallery-info"><h3>Bundesliga Action</h3><p>Fußball</p></div>
                     </div>
-                    <div class="sport-category">
-                        <div class="sport-category-icon">🏀</div>
-                        <h3>Basketball</h3>
-                        <p>BBL, Playoffs, Derbys – dynamische Action aus perfekter Perspektive.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop" alt="Basketball" loading="lazy">
+                        <div class="gallery-info"><h3>Basketball Finals</h3><p>Basketball</p></div>
                     </div>
-                    <div class="sport-category">
-                        <div class="sport-category-icon">🏃</div>
-                        <h3>Leichtathletik</h3>
-                        <p>Wettkämpfe, Meisterschaften – Geschwindigkeit und Präzision eingefangen.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop" alt="Laufen" loading="lazy">
+                        <div class="gallery-info"><h3>Marathon</h3><p>Laufsport</p></div>
                     </div>
                 </div>
             </div>
         </section>
-
         <section style="background: var(--bg-secondary);">
             <div class="container">
-                <div class="stats-section">
-                    <h2 class="stats-title">200+ Spiele<br>dokumentiert</h2>
-                    <p class="section-text">
-                        Von Amateurspielen bis zur Bundesliga – ich kenne jeden Winkel des Spielfelds
-                        und weiß genau, wo der nächste entscheidende Moment passiert.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section style="background: var(--bg-primary);">
-            <div class="container">
-                <h2 class="section-title">Sport-Fotografie Galerie</h2>
-                <p class="section-text">Eindrücke meiner Sport-Fotografie</p>
-
-                <div class="gallery-grid">
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=201');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=202');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=203');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=204');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=205');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=206');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=207');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=208');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=209');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=210');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=211');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=212');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=213');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=214');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=215');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=216');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=217');"></div>
-                    <div class="gallery-item" style="background-image: url('https://picsum.photos/600/450?random=218');"></div>
-                </div>
-
-                <div style="text-align: center; margin-top: 3rem;">
-                    <a href="portfolio.html" class="btn-outline">Komplettes Portfolio ansehen</a>
-                </div>
-            </div>
-        </section>
-
-        <section style="background: var(--bg-primary);">
-            <div class="container">
-                <div class="cta-section">
-                    <h2 class="cta-title">Bereit für<br>Action?</h2>
-                    <p class="cta-text">
-                        Buchen Sie mich für Ihr nächstes Sportevent –<br>
-                        professionelle Aufnahmen garantiert.
-                    </p>
-                    <a href="contact.html" class="btn-cta-large">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <path d="m21 15-5-5L5 21"/>
-                        </svg>
-                        Jetzt Buchen
-                    </a>
+                <div class="card text-center" style="padding: var(--space-3xl);">
+                    <h2>Buchen Sie Ihre Sport-Fotografie</h2>
+                    <p style="font-size: 1.125rem; margin-bottom: var(--space-xl);">Ich halte die intensivsten Momente Ihres Wettkampfs fest.</p>
+                    <a href="contact.html" class="btn btn-primary">📧 Jetzt anfragen</a>
                 </div>
             </div>
         </section>
     </main>
-
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-main">
-                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
-                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-col">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="about.html">Über mich</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Kontakt</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <div><div class="footer-logo">BENJAMIN GILLMANN</div><p class="footer-text">Professionelle Fotografie für Sport, Musik und Events.<br>Momente, die bleiben.</p></div>
+                <div><h4 class="footer-title">Navigation</h4><ul class="footer-links"><li><a href="about.html">Über mich</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Kontakt</a></li></ul></div>
+                <div><h4 class="footer-title">Kategorien</h4><ul class="footer-links"><li><a href="sports.html">Sport</a></li><li><a href="music.html">Musik</a></li><li><a href="portfolio.html">Events</a></li></ul></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2025 Benjamin Gillmann Photography. Alle Rechte vorbehalten.</p></div>
         </div>
     </footer>
-
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => preloader.classList.add('hidden'), 500);
-        });
-
-        const initTheme = () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
-
-            const setTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                if (themeToggle) {
-                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
-                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
-                }
-            };
-
-            setTheme(currentTheme);
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    setTheme(currentTheme);
-                });
-            }
-        };
-
-        const initNavigation = () => {
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            const navbar = document.getElementById('navbar');
-
-            if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', () => {
-                    const isOpen = navLinks.classList.toggle('active');
-                    menuToggle.classList.toggle('active');
-                    menuToggle.setAttribute('aria-expanded', isOpen);
-                    document.body.style.overflow = isOpen ? 'hidden' : '';
-                });
-
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    });
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (navLinks.classList.contains('active') &&
-                        !navLinks.contains(e.target) &&
-                        !menuToggle.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            if (navbar) {
-                let ticking = false;
-                window.addEventListener('scroll', () => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            navbar.classList.toggle('scrolled', window.scrollY > 20);
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            initNavigation();
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>

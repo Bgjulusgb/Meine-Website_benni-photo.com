@@ -3,464 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio von Benjamin Gillmann – Professionelle Sport- und Musikfotografie">
-    <title>Portfolio – Benjamin Gillmann</title>
+    <meta name="description" content="Portfolio – Die besten Arbeiten von Benjamin Gillmann Photography.">
+    <title>Portfolio – Benjamin Gillmann Photography</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
-            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
-            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
-            --neon-glow: 0 0 20px rgba(255, 255, 255, 0.3);
-            --transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
-            --text-primary: #000000; --text-secondary: #666666;
-            --border-color: #e5e5e5;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #000000; --bg-secondary: #141414;
-            --text-primary: #ffffff; --text-secondary: #b3b3b3;
-            --border-color: #2d2d2d;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif; background: var(--bg-primary);
-            color: var(--text-primary); line-height: 1.6;
-            overflow-x: hidden; transition: var(--transition);
-        }
-
-        /* Preloader */
-        .preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--black); display: flex; align-items: center;
-            justify-content: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        .preloader.hidden { opacity: 0; visibility: hidden; }
-        .preloader-spinner { position: relative; width: 80px; height: 80px; }
-        .spinner-circle {
-            position: absolute; width: 100%; height: 100%;
-            border: 3px solid transparent; border-top-color: var(--white);
-            border-radius: 50%; animation: spin 1s linear infinite;
-        }
-        .spinner-text {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); font-size: 1.5rem;
-            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color); z-index: 1000;
-            transition: var(--transition);
-        }
-        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-        .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo {
-            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
-            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
-        }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: var(--text-secondary); text-decoration: none;
-            font-weight: 500; transition: var(--transition); position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
-        .nav-links a.active::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 100%; height: 2px; background: var(--text-primary);
-        }
-        .menu-toggle {
-            display: none; flex-direction: column; gap: 5px;
-            background: none; border: none; cursor: pointer; padding: 5px;
-        }
-        .menu-toggle span {
-            width: 25px; height: 2px; background: var(--text-primary); transition: var(--transition);
-        }
-        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
-        .theme-toggle {
-            background: none; border: 1px solid var(--border-color);
-            border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-primary); transition: var(--transition);
-        }
-        .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--neon-glow); }
-
-        /* Main */
-        main { margin-top: 80px; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-        /* Hero */
-        .page-hero {
-            min-height: 50vh; display: flex; align-items: center;
-            justify-content: center; text-align: center; padding: 6rem 2rem;
-            background: var(--bg-secondary); position: relative;
-        }
-        .page-hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-        }
-        .page-hero p {
-            font-size: clamp(1.125rem, 2vw, 1.5rem);
-            color: var(--text-secondary); max-width: 700px; margin: 0 auto;
-        }
-
-        /* Section */
-        section { padding: 6rem 0; }
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem; text-align: center;
-        }
-        .section-subtitle {
-            font-size: 1.25rem; color: var(--text-secondary);
-            margin-bottom: 4rem; text-align: center;
-        }
-
-        /* Filter Buttons */
-        .filter-buttons {
-            display: flex; gap: 1rem; justify-content: center;
-            margin-bottom: 3rem; flex-wrap: wrap;
-        }
-        .filter-btn {
-            padding: 0.75rem 1.5rem; background: transparent;
-            color: var(--text-secondary); border: 2px solid var(--border-color);
-            border-radius: 50px; font-weight: 600; cursor: pointer;
-            transition: var(--transition); font-family: 'Inter', sans-serif;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--bg-secondary); color: var(--text-primary);
-            border-color: var(--text-primary);
-        }
-
-        /* Portfolio Grid */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
-            gap: 2rem; margin-bottom: 3rem;
-        }
-        .portfolio-card {
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: 20px; overflow: hidden; transition: var(--transition);
-            cursor: pointer;
-        }
-        .portfolio-card:hover {
-            transform: translateY(-10px); box-shadow: var(--neon-glow);
-            border-color: var(--text-primary);
-        }
-        .portfolio-image {
-            width: 100%; aspect-ratio: 4/3; object-fit: cover;
-            background: var(--bg-secondary);
-        }
-        .portfolio-content {
-            padding: 1.5rem;
-        }
-        .portfolio-category {
-            display: inline-block; padding: 0.25rem 0.75rem;
-            background: var(--bg-primary); border-radius: 50px;
-            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-            color: var(--text-secondary); margin-bottom: 0.75rem;
-        }
-        .portfolio-title {
-            font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        .portfolio-description {
-            color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;
-        }
-
-        /* CTA */
-        .cta-section {
-            padding: 5rem 3rem; background: var(--bg-secondary);
-            border-radius: 30px; text-align: center; border: 1px solid var(--border-color);
-        }
-        .cta-title {
-            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1.5rem;
-        }
-        .cta-text {
-            font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2.5rem;
-        }
-        .btn-cta-large {
-            display: inline-flex; align-items: center; gap: 0.75rem;
-            padding: 1.25rem 3rem; background: var(--text-primary);
-            color: var(--bg-primary); text-decoration: none;
-            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
-            transition: var(--transition); border: 3px solid var(--text-primary);
-        }
-        .btn-cta-large:hover { transform: translateY(-5px); box-shadow: var(--neon-glow); }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem;
-        }
-        .footer-content {
-            display: grid; grid-template-columns: 2fr 1fr;
-            gap: 3rem; margin-bottom: 3rem;
-        }
-        .footer-logo {
-            font-size: 1.5rem; font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-        }
-        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
-        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col a {
-            color: var(--text-secondary); text-decoration: none;
-            display: block; padding: 0.5rem 0; transition: var(--transition);
-        }
-        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
-        .footer-bottom {
-            text-align: center; padding-top: 2rem;
-            border-top: 1px solid var(--border-color); color: var(--text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed; top: 80px; left: 0; width: 100%;
-                background: var(--bg-primary); flex-direction: column;
-                padding: 2rem; gap: 1rem; transform: translateX(-100%);
-                transition: var(--transition); border-bottom: 1px solid var(--border-color);
-            }
-            .nav-links.active { transform: translateX(0); }
-            .menu-toggle { display: flex; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-            .cta-section { padding: 3rem 2rem; }
-            section { padding: 3rem 0; }
-            .filter-buttons { gap: 0.5rem; }
-            .filter-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
-        }
-        @media (max-width: 480px) {
-            .nav-container { padding: 1rem; }
-            .container { padding: 0 1rem; }
-            .portfolio-content { padding: 1.25rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id="preloader" class="preloader">
-        <div class="preloader-spinner">
-            <div class="spinner-circle"></div>
-            <div class="spinner-text">BG</div>
-        </div>
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
     </div>
 
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">Über mich</a></li>
-                <li><a href="portfolio.html" class="active">Portfolio</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
-            </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">BG</a>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menü">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">Über mich</a></li>
+                    <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="contact.html" class="nav-link">Kontakt</a></li>
+                    <li>
+                        <button id="themeToggle" class="theme-toggle" aria-label="Theme umschalten">
+                            <div class="theme-toggle-slider">🌙</div>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <main>
-        <section class="page-hero">
-            <div>
-                <h1>Portfolio</h1>
-                <p>Eine Auswahl meiner besten Arbeiten aus Sport, Musik und Events</p>
+    <main id="main">
+        <section class="hero" style="min-height: 60vh;">
+            <div class="hero-content">
+                <div class="hero-badge">🎨 Meine Arbeiten</div>
+                <h1 class="hero-title">PORTFOLIO</h1>
+                <p class="hero-subtitle">
+                    Eine Auswahl meiner besten Projekte
+                </p>
             </div>
         </section>
 
-        <section style="background: var(--bg-primary);">
+        <section>
             <div class="container">
-                <h2 class="section-title">Meine Projekte</h2>
-                <p class="section-subtitle">500+ erfolgreiche Events dokumentiert</p>
-
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">Alle</button>
-                    <button class="filter-btn" data-filter="sport">Sport</button>
-                    <button class="filter-btn" data-filter="musik">Musik</button>
-                    <button class="filter-btn" data-filter="event">Events</button>
-                </div>
-
-                <div class="portfolio-grid" id="portfolioGrid">
-                    <!-- Sport Projekte -->
-                    <div class="portfolio-card" data-category="sport">
-                        <img src="https://picsum.photos/600/450?random=1" alt="Bundesliga Finale" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Sport</span>
-                            <h3 class="portfolio-title">Bundesliga Finale</h3>
-                            <p class="portfolio-description">Dramatisches Meisterschaftsfinale mit 200+ Action-Shots und Emotionen.</p>
+                <div class="grid grid-3">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=600&fit=crop"
+                             alt="Sport Action"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Bundesliga Action</h3>
+                            <p>Sport Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="sport">
-                        <img src="https://picsum.photos/600/450?random=2" alt="Basketball Playoffs" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Sport</span>
-                            <h3 class="portfolio-title">Basketball Playoffs</h3>
-                            <p class="portfolio-description">BBL Playoff-Spiel mit intensiven Momenten und Team-Porträts.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=600&fit=crop"
+                             alt="Live Konzert"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Live on Stage</h3>
+                            <p>Musik Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="sport">
-                        <img src="https://picsum.photos/600/450?random=3" alt="Tennis Turnier" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Sport</span>
-                            <h3 class="portfolio-title">ATP Masters</h3>
-                            <p class="portfolio-description">Spektakuläre Rallys und emotionale Momente vom Center Court.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=600&fit=crop"
+                             alt="Event"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Corporate Gala</h3>
+                            <p>Event Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="sport">
-                        <img src="https://picsum.photos/600/450?random=4" alt="Marathon" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Sport</span>
-                            <h3 class="portfolio-title">Berlin Marathon</h3>
-                            <p class="portfolio-description">40.000 Läufer, emotionale Geschichten und der Kampf gegen die Uhr.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop"
+                             alt="Basketball"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Basketball Finals</h3>
+                            <p>Sport Fotografie</p>
                         </div>
                     </div>
-
-                    <!-- Musik Projekte -->
-                    <div class="portfolio-card" data-category="musik">
-                        <img src="https://picsum.photos/600/450?random=5" alt="Rock Festival" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Musik</span>
-                            <h3 class="portfolio-title">Rock am Ring Festival</h3>
-                            <p class="portfolio-description">3-tägige Festival-Coverage mit 15+ Bands und Backstage-Momenten.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=600&fit=crop"
+                             alt="Festival"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Music Festival</h3>
+                            <p>Musik Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="musik">
-                        <img src="https://picsum.photos/600/450?random=6" alt="Jazz Night" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Musik</span>
-                            <h3 class="portfolio-title">International Jazz Night</h3>
-                            <p class="portfolio-description">Intime Jazz-Performances in Club-Atmosphäre mit Künstler-Porträts.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=600&fit=crop"
+                             alt="Wedding"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Hochzeit Deluxe</h3>
+                            <p>Event Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="musik">
-                        <img src="https://picsum.photos/600/450?random=7" alt="Hip Hop Konzert" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Musik</span>
-                            <h3 class="portfolio-title">Hip Hop Arena Show</h3>
-                            <p class="portfolio-description">Explosive Energie und grandiose Bühnenshow einer Rap-Legende.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop"
+                             alt="Running"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Marathon</h3>
+                            <p>Sport Fotografie</p>
                         </div>
                     </div>
-
-                    <div class="portfolio-card" data-category="musik">
-                        <img src="https://picsum.photos/600/450?random=8" alt="Electronic Festival" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Musik</span>
-                            <h3 class="portfolio-title">Electronic Beats Festival</h3>
-                            <p class="portfolio-description">Spektakuläre Lichtshows und weltbekannte DJs auf drei Stages.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&h=600&fit=crop"
+                             alt="DJ"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>DJ Performance</h3>
+                            <p>Musik Fotografie</p>
                         </div>
                     </div>
-
-                    <!-- Event Projekte -->
-                    <div class="portfolio-card" data-category="event">
-                        <img src="https://picsum.photos/600/450?random=9" alt="Corporate Gala" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Event</span>
-                            <h3 class="portfolio-title">Corporate Gala 2024</h3>
-                            <p class="portfolio-description">Elegante Business-Veranstaltung mit 300+ Gästen und Award-Zeremonie.</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="event">
-                        <img src="https://picsum.photos/600/450?random=10" alt="Hochzeit" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Event</span>
-                            <h3 class="portfolio-title">Exklusive Hochzeit</h3>
-                            <p class="portfolio-description">Emotionale Hochzeitsreportage von Zeremonie bis Party.</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="event">
-                        <img src="https://picsum.photos/600/450?random=11" alt="Produktlaunch" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Event</span>
-                            <h3 class="portfolio-title">Tech Produktlaunch</h3>
-                            <p class="portfolio-description">Innovatives Launch-Event mit Keynote und Live-Demos.</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="event">
-                        <img src="https://picsum.photos/600/450?random=12" alt="Fashion Show" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Event</span>
-                            <h3 class="portfolio-title">Berlin Fashion Week</h3>
-                            <p class="portfolio-description">Runway-Highlights und Backstage-Einblicke der Fashion Week.</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="sport">
-                        <img src="https://picsum.photos/600/450?random=13" alt="Handball EM" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Sport</span>
-                            <h3 class="portfolio-title">Handball EM</h3>
-                            <p class="portfolio-description">Packende Action bei der Europameisterschaft.</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="musik">
-                        <img src="https://picsum.photos/600/450?random=14" alt="Metal Festival" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Musik</span>
-                            <h3 class="portfolio-title">Wacken Open Air</h3>
-                            <p class="portfolio-description">Das größte Heavy Metal Festival der Welt – Pure Power!</p>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-card" data-category="event">
-                        <img src="https://picsum.photos/600/450?random=15" alt="Charity Gala" class="portfolio-image">
-                        <div class="portfolio-content">
-                            <span class="portfolio-category">Event</span>
-                            <h3 class="portfolio-title">Charity Gala</h3>
-                            <p class="portfolio-description">Glamouröses Fundraising-Event mit prominenten Gästen.</p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop"
+                             alt="Conference"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Business Conference</h3>
+                            <p>Event Fotografie</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section style="background: var(--bg-primary);">
+        <section style="background: var(--bg-secondary);">
             <div class="container">
-                <div class="cta-section">
-                    <h2 class="cta-title">Begeistert von<br>meiner Arbeit?</h2>
-                    <p class="cta-text">
-                        Lassen Sie uns Ihr nächstes Projekt gemeinsam realisieren.<br>
-                        Buchen Sie jetzt Ihr professionelles Shooting.
+                <div class="card text-center" style="padding: var(--space-3xl);">
+                    <h2>Interessiert an einem Shooting?</h2>
+                    <p style="font-size: 1.125rem; margin-bottom: var(--space-xl);">
+                        Lassen Sie uns Ihr Projekt besprechen.
                     </p>
-                    <a href="contact.html" class="btn-cta-large">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <path d="m21 15-5-5L5 21"/>
-                        </svg>
-                        Jetzt Buchen
+                    <a href="contact.html" class="btn btn-primary">
+                        📧 Kontakt aufnehmen
                     </a>
                 </div>
             </div>
@@ -470,136 +160,37 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-main">
-                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
-                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                <div>
+                    <div class="footer-logo">BENJAMIN GILLMANN</div>
+                    <p class="footer-text">
+                        Professionelle Fotografie für Sport, Musik und Events.<br>
+                        Momente, die bleiben.
+                    </p>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-col">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="about.html">Über mich</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Kontakt</a></li>
-                        </ul>
-                    </div>
+                <div>
+                    <h4 class="footer-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Über mich</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Kategorien</h4>
+                    <ul class="footer-links">
+                        <li><a href="sports.html">Sport</a></li>
+                        <li><a href="music.html">Musik</a></li>
+                        <li><a href="portfolio.html">Events</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+                <p>&copy; 2025 Benjamin Gillmann Photography. Alle Rechte vorbehalten.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => preloader.classList.add('hidden'), 500);
-        });
-
-        const initTheme = () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
-
-            const setTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                if (themeToggle) {
-                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
-                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
-                }
-            };
-
-            setTheme(currentTheme);
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    setTheme(currentTheme);
-                });
-            }
-        };
-
-        const initNavigation = () => {
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            const navbar = document.getElementById('navbar');
-
-            if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', () => {
-                    const isOpen = navLinks.classList.toggle('active');
-                    menuToggle.classList.toggle('active');
-                    menuToggle.setAttribute('aria-expanded', isOpen);
-                    document.body.style.overflow = isOpen ? 'hidden' : '';
-                });
-
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    });
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (navLinks.classList.contains('active') &&
-                        !navLinks.contains(e.target) &&
-                        !menuToggle.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            if (navbar) {
-                let ticking = false;
-                window.addEventListener('scroll', () => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            navbar.classList.toggle('scrolled', window.scrollY > 20);
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-            }
-        };
-
-        // Portfolio Filter
-        const initPortfolioFilter = () => {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const portfolioCards = document.querySelectorAll('.portfolio-card');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const filter = button.dataset.filter;
-
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    // Filter cards
-                    portfolioCards.forEach(card => {
-                        if (filter === 'all' || card.dataset.category === filter) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            initNavigation();
-            initPortfolioFilter();
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
