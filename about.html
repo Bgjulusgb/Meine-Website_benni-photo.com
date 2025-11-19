@@ -3,339 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Über Benjamin Gillmann – Professioneller Fotograf mit Leidenschaft für Sport und Musik.">
-    <title>Über mich – Benjamin Gillmann</title>
+    <meta name="description" content="Über Benjamin Gillmann – Professioneller Fotograf mit Leidenschaft für Sport, Musik und Events.">
+    <title>Über mich – Benjamin Gillmann Photography</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --black: #000000; --gray-900: #141414; --gray-800: #1f1f1f;
-            --gray-700: #2d2d2d; --gray-600: #404040; --gray-400: #8c8c8c;
-            --gray-200: #d9d9d9; --gray-100: #f0f0f0; --white: #ffffff;
-            --neon-glow: 0 0 20px rgba(255, 255, 255, 0.3);
-            --transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff; --bg-secondary: #f8f8f8;
-            --text-primary: #000000; --text-secondary: #666666;
-            --border-color: #e5e5e5;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #000000; --bg-secondary: #141414;
-            --text-primary: #ffffff; --text-secondary: #b3b3b3;
-            --border-color: #2d2d2d;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
-
-        /* Preloader */
-        .preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--black); display: flex; align-items: center;
-            justify-content: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        .preloader.hidden { opacity: 0; visibility: hidden; }
-        .preloader-spinner { position: relative; width: 80px; height: 80px; }
-        .spinner-circle {
-            position: absolute; width: 100%; height: 100%;
-            border: 3px solid transparent; border-top-color: var(--white);
-            border-radius: 50%; animation: spin 1s linear infinite;
-        }
-        .spinner-text {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); font-size: 1.5rem;
-            font-weight: 700; color: var(--white); font-family: 'Poppins', sans-serif;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; width: 100%; background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color); z-index: 1000;
-            transition: var(--transition);
-        }
-        nav.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-        .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo {
-            font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
-            text-decoration: none; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
-        }
-        .nav-links {
-            display: flex; list-style: none; gap: 2rem; align-items: center;
-        }
-        .nav-links a {
-            color: var(--text-secondary); text-decoration: none;
-            font-weight: 500; transition: var(--transition); position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
-        .nav-links a.active::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 100%; height: 2px; background: var(--text-primary);
-        }
-        .menu-toggle {
-            display: none; flex-direction: column; gap: 5px;
-            background: none; border: none; cursor: pointer; padding: 5px;
-        }
-        .menu-toggle span {
-            width: 25px; height: 2px; background: var(--text-primary);
-            transition: var(--transition);
-        }
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-        .theme-toggle {
-            background: none; border: 1px solid var(--border-color);
-            border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-primary); transition: var(--transition);
-        }
-        .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--neon-glow); }
-
-        /* Main */
-        main { margin-top: 80px; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-        /* Hero */
-        .page-hero {
-            min-height: 50vh; display: flex; align-items: center;
-            justify-content: center; text-align: center; padding: 6rem 2rem;
-            background: var(--bg-secondary); position: relative;
-        }
-        .page-hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-        }
-        .page-hero p {
-            font-size: clamp(1.125rem, 2vw, 1.5rem);
-            color: var(--text-secondary); max-width: 700px; margin: 0 auto;
-        }
-
-        /* Section */
-        section { padding: 6rem 0; }
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 2rem;
-        }
-        .section-text {
-            font-size: 1.125rem; line-height: 1.8;
-            color: var(--text-secondary); margin-bottom: 1.5rem;
-        }
-
-        /* About Grid */
-        .about-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem; margin-top: 4rem;
-        }
-        .about-card {
-            padding: 2.5rem; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); border-radius: 20px;
-            transition: var(--transition);
-        }
-        .about-card:hover {
-            transform: translateY(-10px); box-shadow: var(--neon-glow);
-            border-color: var(--text-primary);
-        }
-        .about-card-icon {
-            font-size: 3rem; margin-bottom: 1.5rem;
-        }
-        .about-card h3 {
-            font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        .about-card p {
-            color: var(--text-secondary); line-height: 1.7;
-        }
-
-        /* Skills */
-        .skills-list {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem; margin-top: 2rem;
-        }
-        .skill-item {
-            padding: 1.5rem; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); border-radius: 15px;
-            text-align: center; transition: var(--transition);
-        }
-        .skill-item:hover {
-            border-color: var(--text-primary); transform: scale(1.05);
-        }
-        .skill-name {
-            font-weight: 600; margin-bottom: 0.5rem;
-        }
-        .skill-level {
-            font-size: 0.875rem; color: var(--text-secondary);
-        }
-
-        /* CTA */
-        .cta-section {
-            padding: 5rem 3rem; background: var(--bg-secondary);
-            border-radius: 30px; text-align: center;
-            border: 1px solid var(--border-color);
-        }
-        .cta-title {
-            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1.5rem;
-        }
-        .cta-text {
-            font-size: 1.25rem; color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-        }
-        .btn-cta-large {
-            display: inline-flex; align-items: center; gap: 0.75rem;
-            padding: 1.25rem 3rem; background: var(--text-primary);
-            color: var(--bg-primary); text-decoration: none;
-            border-radius: 50px; font-weight: 700; font-size: 1.125rem;
-            transition: var(--transition); border: 3px solid var(--text-primary);
-        }
-        .btn-cta-large:hover {
-            transform: translateY(-5px); box-shadow: var(--neon-glow);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem;
-        }
-        .footer-content {
-            display: grid; grid-template-columns: 2fr 1fr;
-            gap: 3rem; margin-bottom: 3rem;
-        }
-        .footer-logo {
-            font-size: 1.5rem; font-weight: 800;
-            font-family: 'Poppins', sans-serif; margin-bottom: 1rem;
-        }
-        .footer-main p { color: var(--text-secondary); line-height: 1.7; }
-        .footer-col h4 { font-weight: 600; margin-bottom: 1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col a {
-            color: var(--text-secondary); text-decoration: none;
-            display: block; padding: 0.5rem 0; transition: var(--transition);
-        }
-        .footer-col a:hover { color: var(--text-primary); padding-left: 0.5rem; }
-        .footer-bottom {
-            text-align: center; padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed; top: 80px; left: 0; width: 100%;
-                background: var(--bg-primary); flex-direction: column;
-                padding: 2rem; gap: 1rem; transform: translateX(-100%);
-                transition: var(--transition); border-bottom: 1px solid var(--border-color);
-            }
-            .nav-links.active { transform: translateX(0); }
-            .menu-toggle { display: flex; }
-            .about-grid, .skills-list { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-            .cta-section { padding: 3rem 2rem; }
-            section { padding: 3rem 0; }
-        }
-        @media (max-width: 480px) {
-            .nav-container { padding: 1rem; }
-            .container { padding: 0 1rem; }
-            .about-card { padding: 2rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id="preloader" class="preloader">
-        <div class="preloader-spinner">
-            <div class="spinner-circle"></div>
-            <div class="spinner-text">BG</div>
-        </div>
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
     </div>
 
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">BENJAMIN GILLMANN</a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Menü" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">Über mich</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
-            </ul>
-            <button id="themeToggle" class="theme-toggle" aria-label="Dark/Light Mode">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
 
-    <main>
-        <section class="page-hero">
-            <div>
-                <h1>Über mich</h1>
-                <p>Fotograf aus Leidenschaft mit Fokus auf Sport, Musik und Events</p>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">BG</a>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menü">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link active">Über mich</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="contact.html" class="nav-link">Kontakt</a></li>
+                    <li>
+                        <button id="themeToggle" class="theme-toggle" aria-label="Theme umschalten">
+                            <div class="theme-toggle-slider">🌙</div>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero" style="min-height: 60vh;">
+            <div class="hero-content">
+                <div class="hero-badge">📖 Meine Geschichte</div>
+                <h1 class="hero-title">ÜBER MICH</h1>
+                <p class="hero-subtitle">
+                    Leidenschaft für Fotografie seit über 10 Jahren
+                </p>
             </div>
         </section>
 
         <section>
             <div class="container">
-                <h2 class="section-title">Meine Geschichte</h2>
-                <p class="section-text">
-                    Hallo, ich bin Benjamin Gillmann – professioneller Fotograf mit einer Leidenschaft für
-                    dynamische Momente und authentische Emotionen. Seit über 10 Jahren halte ich die
-                    intensivsten Augenblicke des Lebens fest.
-                </p>
-                <p class="section-text">
-                    Meine Spezialisierung liegt in der Sport- und Musikfotografie, wo es darauf ankommt,
-                    den perfekten Moment zu erfassen. Ob bei Bundesliga-Spielen, internationalen Musikfestivals
-                    oder intimen Konzerten – ich bin immer da, wo die Action ist.
-                </p>
-
-                <div class="about-grid">
-                    <div class="about-card">
-                        <div class="about-card-icon">🎯</div>
-                        <h3>Meine Vision</h3>
+                <div class="grid grid-2" style="align-items: center;">
+                    <div>
+                        <h2>Hallo, ich bin Benjamin</h2>
                         <p>
-                            Jeder Moment ist einzigartig. Mein Ziel ist es, diese Einzigartigkeit in jedem
-                            Bild einzufangen und Geschichten zu erzählen, die bleiben.
+                            Seit über 10 Jahren halte ich besondere Momente mit meiner Kamera fest.
+                            Was als Hobby begann, ist heute meine Leidenschaft und mein Beruf.
+                        </p>
+                        <p>
+                            Ich spezialisiere mich auf Sport-, Musik- und Event-Fotografie und arbeite
+                            mit Kunden aus ganz Deutschland zusammen. Mein Ziel ist es, authentische
+                            und emotionale Bilder zu schaffen, die Geschichten erzählen.
+                        </p>
+                        <p>
+                            Mit modernster Ausrüstung und einem Auge fürs Detail sorge ich dafür,
+                            dass jeder Moment perfekt eingefangen wird.
                         </p>
                     </div>
-                    <div class="about-card">
-                        <div class="about-card-icon">⚡</div>
-                        <h3>Mein Ansatz</h3>
-                        <p>
-                            Schnell, präzise und professionell. Mit modernster Technik und einem Gespür
-                            für den richtigen Moment entstehen Bilder, die begeistern.
-                        </p>
-                    </div>
-                    <div class="about-card">
-                        <div class="about-card-icon">🏆</div>
-                        <h3>Meine Erfahrung</h3>
-                        <p>
-                            500+ Events, 10.000+ Fotos, 100+ zufriedene Kunden. Vertrauen Sie auf
-                            jahrelange Erfahrung in der professionellen Fotografie.
-                        </p>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800&h=1000&fit=crop"
+                             alt="Benjamin Gillmann"
+                             loading="lazy">
                     </div>
                 </div>
             </div>
@@ -343,31 +84,32 @@
 
         <section style="background: var(--bg-secondary);">
             <div class="container">
-                <h2 class="section-title">Meine Fähigkeiten</h2>
-                <div class="skills-list">
-                    <div class="skill-item">
-                        <div class="skill-name">Sportfotografie</div>
-                        <div class="skill-level">Spezialisiert</div>
+                <div class="text-center mb-xl">
+                    <h2>Meine Expertise</h2>
+                    <p>Was mich auszeichnet</p>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-icon">📷</div>
+                        <h3 class="card-title">Professionell</h3>
+                        <p class="card-text">
+                            Modernste Ausrüstung und jahrelange Erfahrung für beste Ergebnisse.
+                        </p>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Musikfotografie</div>
-                        <div class="skill-level">Spezialisiert</div>
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">Schnell</h3>
+                        <p class="card-text">
+                            Schnelle Lieferung Ihrer Bilder in höchster Qualität.
+                        </p>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Event-Dokumentation</div>
-                        <div class="skill-level">Fortgeschritten</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Bildbearbeitung</div>
-                        <div class="skill-level">Experte</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Low-Light Fotografie</div>
-                        <div class="skill-level">Spezialisiert</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Action Photography</div>
-                        <div class="skill-level">Experte</div>
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Präzise</h3>
+                        <p class="card-text">
+                            Jedes Detail zählt – ich fange den perfekten Moment ein.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -375,18 +117,13 @@
 
         <section>
             <div class="container">
-                <div class="cta-section">
-                    <h2 class="cta-title">Bereit für Ihr<br>nächstes Projekt?</h2>
-                    <p class="cta-text">
-                        Kontaktieren Sie mich für ein unverbindliches Gespräch.<br>
-                        Antwort innerhalb von 24 Stunden.
+                <div class="card text-center" style="padding: var(--space-3xl);">
+                    <h2>Lassen Sie uns zusammenarbeiten</h2>
+                    <p style="font-size: 1.125rem; margin-bottom: var(--space-xl);">
+                        Ich freue mich darauf, Ihr nächstes Projekt zu realisieren.
                     </p>
-                    <a href="contact.html" class="btn-cta-large">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        Jetzt Kontakt aufnehmen
+                    <a href="contact.html" class="btn btn-primary">
+                        📧 Kontakt aufnehmen
                     </a>
                 </div>
             </div>
@@ -396,110 +133,37 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-main">
-                    <h3 class="footer-logo">BENJAMIN GILLMANN</h3>
-                    <p>Professionelle Fotografie für Sport, Musik und Events in Deutschland.</p>
+                <div>
+                    <div class="footer-logo">BENJAMIN GILLMANN</div>
+                    <p class="footer-text">
+                        Professionelle Fotografie für Sport, Musik und Events.<br>
+                        Momente, die bleiben.
+                    </p>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-col">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="about.html">Über mich</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Kontakt</a></li>
-                        </ul>
-                    </div>
+                <div>
+                    <h4 class="footer-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Über mich</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Kategorien</h4>
+                    <ul class="footer-links">
+                        <li><a href="sports.html">Sport</a></li>
+                        <li><a href="music.html">Musik</a></li>
+                        <li><a href="portfolio.html">Events</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Benjamin Gillmann. Alle Rechte vorbehalten.</p>
+                <p>&copy; 2025 Benjamin Gillmann Photography. Alle Rechte vorbehalten.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => preloader.classList.add('hidden'), 500);
-        });
-
-        const initTheme = () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-            let currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
-
-            const setTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                if (themeToggle) {
-                    const sunIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
-                    const moonIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-                    themeToggle.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
-                }
-            };
-
-            setTheme(currentTheme);
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    setTheme(currentTheme);
-                });
-            }
-        };
-
-        const initNavigation = () => {
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            const navbar = document.getElementById('navbar');
-
-            if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', () => {
-                    const isOpen = navLinks.classList.toggle('active');
-                    menuToggle.classList.toggle('active');
-                    menuToggle.setAttribute('aria-expanded', isOpen);
-                    document.body.style.overflow = isOpen ? 'hidden' : '';
-                });
-
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    });
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (navLinks.classList.contains('active') &&
-                        !navLinks.contains(e.target) &&
-                        !menuToggle.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            if (navbar) {
-                let ticking = false;
-                window.addEventListener('scroll', () => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            navbar.classList.toggle('scrolled', window.scrollY > 20);
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            initNavigation();
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
