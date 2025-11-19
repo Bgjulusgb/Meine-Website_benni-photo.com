@@ -943,6 +943,181 @@ const throttle = (func, limit) => {
   };
 };
 
+// ==========================================
+// GALLERY MODAL - Pop-up Grid View
+// Zeigt alle Fotos in einer Grid-Ansicht
+// ==========================================
+
+const initGalleryModal = () => {
+  const galleryContainers = document.querySelectorAll('.gallery-grid, .photo-grid');
+  if (galleryContainers.length === 0) return;
+
+  let modal = null;
+  let allImages = [];
+
+  // Create "Show All Photos" button
+  const createShowAllButton = (container) => {
+    const images = container.querySelectorAll('.gallery-item img, .photo-grid-item img');
+    if (images.length < 4) return; // Only show button if there are at least 4 images
+
+    const btn = document.createElement('button');
+    btn.className = 'show-all-photos-btn';
+    btn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      <span>Alle ${images.length} Fotos anzeigen</span>
+    `;
+    btn.setAttribute('aria-label', `Zeige alle ${images.length} Fotos in Galerie-Ansicht`);
+
+    // Show button after scroll
+    setTimeout(() => {
+      btn.classList.add('visible');
+    }, 1000);
+
+    btn.addEventListener('click', () => openGalleryModal(container));
+    document.body.appendChild(btn);
+
+    return btn;
+  };
+
+  // Open gallery modal
+  const openGalleryModal = (container) => {
+    allImages = Array.from(container.querySelectorAll('.gallery-item img, .photo-grid-item img'));
+    if (allImages.length === 0) return;
+
+    // Create modal
+    modal = document.createElement('div');
+    modal.className = 'gallery-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Galerie-Übersicht mit allen Fotos');
+
+    modal.innerHTML = `
+      <div class="gallery-modal-header">
+        <h2 class="gallery-modal-title">Galerie-Übersicht</h2>
+        <button class="gallery-modal-close" aria-label="Galerie schließen">&times;</button>
+      </div>
+      <div class="gallery-modal-content">
+        <div class="gallery-modal-grid" role="list"></div>
+      </div>
+    `;
+
+    const grid = modal.querySelector('.gallery-modal-grid');
+
+    // Add all images to grid
+    allImages.forEach((img, index) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-modal-item';
+      item.setAttribute('role', 'listitem');
+      item.setAttribute('tabindex', '0');
+
+      const imgClone = document.createElement('img');
+      imgClone.src = img.src;
+      imgClone.alt = img.alt || `Foto ${index + 1}`;
+      imgClone.loading = 'lazy';
+
+      const overlay = document.createElement('div');
+      overlay.className = 'gallery-modal-item-overlay';
+
+      const info = document.createElement('div');
+      info.className = 'gallery-modal-item-info';
+
+      const title = document.createElement('p');
+      title.className = 'gallery-modal-item-title';
+      title.textContent = img.alt || `Foto ${index + 1}`;
+
+      const counter = document.createElement('div');
+      counter.className = 'gallery-modal-counter';
+      counter.textContent = `${index + 1} / ${allImages.length}`;
+
+      info.appendChild(title);
+      overlay.appendChild(info);
+      item.appendChild(imgClone);
+      item.appendChild(counter);
+      item.appendChild(overlay);
+
+      // Click to open in lightbox
+      item.addEventListener('click', () => {
+        closeGalleryModal();
+        setTimeout(() => {
+          if (typeof createLightbox === 'function') {
+            createLightbox(index);
+          } else {
+            // Trigger lightbox manually by clicking the original image
+            allImages[index].click();
+          }
+        }, 300);
+      });
+
+      // Keyboard support
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+
+      grid.appendChild(item);
+    });
+
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+
+    // Animate in
+    requestAnimationFrame(() => {
+      modal.classList.add('active');
+    });
+
+    // Close button
+    const closeBtn = modal.querySelector('.gallery-modal-close');
+    closeBtn.addEventListener('click', closeGalleryModal);
+
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeGalleryModal();
+      }
+    });
+
+    // Close on ESC key
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeGalleryModal();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    modal._handleEscape = handleEscape;
+  };
+
+  // Close gallery modal
+  const closeGalleryModal = () => {
+    if (!modal) return;
+
+    modal.classList.remove('active');
+
+    setTimeout(() => {
+      if (modal && modal.parentNode) {
+        modal.remove();
+      }
+      modal = null;
+      document.body.style.overflow = '';
+
+      if (modal && modal._handleEscape) {
+        document.removeEventListener('keydown', modal._handleEscape);
+      }
+    }, 400);
+  };
+
+  // Initialize for each gallery
+  galleryContainers.forEach(container => {
+    createShowAllButton(container);
+  });
+};
+
 const init = () => {
   initTheme();
   initNavigation();
@@ -959,6 +1134,7 @@ const init = () => {
   initParallax();
   initImageHoverZoom();
   initAccessibility();
+  initGalleryModal();
 };
 
 // Initialize when DOM is ready
