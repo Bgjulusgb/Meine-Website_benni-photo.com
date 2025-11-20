@@ -115,6 +115,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-padding-top: 100px; /* Für Fixed Header */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -230,7 +231,7 @@ section {
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   font-family: var(--font-display);
   font-size: 1.75rem;
   font-weight: 900;
@@ -246,26 +247,48 @@ section {
 .logo:hover {
   background: var(--text-primary);
   color: var(--bg-primary);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-md);
 }
 
 .logo-image {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  filter: grayscale(100%);
   transition: all var(--transition-base);
 }
 
-[data-theme="dark"] .logo-image {
+/* SVG Logo Support - Weißer Font wird zu Schwarz im Light Theme */
+.logo-image[src$=".svg"] {
+  filter: brightness(0) grayscale(100%);
+}
+
+[data-theme="dark"] .logo-image[src$=".svg"] {
+  filter: brightness(0) invert(1) grayscale(100%);
+}
+
+.logo:hover .logo-image[src$=".svg"] {
+  filter: brightness(0) invert(1) grayscale(100%);
+}
+
+[data-theme="dark"] .logo:hover .logo-image[src$=".svg"] {
+  filter: brightness(0) grayscale(100%);
+}
+
+/* PNG Logo Support - Fallback für hochauflösende PNGs */
+.logo-image[src$=".png"] {
+  filter: grayscale(100%);
+}
+
+[data-theme="dark"] .logo-image[src$=".png"] {
   filter: grayscale(100%) brightness(0) invert(1);
 }
 
-.logo:hover .logo-image {
+.logo:hover .logo-image[src$=".png"] {
   filter: grayscale(100%) brightness(0) invert(1);
 }
 
-[data-theme="dark"] .logo:hover .logo-image {
+[data-theme="dark"] .logo:hover .logo-image[src$=".png"] {
   filter: grayscale(100%);
 }
 
@@ -1141,18 +1164,35 @@ section {
 }
 
 .preloader-logo {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   margin-bottom: var(--space-md);
-  animation: pulse 2s ease-in-out infinite;
-  filter: grayscale(100%) brightness(0) invert(1);
-  /* Macht das Logo rein weiß auf schwarzem Hintergrund */
+  animation: pulse 2s ease-in-out infinite, rotate-subtle 20s linear infinite;
 }
 
 .preloader-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* SVG Logo im Preloader - Weißer Font wird invertiert */
+.preloader-logo img[src$=".svg"] {
+  filter: grayscale(100%) brightness(0) invert(1);
+}
+
+/* PNG Logo im Preloader - Fallback */
+.preloader-logo img[src$=".png"] {
+  filter: grayscale(100%) brightness(0) invert(1);
+}
+
+@keyframes rotate-subtle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
 }
 
 .preloader-text {
@@ -1182,4 +1222,333 @@ section {
 @keyframes fadeInOut {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
+}
+
+/* === UX ENHANCEMENTS === */
+
+/* Smooth Page Load Animation */
+body {
+  animation: pageLoad 0.5s ease-out;
+}
+
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus Visible für bessere Tastatur-Navigation */
+*:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection Styling */
+::selection {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+::-moz-selection {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--text-primary) 0%, var(--gray-600) 100%);
+  z-index: 10000;
+  transition: width 0.1s ease;
+}
+
+/* Loading State für Bilder */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img:not([src]) {
+  opacity: 0;
+}
+
+img[loading="lazy"] {
+  background: var(--bg-tertiary);
+}
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Hover Lift Effect für interaktive Elemente */
+.hover-lift {
+  transition: all var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Ripple Effect für Clicks */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Tooltip System */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-base);
+  z-index: 1000;
+}
+
+[data-tooltip]::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+  border: 5px solid transparent;
+  border-top-color: var(--text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-base);
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Verbesserte Gallery Hover Effects */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: var(--bg-tertiary);
+}
+
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.gallery-item:hover::before {
+  opacity: 1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1) rotate(1deg);
+}
+
+/* Badge Animations */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+  animation: fadeInUp 0.6s ease, float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Improved Theme Toggle Animation */
+.theme-toggle {
+  position: relative;
+  width: 60px;
+  height: 32px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  border-color: var(--text-primary);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .theme-toggle-slider {
+  transform: translateX(28px) rotate(360deg);
+}
+
+/* Mobile Menu Animation Verbesserung */
+@media (max-width: 768px) {
+  .nav-menu {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg-primary);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-xl) var(--space-lg);
+    gap: var(--space-md);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+  }
+
+  .nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    font-size: 1.125rem;
+    padding: var(--space-sm) 0;
+    width: 100%;
+    text-align: center;
+    animation: slideInRight 0.3s ease both;
+  }
+
+  .nav-menu.active .nav-link:nth-child(1) { animation-delay: 0.05s; }
+  .nav-menu.active .nav-link:nth-child(2) { animation-delay: 0.1s; }
+  .nav-menu.active .nav-link:nth-child(3) { animation-delay: 0.15s; }
+  .nav-menu.active .nav-link:nth-child(4) { animation-delay: 0.2s; }
+  .nav-menu.active .nav-link:nth-child(5) { animation-delay: 0.25s; }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .header,
+  .footer,
+  .preloader,
+  .theme-toggle,
+  .menu-toggle,
+  .skip-link,
+  .scroll-progress {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
 }
