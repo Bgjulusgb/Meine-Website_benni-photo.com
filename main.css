@@ -27,14 +27,14 @@ Kreatives, Responsives & Elegantes Design
   --gray-800: #262626;
   --gray-900: #171717;
 
-  /* Theme Colors */
+  /* Theme Colors - Verbesserte Kontraste */
   --bg-primary: #ffffff;
   --bg-secondary: #fafafa;
   --bg-tertiary: #f5f5f5;
-  --text-primary: #171717;
-  --text-secondary: #525252;
-  --text-tertiary: #a3a3a3;
-  --border-color: #e5e5e5;
+  --text-primary: #0a0a0a;
+  --text-secondary: #404040;
+  --text-tertiary: #737373;
+  --border-color: #e0e0e0;
 
   /* Gradients - Black & White Only */
   --gradient-primary: linear-gradient(135deg, #000000 0%, #404040 100%);
@@ -78,6 +78,19 @@ Kreatives, Responsives & Elegantes Design
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-display: 'Poppins', var(--font-sans);
 
+  /* Font Sizes - Verbesserte Skalierung */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+
   /* Z-Index */
   --z-dropdown: 1000;
   --z-sticky: 1020;
@@ -89,12 +102,12 @@ Kreatives, Responsives & Elegantes Design
 /* Dark Theme */
 [data-theme="dark"] {
   --bg-primary: #0a0a0a;
-  --bg-secondary: #141414;
-  --bg-tertiary: #1f1f1f;
-  --text-primary: #ffffff;
-  --text-secondary: #d4d4d4;
-  --text-tertiary: #737373;
-  --border-color: #262626;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1a1a1a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #c0c0c0;
+  --text-tertiary: #808080;
+  --border-color: #2a2a2a;
   --shadow-sm: 0 1px 2px 0 rgba(255, 255, 255, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(255, 255, 255, 0.1);
@@ -128,33 +141,62 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--text-primary);
   background: var(--bg-primary);
   overflow-x: hidden;
   transition: background var(--transition-base), color var(--transition-base);
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
 }
 
 /* === TYPOGRAPHY === */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: var(--space-md);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
 }
 
-h1 { font-size: clamp(2.5rem, 7vw, 5rem); }
-h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
-h3 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h4 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h5 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
-h6 { font-size: clamp(1.125rem, 2vw, 1.25rem); }
+h1 {
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+h2 {
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  font-weight: 800;
+}
+h3 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+}
+h4 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 700;
+}
+h5 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+}
+h6 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 600;
+}
 
 p {
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
   color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: var(--text-base);
+  max-width: 75ch;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 a {
@@ -170,24 +212,24 @@ a:hover {
 /* === LAYOUT === */
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 0 var(--space-md);
-  }
+  padding: 0 clamp(1rem, 5vw, 2rem);
 }
 
 section {
-  padding: var(--space-4xl) 0;
+  padding: clamp(3rem, 8vw, 8rem) 0;
+}
+
+@media (max-width: 1024px) {
+  section {
+    padding: clamp(2.5rem, 6vw, 5rem) 0;
+  }
 }
 
 @media (max-width: 768px) {
   section {
-    padding: var(--space-2xl) 0;
+    padding: clamp(2rem, 5vw, 3rem) 0;
   }
 }
 
@@ -233,63 +275,52 @@ section {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   position: relative;
   transition: all var(--transition-base);
   padding: var(--space-xs) var(--space-md);
-  border: 2px solid var(--text-primary);
+  border: 2px solid transparent;
   border-radius: var(--radius-sm);
 }
 
 .logo:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-md);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .logo-image {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-base);
 }
 
-/* SVG Logo Support - Weißer Font wird zu Schwarz im Light Theme */
+.logo:hover .logo-image {
+  transform: scale(1.05);
+}
+
+/* SVG Logo - Keine Farb-Invertierung, natürliche Farben */
 .logo-image[src$=".svg"] {
-  filter: brightness(0) grayscale(100%);
+  /* SVG behält seine natürlichen Farben - kein Filter */
+  filter: none;
 }
 
 [data-theme="dark"] .logo-image[src$=".svg"] {
-  filter: brightness(0) invert(1) grayscale(100%);
+  /* Auch im Dark Theme: natürliche Farben */
+  filter: none;
 }
 
-.logo:hover .logo-image[src$=".svg"] {
-  filter: brightness(0) invert(1) grayscale(100%);
-}
-
-[data-theme="dark"] .logo:hover .logo-image[src$=".svg"] {
-  filter: brightness(0) grayscale(100%);
-}
-
-/* PNG Logo Support - Fallback für hochauflösende PNGs */
+/* PNG Logo - Nur Grayscale für Konsistenz */
 .logo-image[src$=".png"] {
   filter: grayscale(100%);
 }
 
 [data-theme="dark"] .logo-image[src$=".png"] {
-  filter: grayscale(100%) brightness(0) invert(1);
-}
-
-.logo:hover .logo-image[src$=".png"] {
-  filter: grayscale(100%) brightness(0) invert(1);
-}
-
-[data-theme="dark"] .logo:hover .logo-image[src$=".png"] {
-  filter: grayscale(100%);
+  filter: grayscale(100%) brightness(1.2);
 }
 
 .nav-menu {
@@ -302,10 +333,14 @@ section {
 .nav-link {
   position: relative;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--text-secondary);
+  padding: var(--space-xs) 0;
+  min-height: 44px; /* Touch-friendly */
+  display: flex;
+  align-items: center;
 }
 
 .nav-link::after {
@@ -427,12 +462,12 @@ section {
 
 /* === HERO SECTION === */
 .hero {
-  min-height: 100vh;
+  min-height: clamp(600px, 100vh, 1200px);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-3xl) var(--space-lg);
+  padding: clamp(4rem, 10vh, 8rem) clamp(1rem, 5vw, 2rem);
   position: relative;
   overflow: hidden;
   background: radial-gradient(ellipse at center, var(--bg-secondary) 0%, var(--bg-primary) 100%);
@@ -476,23 +511,24 @@ section {
 }
 
 .hero-title {
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-size: clamp(2.5rem, 12vw, 7rem);
   font-weight: 900;
-  line-height: 1;
-  margin-bottom: var(--space-lg);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1.05;
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+  color: var(--text-primary);
   animation: fadeInUp 0.6s ease 0.2s both;
+  letter-spacing: -0.03em;
 }
 
 .hero-subtitle {
-  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   color: var(--text-secondary);
-  margin-bottom: var(--space-xl);
-  line-height: 1.6;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  line-height: 1.7;
   animation: fadeInUp 0.6s ease 0.4s both;
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-cta {
@@ -520,9 +556,9 @@ section {
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
-  padding: 1rem 2rem;
+  padding: clamp(0.875rem, 2vw, 1.125rem) clamp(1.5rem, 4vw, 2.5rem);
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -533,6 +569,7 @@ section {
   position: relative;
   overflow: hidden;
   user-select: none;
+  min-height: 48px; /* Touch-friendly */
 }
 
 .btn::before {
@@ -619,7 +656,7 @@ section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
-  padding: var(--space-xl);
+  padding: clamp(1.5rem, 4vw, 3rem);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -772,15 +809,16 @@ section {
 .form-textarea,
 .form-select {
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: clamp(0.875rem, 2vw, 1.125rem) clamp(1rem, 2.5vw, 1.5rem);
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
   color: var(--text-primary);
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: all var(--transition-base);
   position: relative;
+  min-height: 48px; /* Touch-friendly */
 }
 
 .form-input:focus,
@@ -1050,37 +1088,43 @@ section {
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
   :root {
-    --space-3xl: 4rem;
-    --space-4xl: 6rem;
+    --space-3xl: clamp(3rem, 6vw, 4rem);
+    --space-4xl: clamp(4rem, 8vw, 6rem);
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 3rem;
-    --space-4xl: 4rem;
+    --space-xl: clamp(2rem, 4vw, 2.5rem);
+    --space-2xl: clamp(2.5rem, 5vw, 3rem);
+    --space-3xl: clamp(3rem, 6vw, 3.5rem);
+    --space-4xl: clamp(3.5rem, 7vw, 4rem);
   }
 
   body {
-    font-size: 0.9375rem;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
+    font-size: clamp(0.9375rem, 2vw, 1rem);
   }
 
   .hero-cta {
     flex-direction: column;
     width: 100%;
+    gap: var(--space-md);
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    max-width: 320px;
   }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 var(--space-sm);
+  html {
+    font-size: 15px; /* Leicht kleinere Basis auf sehr kleinen Geräten */
+  }
+
+  .hero {
+    min-height: auto;
+    padding: clamp(3rem, 8vh, 5rem) var(--space-md);
   }
 }
 
@@ -1164,10 +1208,10 @@ section {
 }
 
 .preloader-logo {
-  width: 150px;
-  height: 150px;
+  width: clamp(120px, 20vw, 180px);
+  height: clamp(120px, 20vw, 180px);
   margin-bottom: var(--space-md);
-  animation: pulse 2s ease-in-out infinite, rotate-subtle 20s linear infinite;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .preloader-logo img {
@@ -1176,9 +1220,10 @@ section {
   object-fit: contain;
 }
 
-/* SVG Logo im Preloader - Weißer Font wird invertiert */
+/* SVG Logo im Preloader - Behält natürliche Farben, nur Helligkeit angepasst */
 .preloader-logo img[src$=".svg"] {
-  filter: grayscale(100%) brightness(0) invert(1);
+  filter: brightness(10) grayscale(100%);
+  /* Macht weiße SVG-Elemente sehr hell/sichtbar auf schwarzem Hintergrund */
 }
 
 /* PNG Logo im Preloader - Fallback */
