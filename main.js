@@ -503,7 +503,7 @@ const LazyLoad = {
 };
 
 // ==========================================
-// PRELOADER - PERFEKTIONIERT BIS 100%
+// PRELOADER - KOMPLETT NEU & ROBUST
 // ==========================================
 const Preloader = {
   init() {
@@ -514,118 +514,170 @@ const Preloader = {
     const progressBar = document.querySelector('.preloader-progress');
     const textEl = document.querySelector('.preloader-text');
 
-    let progress = 0;
+    let currentProgress = 0;
     let targetProgress = 0;
     let isComplete = false;
+    let animationFrameId = null;
 
-    // Smooth Progress Animation
+    // Smooth Progress Animation with easing
     const animateProgress = () => {
-      if (progress < targetProgress) {
-        progress += Math.min(2, targetProgress - progress);
-        if (percentageEl) {
-          percentageEl.textContent = `${Math.floor(progress)}%`;
-          percentageEl.style.transform = `scale(${1 + progress / 400})`;
+      if (isComplete) return;
 
-          // Update text based on progress
-          if (textEl) {
-            if (progress < 30) textEl.textContent = 'Initializing...';
-            else if (progress < 60) textEl.textContent = 'Loading Assets...';
-            else if (progress < 90) textEl.textContent = 'Preparing Interface...';
-            else if (progress < 100) textEl.textContent = 'Almost Ready...';
-            else textEl.textContent = 'Complete!';
-          }
-        }
-        if (progressBar) {
-          progressBar.style.setProperty('--progress', `${progress}%`);
-        }
-        requestAnimationFrame(animateProgress);
-      } else if (progress >= 100 && !isComplete) {
+      // Smooth easing towards target
+      const diff = targetProgress - currentProgress;
+      if (Math.abs(diff) > 0.1) {
+        currentProgress += diff * 0.15; // Smooth easing
+      } else {
+        currentProgress = targetProgress;
+      }
+
+      const displayProgress = Math.floor(currentProgress);
+
+      // Update UI elements
+      if (percentageEl) {
+        percentageEl.textContent = `${displayProgress}%`;
+        percentageEl.setAttribute('data-progress', displayProgress);
+      }
+
+      if (progressBar) {
+        progressBar.style.setProperty('--progress', `${currentProgress}%`);
+      }
+
+      // Update loading text
+      if (textEl) {
+        if (displayProgress < 25) textEl.textContent = 'Initializing...';
+        else if (displayProgress < 50) textEl.textContent = 'Loading Assets...';
+        else if (displayProgress < 75) textEl.textContent = 'Preparing Interface...';
+        else if (displayProgress < 95) textEl.textContent = 'Almost Ready...';
+        else if (displayProgress >= 95 && displayProgress < 100) textEl.textContent = 'Finalizing...';
+        else textEl.textContent = 'Complete!';
+      }
+
+      // Check if we reached 100%
+      if (currentProgress >= 99.9 && !isComplete) {
         isComplete = true;
         completeLoading();
+        return;
       }
+
+      // Continue animation
+      animationFrameId = requestAnimationFrame(animateProgress);
     };
 
     // Complete Loading Function
     const completeLoading = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
       setTimeout(() => {
         preloader.classList.add('hidden');
+        document.body.style.overflow = ''; // Re-enable scrolling
+
         setTimeout(() => {
           if (preloader.parentNode) {
             preloader.remove();
           }
           document.body.classList.add('loaded');
         }, 800);
-      }, 300);
+      }, 400);
     };
 
-    // Progressive Loading Stages
-    const loadingStages = [
-      { time: 100, progress: 15 },
-      { time: 300, progress: 30 },
-      { time: 500, progress: 45 },
-      { time: 700, progress: 60 },
-      { time: 900, progress: 75 }
+    // STRATEGIE 1: Zeitbasierte Stages (garantiert mindestens diesen Fortschritt)
+    const timeBasedStages = [
+      { delay: 0, progress: 0 },
+      { delay: 100, progress: 20 },
+      { delay: 300, progress: 35 },
+      { delay: 500, progress: 50 },
+      { delay: 800, progress: 65 },
+      { delay: 1200, progress: 80 }
     ];
 
-    loadingStages.forEach(stage => {
+    timeBasedStages.forEach(stage => {
       setTimeout(() => {
         if (!isComplete) {
           targetProgress = Math.max(targetProgress, stage.progress);
-          animateProgress();
         }
-      }, stage.time);
+      }, stage.delay);
     });
 
-    // Track actual resources
-    let resourcesLoaded = 0;
-    const totalResources = document.images.length +
-                          document.styleSheets.length +
-                          (document.fonts ? document.fonts.size : 0);
+    // STRATEGIE 2: Ressourcen-basiertes Tracking
+    let loadedResources = 0;
+    const images = Array.from(document.images);
+    const totalImages = images.length;
 
-    const checkResources = () => {
-      resourcesLoaded++;
-      const resourceProgress = Math.min(90, Math.floor((resourcesLoaded / Math.max(totalResources, 1)) * 90));
-      targetProgress = Math.max(targetProgress, resourceProgress);
-      animateProgress();
+    const updateResourceProgress = () => {
+      loadedResources++;
+      if (totalImages > 0) {
+        const resourceProgress = 50 + Math.floor((loadedResources / totalImages) * 35); // 50-85%
+        targetProgress = Math.max(targetProgress, resourceProgress);
+      }
     };
 
-    // Track images
-    Array.from(document.images).forEach(img => {
+    // Track all images
+    images.forEach(img => {
       if (img.complete) {
-        checkResources();
+        updateResourceProgress();
       } else {
-        img.addEventListener('load', checkResources);
-        img.addEventListener('error', checkResources);
+        img.addEventListener('load', updateResourceProgress, { once: true });
+        img.addEventListener('error', updateResourceProgress, { once: true });
       }
     });
 
     // Track fonts
-    if (document.fonts) {
+    if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
+        if (!isComplete) {
+          targetProgress = Math.max(targetProgress, 85);
+        }
+      }).catch(() => {
+        // Font loading failed, continue anyway
         targetProgress = Math.max(targetProgress, 85);
-        animateProgress();
       });
     }
 
-    // Window Load - GARANTIERT 100%
-    window.addEventListener('load', () => {
-      // Warte kurz, dann gehe zu 100%
+    // STRATEGIE 3: window.load Event - TRIGGER ZU 100%
+    const finishPreloader = () => {
       setTimeout(() => {
-        targetProgress = 100;
-        animateProgress();
-      }, 200);
-    });
+        if (!isComplete) {
+          targetProgress = 100;
+        }
+      }, 100);
+    };
 
-    // Start initial animation
-    animateProgress();
+    if (document.readyState === 'complete') {
+      // Page already loaded
+      finishPreloader();
+    } else {
+      window.addEventListener('load', finishPreloader, { once: true });
+    }
 
-    // Fallback - force complete after 8 seconds
+    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 5 Sekunden
     setTimeout(() => {
       if (!isComplete) {
+        console.log('Preloader: Fallback triggered - forcing completion');
         targetProgress = 100;
-        animateProgress();
+      }
+    }, 5000);
+
+    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 8 Sekunden
+    setTimeout(() => {
+      if (!isComplete) {
+        console.warn('Preloader: Emergency fallback - force removing preloader');
+        isComplete = true;
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+          if (preloader.parentNode) {
+            preloader.remove();
+          }
+        }, 800);
       }
     }, 8000);
+
+    // Start animation loop
+    animateProgress();
+
+    console.log('Preloader initialized with multiple strategies');
   }
 };
 
