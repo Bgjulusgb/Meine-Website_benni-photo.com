@@ -611,17 +611,110 @@ const getABTestVariant = (testName, variants = ['A', 'B']) => {
 };
 
 // ==========================================
+// WRITING EFFECTS FOR FORMS
+// ==========================================
+
+const initWritingEffects = () => {
+  const formInputs = document.querySelectorAll('.form-input, .form-textarea');
+
+  formInputs.forEach(input => {
+    let typingTimer;
+
+    // Typing indicator
+    input.addEventListener('input', () => {
+      clearTimeout(typingTimer);
+      input.classList.add('typing');
+
+      // Remove typing class after 600ms of no input
+      typingTimer = setTimeout(() => {
+        input.classList.remove('typing');
+      }, 600);
+    });
+
+    // Character counter for textarea
+    if (input.classList.contains('form-textarea')) {
+      const maxLength = input.getAttribute('maxlength') || 500;
+      const counter = document.createElement('div');
+      counter.className = 'form-character-counter';
+      counter.textContent = `0 / ${maxLength}`;
+
+      input.parentElement.style.position = 'relative';
+      input.parentElement.appendChild(counter);
+
+      input.addEventListener('input', () => {
+        const length = input.value.length;
+        counter.textContent = `${length} / ${maxLength}`;
+
+        // Highlight when approaching limit
+        if (length > maxLength * 0.9) {
+          counter.classList.add('limit-approaching');
+        } else {
+          counter.classList.remove('limit-approaching');
+        }
+      });
+    }
+
+    // Success state on valid input
+    input.addEventListener('blur', () => {
+      if (input.value.trim().length > 0 && !input.classList.contains('error')) {
+        input.classList.add('success');
+        setTimeout(() => {
+          input.classList.remove('success');
+        }, 2000);
+      }
+    });
+  });
+};
+
+// ==========================================
+// PRELOADER WITH PERCENTAGE
+// ==========================================
+
+const initPreloader = () => {
+  const preloader = document.querySelector('.preloader');
+  const percentageEl = document.querySelector('.preloader-percentage');
+
+  if (!preloader || !percentageEl) return;
+
+  let progress = 0;
+  const duration = 2000; // 2 seconds
+  const interval = 20; // Update every 20ms
+  const steps = duration / interval;
+  const increment = 100 / steps;
+
+  const updateProgress = setInterval(() => {
+    progress += increment;
+
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(updateProgress);
+
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+          preloader.remove();
+        }, 800);
+      }, 300);
+    }
+
+    percentageEl.textContent = `${Math.round(progress)}%`;
+  }, interval);
+};
+
+// ==========================================
 // INITIALIZATION
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize in optimal order
+  initPreloader();
   initCookieConsent();
   initContactForm();
   initNewsletter();
   initSocialSharing();
   initPerformanceMonitoring();
   initErrorTracking();
+  initWritingEffects();
   trackPageView();
 });
 
