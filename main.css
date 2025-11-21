@@ -281,22 +281,22 @@ section {
   width: 32px;
   height: 32px;
   object-fit: contain;
-  /* Logo bleibt immer weiß, keine Filter oder Invertierungen */
-  filter: brightness(0) invert(1);
+  /* Kein Filter - Original SVG verwenden */
+  filter: none;
   transition: none;
 }
 
-/* Logo bleibt in allen Themes und Zuständen gleich - immer weiß */
+/* Logo bleibt original in allen Themes */
 [data-theme="dark"] .logo-image {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .logo:hover .logo-image {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 [data-theme="dark"] .logo:hover .logo-image {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .nav-menu {
@@ -942,9 +942,10 @@ section {
     0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* === FORMS === */
+/* === FORMS - Mit Writing-Effekten === */
 .form-group {
   margin-bottom: var(--space-lg);
+  position: relative;
 }
 
 .form-label {
@@ -954,6 +955,7 @@ section {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  transition: all var(--transition-base);
 }
 
 .form-input,
@@ -971,51 +973,179 @@ section {
   position: relative;
 }
 
+/* Typing Cursor Effekt */
 .form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
+.form-textarea:focus {
   outline: none;
   border-color: var(--text-primary);
   box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
   background: var(--bg-primary);
   transform: translateY(-2px);
+  animation: typingBorderPulse 1.5s ease-in-out infinite;
 }
 
 [data-theme="dark"] .form-input:focus,
-[data-theme="dark"] .form-textarea:focus,
-[data-theme="dark"] .form-select:focus {
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+[data-theme="dark"] .form-textarea:focus {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  animation: typingBorderPulseDark 1.5s ease-in-out infinite;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+  background: var(--bg-primary);
 }
 
 /* Writing Animation beim Tippen */
-.form-input:not(:placeholder-shown),
-.form-textarea:not(:placeholder-shown) {
-  animation: typing-glow 0.3s ease;
+.form-input.typing,
+.form-textarea.typing {
+  border-color: var(--text-primary);
+  animation: typingGlow 0.6s ease infinite;
 }
 
-@keyframes typing-glow {
+[data-theme="dark"] .form-input.typing,
+[data-theme="dark"] .form-textarea.typing {
+  animation: typingGlowDark 0.6s ease infinite;
+}
+
+@keyframes typingBorderPulse {
+  0%, 100% {
+    border-color: var(--text-primary);
+  }
+  50% {
+    border-color: var(--text-secondary);
+  }
+}
+
+@keyframes typingBorderPulseDark {
+  0%, 100% {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05),
+                0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    border-color: #e0e0e0;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08),
+                0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes typingGlow {
   0%, 100% {
     box-shadow: 0 0 0 0px rgba(0, 0, 0, 0);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.08);
   }
+}
+
+@keyframes typingGlowDark {
+  0%, 100% {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
+                0 4px 16px rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Character Counter */
+.form-character-counter {
+  position: absolute;
+  bottom: -24px;
+  right: 0;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  transition: all var(--transition-fast);
+}
+
+.form-character-counter.limit-approaching {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+  display: none;
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+  animation: fadeInOut 1.5s ease-in-out infinite;
+}
+
+.typing-indicator.active {
+  display: block;
+}
+
+.typing-indicator::after {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 12px;
+  background: var(--text-primary);
+  margin-left: 4px;
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 .form-textarea {
   min-height: 150px;
   resize: vertical;
+  line-height: 1.6;
 }
 
+/* Success State */
+.form-input.success,
+.form-textarea.success {
+  border-color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+/* Error State */
 .form-input.error,
 .form-textarea.error {
-  border-color: var(--color-accent);
+  border-color: #ff4444;
+  animation: shakeError 0.5s ease;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
 }
 
 .error-message {
-  color: var(--color-accent);
+  color: #ff4444;
   font-size: 0.875rem;
   margin-top: var(--space-xs);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === FOOTER === */
@@ -1489,15 +1619,13 @@ section {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   animation: logoFloat 3s ease-in-out infinite;
-  filter:
-    grayscale(100%)
-    brightness(0)
-    invert(1)
-    drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
-    drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  /* Kein Filter - Original Logo mit Glow-Effekt */
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6))
+          drop-shadow(0 0 30px rgba(255, 255, 255, 0.4))
+          drop-shadow(0 0 45px rgba(255, 255, 255, 0.2));
 }
 
 .preloader-logo img {
@@ -1580,21 +1708,21 @@ section {
 
 @keyframes logoFloat {
   0%, 100% {
-    transform: translate(-50%, -50%) translateY(0px) scale(1);
-    filter:
-      grayscale(100%)
-      brightness(0)
-      invert(1)
-      drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    transform: translate(-50%, -50%) translateY(0px) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 30px rgba(255, 255, 255, 0.4));
+  }
+  25% {
+    transform: translate(-50%, -50%) translateY(-8px) scale(1.03) rotate(-2deg);
   }
   50% {
-    transform: translate(-50%, -50%) translateY(-10px) scale(1.05);
-    filter:
-      grayscale(100%)
-      brightness(0)
-      invert(1)
-      drop-shadow(0 0 20px rgba(255, 255, 255, 0.8))
-      drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+    transform: translate(-50%, -50%) translateY(-12px) scale(1.08) rotate(0deg);
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9))
+            drop-shadow(0 0 45px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
+  }
+  75% {
+    transform: translate(-50%, -50%) translateY(-8px) scale(1.03) rotate(2deg);
   }
 }
 
@@ -1614,6 +1742,43 @@ section {
   }
 }
 
+/* Percentage Counter */
+.preloader-percentage {
+  position: absolute;
+  bottom: 140px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-display);
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  animation: percentagePulse 1s ease-in-out infinite;
+}
+
+@keyframes percentagePulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Partikel-Effekte um das Logo */
+.preloader-spinner::after {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: particleRotate 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes particleRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Mobile Optimierung für Preloader */
 @media (max-width: 768px) {
   .preloader-spinner {
@@ -1622,8 +1787,8 @@ section {
   }
 
   .preloader-logo {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
   }
 
   .preloader-progress {
@@ -1634,5 +1799,10 @@ section {
   .preloader-text {
     font-size: 0.75rem;
     margin-top: 150px;
+  }
+
+  .preloader-percentage {
+    font-size: 1.25rem;
+    bottom: 120px;
   }
 }
