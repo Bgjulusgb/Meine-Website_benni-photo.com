@@ -16,21 +16,297 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
+
+    <style>
+        /* Sport Gallery Specific Styles */
+        .sports-gallery-container {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: var(--space-3xl);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .gallery-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: var(--space-md);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="dark"] .gallery-header h1 {
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+        }
+
+        /* Filter Buttons */
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-3xl);
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .filter-btn {
+            padding: var(--space-md) var(--space-xl);
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-primary);
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        [data-theme="dark"] .filter-btn.active {
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Masonry Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        .gallery-image-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .gallery-image-card.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-image-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--text-primary);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        [data-theme="dark"] .gallery-image-card:hover {
+            box-shadow: var(--shadow-glow);
+        }
+
+        .gallery-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* 4:3 aspect ratio */
+            overflow: hidden;
+            background: var(--bg-tertiary);
+        }
+
+        .gallery-image-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1);
+            transition: all 0.5s ease;
+        }
+
+        .gallery-image-card:hover img {
+            transform: scale(1.1);
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        /* Image Overlay */
+        .gallery-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.9) 0%,
+                rgba(0, 0, 0, 0.6) 30%,
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: var(--space-lg);
+            color: white;
+        }
+
+        .gallery-image-card:hover .gallery-image-overlay {
+            opacity: 1;
+        }
+
+        .gallery-image-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .gallery-image-category {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Loading Skeleton */
+        .gallery-image-skeleton {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                var(--bg-tertiary) 0%,
+                var(--bg-elevated) 50%,
+                var(--bg-tertiary) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Stats Bar */
+        .gallery-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-2xl);
+            padding: var(--space-xl);
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            margin-top: var(--space-3xl);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Load More Button */
+        .load-more-container {
+            text-align: center;
+            margin-top: var(--space-3xl);
+        }
+
+        .load-more-btn {
+            padding: var(--space-lg) var(--space-3xl);
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: 2px solid var(--text-primary);
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .load-more-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+
+            .gallery-filters {
+                gap: var(--space-sm);
+            }
+
+            .filter-btn {
+                padding: var(--space-sm) var(--space-md);
+                font-size: 0.8rem;
+            }
+
+            .gallery-stats {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Preloader -->
     <div class="preloader">
-        <div class="preloader-spinner"></div>
-        <div class="preloader-logo">
-            <img src="android-chrome-512x512.png" alt="BG Logo">
+        <div class="preloader-spinner">
+            <div class="preloader-logo">
+                <img src="Transparent_Logo.svg" alt="BG Logo">
+            </div>
         </div>
-        <div class="preloader-text">Loading...</div>
+        <div class="preloader-percentage">0%</div>
+        <div class="preloader-progress"></div>
+        <div class="preloader-text">Loading Gallery...</div>
     </div>
+
     <a href="#main" class="skip-link">Zum Inhalt springen</a>
+
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <nav class="nav">
                 <a href="index.html" class="logo">
-                    <img src="favicon-32x32.png" alt="BG" class="logo-image">
+                    <img src="Transparent_Logo.svg" alt="BG" class="logo-image">
                     <span>BG</span>
                 </a>
                 <button class="menu-toggle" id="menuToggle" aria-label="Menü">
@@ -47,52 +323,271 @@
             </nav>
         </div>
     </header>
-    <main id="main">
-        <section class="hero" style="min-height: 60vh;">
-            <div class="hero-content">
+
+    <!-- Main Content -->
+    <main id="main" class="sports-gallery-container">
+        <div class="container">
+            <!-- Gallery Header -->
+            <div class="gallery-header">
                 <div class="hero-badge">⚽ Sport Photography</div>
-                <h1 class="hero-title">SPORT</h1>
-                <p class="hero-subtitle">Action, Präzision & Emotionen</p>
+                <h1>SPORT GALERIE</h1>
+                <p style="color: var(--text-secondary); font-size: 1.125rem;">
+                    Action, Präzision & Emotion – Die intensivsten Momente des Sports
+                </p>
             </div>
-        </section>
-        <section>
-            <div class="container">
-                <div class="grid grid-3">
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=600&fit=crop" alt="Fußball" loading="lazy">
-                        <div class="gallery-info"><h3>Bundesliga Action</h3><p>Fußball</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop" alt="Basketball" loading="lazy">
-                        <div class="gallery-info"><h3>Basketball Finals</h3><p>Basketball</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop" alt="Laufen" loading="lazy">
-                        <div class="gallery-info"><h3>Marathon</h3><p>Laufsport</p></div>
-                    </div>
+
+            <!-- Filter Buttons -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Alle</button>
+                <button class="filter-btn" data-filter="fussball">Fußball</button>
+                <button class="filter-btn" data-filter="basketball">Basketball</button>
+                <button class="filter-btn" data-filter="laufen">Laufen</button>
+                <button class="filter-btn" data-filter="handball">Handball</button>
+                <button class="filter-btn" data-filter="tennis">Tennis</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Images werden dynamisch geladen -->
+            </div>
+
+            <!-- Load More -->
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn">Mehr laden</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="gallery-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalImages">0</div>
+                    <div class="stat-label">Bilder</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Sportarten</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Events</div>
                 </div>
             </div>
-        </section>
-        <section style="background: var(--bg-secondary);">
+        </div>
+
+        <!-- CTA Section -->
+        <section style="margin-top: var(--space-4xl);">
             <div class="container">
                 <div class="card text-center" style="padding: var(--space-3xl);">
                     <h2>Buchen Sie Ihre Sport-Fotografie</h2>
-                    <p style="font-size: 1.125rem; margin-bottom: var(--space-xl);">Ich halte die intensivsten Momente Ihres Wettkampfs fest.</p>
+                    <p style="font-size: 1.125rem; margin-bottom: var(--space-xl); color: var(--text-secondary);">
+                        Ich halte die intensivsten Momente Ihres Wettkampfs fest.
+                    </p>
                     <a href="contact.html" class="btn btn-primary">📧 Jetzt anfragen</a>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div><div class="footer-logo">BENJAMIN GILLMANN</div><p class="footer-text">Professionelle Fotografie für Sport, Musik und Events.<br>Momente, die bleiben.</p></div>
-                <div><h4 class="footer-title">Navigation</h4><ul class="footer-links"><li><a href="about.html">Über mich</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Kontakt</a></li></ul></div>
-                <div><h4 class="footer-title">Kategorien</h4><ul class="footer-links"><li><a href="sports.html">Sport</a></li><li><a href="music.html">Musik</a></li><li><a href="portfolio.html">Events</a></li></ul></div>
+                <div>
+                    <div class="footer-logo">BENJAMIN GILLMANN</div>
+                    <p class="footer-text">Professionelle Fotografie für Sport, Musik und Events.<br>Momente, die bleiben.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Über mich</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Kategorien</h4>
+                    <ul class="footer-links">
+                        <li><a href="sports.html">Sport</a></li>
+                        <li><a href="music.html">Musik</a></li>
+                        <li><a href="portfolio.html">Events</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 Benjamin Gillmann Photography. Alle Rechte vorbehalten.</p></div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Benjamin Gillmann Photography. Alle Rechte vorbehalten.</p>
+            </div>
         </div>
     </footer>
+
     <script src="main.js"></script>
+    <script>
+        // Sport Gallery Backend mit Lazy Loading
+        const SportsGallery = {
+            images: [
+                // Fußball
+                { url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=600&fit=crop', title: 'Bundesliga Action', category: 'fussball' },
+                { url: 'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=800&h=600&fit=crop', title: 'Tor Jubel', category: 'fussball' },
+                { url: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop', title: 'Stadium Atmosphere', category: 'fussball' },
+                { url: 'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&h=600&fit=crop', title: 'Training Session', category: 'fussball' },
+
+                // Basketball
+                { url: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop', title: 'Basketball Finals', category: 'basketball' },
+                { url: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=600&fit=crop', title: 'Championship Game', category: 'basketball' },
+                { url: 'https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800&h=600&fit=crop', title: 'Street Basketball', category: 'basketball' },
+                { url: 'https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&h=600&fit=crop', title: 'Dunk Contest', category: 'basketball' },
+
+                // Laufen
+                { url: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&h=600&fit=crop', title: 'Marathon', category: 'laufen' },
+                { url: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=800&h=600&fit=crop', title: 'Sprint Start', category: 'laufen' },
+                { url: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=600&fit=crop', title: 'Trail Running', category: 'laufen' },
+                { url: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=800&h=600&fit=crop', title: 'City Marathon', category: 'laufen' },
+
+                // Handball
+                { url: 'https://images.unsplash.com/photo-1529682572021-6c0e0d5d4eea?w=800&h=600&fit=crop', title: 'Handball Match', category: 'handball' },
+                { url: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=800&h=600&fit=crop', title: 'Team Celebration', category: 'handball' },
+
+                // Tennis
+                { url: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=600&fit=crop', title: 'Tennis Tournament', category: 'tennis' },
+                { url: 'https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=800&h=600&fit=crop', title: 'Serve Action', category: 'tennis' },
+                { url: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=800&h=600&fit=crop', title: 'Court Championship', category: 'tennis' },
+                { url: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&h=600&fit=crop', title: 'Winner Moment', category: 'tennis' },
+            ],
+
+            currentFilter: 'all',
+            displayedCount: 0,
+            itemsPerLoad: 8,
+            loadedImages: new Set(),
+
+            init() {
+                this.grid = document.getElementById('galleryGrid');
+                this.loadMoreBtn = document.getElementById('loadMoreBtn');
+                this.totalImagesEl = document.getElementById('totalImages');
+
+                this.bindEvents();
+                this.loadImages();
+                this.updateStats();
+            },
+
+            bindEvents() {
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.currentFilter = e.target.dataset.filter;
+                        this.resetGallery();
+                        this.loadImages();
+                    });
+                });
+
+                // Load more
+                this.loadMoreBtn.addEventListener('click', () => {
+                    this.loadImages();
+                });
+            },
+
+            getFilteredImages() {
+                if (this.currentFilter === 'all') {
+                    return this.images;
+                }
+                return this.images.filter(img => img.category === this.currentFilter);
+            },
+
+            resetGallery() {
+                this.grid.innerHTML = '';
+                this.displayedCount = 0;
+                this.loadedImages.clear();
+            },
+
+            loadImages() {
+                const filteredImages = this.getFilteredImages();
+                const imagesToLoad = filteredImages.slice(
+                    this.displayedCount,
+                    this.displayedCount + this.itemsPerLoad
+                );
+
+                imagesToLoad.forEach((imgData, index) => {
+                    setTimeout(() => {
+                        this.createImageCard(imgData);
+                    }, index * 100); // Stagger animation
+                });
+
+                this.displayedCount += imagesToLoad.length;
+
+                // Update button state
+                if (this.displayedCount >= filteredImages.length) {
+                    this.loadMoreBtn.disabled = true;
+                    this.loadMoreBtn.textContent = 'Alle geladen';
+                } else {
+                    this.loadMoreBtn.disabled = false;
+                    this.loadMoreBtn.textContent = 'Mehr laden';
+                }
+
+                this.updateStats();
+            },
+
+            createImageCard(imgData) {
+                const card = document.createElement('div');
+                card.className = 'gallery-image-card';
+                card.dataset.category = imgData.category;
+
+                card.innerHTML = `
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-skeleton"></div>
+                        <img data-src="${imgData.url}" alt="${imgData.title}" loading="lazy">
+                        <div class="gallery-image-overlay">
+                            <h3 class="gallery-image-title">${imgData.title}</h3>
+                            <p class="gallery-image-category">${this.getCategoryLabel(imgData.category)}</p>
+                        </div>
+                    </div>
+                `;
+
+                this.grid.appendChild(card);
+
+                // Lazy load image
+                const img = card.querySelector('img');
+                const skeleton = card.querySelector('.gallery-image-skeleton');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            img.src = img.dataset.src;
+                            img.onload = () => {
+                                skeleton.style.display = 'none';
+                                card.classList.add('loaded');
+                                this.loadedImages.add(imgData.url);
+                            };
+                            observer.unobserve(img);
+                        }
+                    });
+                }, { rootMargin: '50px' });
+
+                observer.observe(img);
+            },
+
+            getCategoryLabel(category) {
+                const labels = {
+                    'fussball': 'Fußball',
+                    'basketball': 'Basketball',
+                    'laufen': 'Laufsport',
+                    'handball': 'Handball',
+                    'tennis': 'Tennis'
+                };
+                return labels[category] || category;
+            },
+
+            updateStats() {
+                const filteredCount = this.getFilteredImages().length;
+                this.totalImagesEl.textContent = filteredCount;
+            }
+        };
+
+        // Initialize gallery when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => SportsGallery.init());
+        } else {
+            SportsGallery.init();
+        }
+    </script>
 </body>
 </html>

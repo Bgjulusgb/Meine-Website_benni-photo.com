@@ -503,18 +503,70 @@ const LazyLoad = {
 };
 
 // ==========================================
-// PRELOADER
+// PRELOADER - VERBESSERT MIT BACKEND & PERCENTAGE
 // ==========================================
 const Preloader = {
   init() {
-    window.addEventListener('load', () => {
-      const preloader = document.querySelector('.preloader');
-      if (preloader) {
-        setTimeout(() => {
-          preloader.classList.add('hidden');
-          setTimeout(() => preloader.remove(), 500);
-        }, 500);
+    const preloader = document.querySelector('.preloader');
+    if (!preloader) return;
+
+    const percentageEl = document.querySelector('.preloader-percentage');
+    const progressBar = document.querySelector('.preloader-progress');
+
+    let progress = 0;
+    const resources = document.images.length +
+                      document.styleSheets.length +
+                      document.scripts.length;
+    let loadedResources = 0;
+
+    // Simuliere Resource Loading
+    const updateProgress = () => {
+      loadedResources++;
+      progress = Math.min(Math.floor((loadedResources / Math.max(resources, 1)) * 100), 100);
+
+      if (percentageEl) {
+        percentageEl.textContent = `${progress}%`;
+        percentageEl.style.transform = `scale(${1 + progress / 500})`;
       }
+
+      if (progressBar) {
+        progressBar.style.setProperty('--progress', `${progress}%`);
+      }
+    };
+
+    // Track Image Loading
+    Array.from(document.images).forEach(img => {
+      if (img.complete) {
+        updateProgress();
+      } else {
+        img.addEventListener('load', updateProgress);
+        img.addEventListener('error', updateProgress);
+      }
+    });
+
+    // Fallback Timer für schnelles Laden
+    const timer = setInterval(() => {
+      if (progress < 90) {
+        progress += Math.random() * 10;
+        progress = Math.min(progress, 90);
+        if (percentageEl) percentageEl.textContent = `${Math.floor(progress)}%`;
+      }
+    }, 100);
+
+    // On Complete
+    window.addEventListener('load', () => {
+      clearInterval(timer);
+      progress = 100;
+      if (percentageEl) percentageEl.textContent = '100%';
+
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+          preloader.remove();
+          // Trigger Animations
+          document.body.classList.add('loaded');
+        }, 800);
+      }, 500);
     });
   }
 };
