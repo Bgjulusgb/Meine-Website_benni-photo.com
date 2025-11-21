@@ -54,27 +54,49 @@ const initContactForm = () => {
     };
 
     try {
-      // OPTION 1: Send to your backend API
+      // ==========================================================
+      // BACKEND-INTEGRATION: Wählen Sie eine der folgenden Optionen
+      // ==========================================================
+
+      // OPTION 1: Eigenes Backend API
+      // Ersetzen Sie 'https://your-api.com/contact' mit Ihrer API-URL
       // const response = await fetch('https://your-api.com/contact', {
       //   method: 'POST',
       //   headers: {
       //     'Content-Type': 'application/json',
+      //     'Accept': 'application/json',
       //   },
-      //   body: JSON.stringify(formData)
+      //   body: JSON.stringify(formData),
+      //   credentials: 'same-origin', // Für Cookie-basierte Auth
       // });
 
-      // OPTION 2: Use Formspree (simple integration)
+      // OPTION 2: Formspree (Empfohlen - Einfach & Kostenlos)
+      // 1. Gehen Sie zu https://formspree.io
+      // 2. Erstellen Sie ein kostenloses Konto
+      // 3. Erstellen Sie ein neues Formular und erhalten Sie Ihre Form-ID
+      // 4. Ersetzen Sie 'YOUR_FORM_ID' unten mit Ihrer ID
       // const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
       //   method: 'POST',
       //   headers: {
       //     'Content-Type': 'application/json',
+      //     'Accept': 'application/json',
       //   },
       //   body: JSON.stringify(formData)
       // });
 
-      // OPTION 3: Simulate success for demo (remove in production)
+      // OPTION 3: EmailJS (Alternative)
+      // Dokumentation: https://www.emailjs.com/docs/
+
+      // OPTION 4: Netlify Forms (wenn auf Netlify gehostet)
+      // Fügen Sie einfach 'data-netlify="true"' zum <form>-Tag hinzu
+
+      // ==========================================================
+      // DEMO-MODUS (Nur für Tests - In Production entfernen!)
+      // ==========================================================
       await new Promise(resolve => setTimeout(resolve, 1500));
       const response = { ok: true };
+
+      // WICHTIG: Aktivieren Sie eine der obigen Optionen für Production!
 
       if (response.ok) {
         showNotification('✓ Nachricht erfolgreich gesendet! Ich melde mich in Kürze bei Ihnen.', 'success');
@@ -91,8 +113,21 @@ const initContactForm = () => {
         throw new Error('Server error');
       }
     } catch (error) {
-      showNotification('❌ Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie mich direkt per E-Mail.', 'error');
-      trackEvent('Contact', 'Form Submit', 'Error');
+      console.error('Kontaktformular-Fehler:', error);
+
+      // Detaillierte Fehlermeldungen für besseres Debugging
+      let errorMessage = '❌ Fehler beim Senden.';
+
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage += ' Netzwerkverbindung fehlgeschlagen.';
+      } else if (error.name === 'AbortError') {
+        errorMessage += ' Anfrage wurde abgebrochen (Timeout).';
+      } else {
+        errorMessage += ' Bitte versuchen Sie es erneut oder kontaktieren Sie mich direkt per E-Mail.';
+      }
+
+      showNotification(errorMessage, 'error');
+      trackEvent('Contact', 'Form Submit', 'Error', error.message);
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;

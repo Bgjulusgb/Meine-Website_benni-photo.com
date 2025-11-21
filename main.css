@@ -237,36 +237,40 @@ section {
   letter-spacing: -0.05em;
   color: var(--text-primary);
   position: relative;
-  transition: all var(--transition-base);
+  /* Keine Hover-Effekte, keine Farbwechsel */
+  transition: none;
   padding: var(--space-xs) var(--space-md);
   border: 2px solid var(--text-primary);
   border-radius: var(--radius-sm);
 }
 
+/* Kein Hover-Effekt - Logo bleibt konstant */
 .logo:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  transform: translateY(-2px);
+  background: transparent;
+  color: var(--text-primary);
+  transform: none;
 }
 
 .logo-image {
   width: 32px;
   height: 32px;
   object-fit: contain;
-  filter: grayscale(100%);
-  transition: all var(--transition-base);
+  /* Logo bleibt immer weiß, keine Filter oder Invertierungen */
+  filter: brightness(0) invert(1);
+  transition: none;
 }
 
+/* Logo bleibt in allen Themes und Zuständen gleich - immer weiß */
 [data-theme="dark"] .logo-image {
-  filter: grayscale(100%) brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .logo:hover .logo-image {
-  filter: grayscale(100%) brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 [data-theme="dark"] .logo:hover .logo-image {
-  filter: grayscale(100%);
+  filter: brightness(0) invert(1);
 }
 
 .nav-menu {
@@ -375,21 +379,30 @@ section {
 @media (max-width: 768px) {
   .menu-toggle {
     display: flex;
+    /* Größerer Touch-Target für bessere Usability */
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
   }
 
   .nav-menu {
     position: fixed;
-    top: 80px;
+    top: 90px;
     left: 0;
     right: 0;
     flex-direction: column;
     background: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     padding: var(--space-xl) var(--space-lg);
-    gap: var(--space-md);
+    gap: var(--space-lg);
     transform: translateX(-100%);
     opacity: 0;
     transition: all var(--transition-base);
+    /* Bessere Performance auf Mobile */
+    will-change: transform, opacity;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
   }
 
   .nav-menu.active {
@@ -399,6 +412,27 @@ section {
 
   .nav-link {
     font-size: 1.125rem;
+    /* Größerer Touch-Target */
+    padding: var(--space-md) var(--space-sm);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Logo auf Mobile optimieren */
+  .logo {
+    font-size: 1.5rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .logo-image {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Header Höhe auf Mobile anpassen */
+  .nav {
+    height: 70px;
   }
 }
 
@@ -1047,17 +1081,122 @@ section {
   .btn {
     width: 100%;
     justify-content: center;
+    /* Größere Touch-Targets auf Mobile */
+    min-height: 48px;
+    padding: 1rem 1.5rem;
   }
 
   .hero-cta {
     flex-direction: column;
     width: 100%;
+    gap: var(--space-md);
+  }
+
+  /* Forms auf Mobile optimieren */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    /* Verhindert Zoom auf iOS beim Fokus */
+    font-size: 16px;
+    min-height: 48px;
+    padding: 0.875rem 1rem;
+  }
+
+  /* Hero Section auf Mobile */
+  .hero {
+    min-height: calc(100vh - 70px);
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .hero-badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Cards auf Mobile */
+  .card {
+    padding: var(--space-lg);
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+  }
+
+  /* Grid auf Mobile */
+  .grid {
+    gap: var(--space-md);
+  }
+
+  /* Container Padding */
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  section {
+    padding: var(--space-2xl) 0;
   }
 }
 
 @media (max-width: 480px) {
   .container {
     padding: 0 var(--space-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+/* Tablet Landscape Optimierung */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 var(--space-xl);
+  }
+
+  .nav-menu {
+    gap: var(--space-lg);
+  }
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Touch Device Optimierungen */
+@media (hover: none) and (pointer: coarse) {
+  /* Alle interaktiven Elemente haben größere Touch-Targets */
+  a, button, input, select, textarea {
+    min-height: 44px;
+  }
+
+  /* Deaktiviere Hover-Effekte auf Touch-Geräten */
+  .card:hover {
+    transform: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+
+  /* Aktiviere stattdessen Active-States für Touch-Feedback */
+  .card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .nav-link:active {
+    opacity: 0.7;
   }
 }
 
