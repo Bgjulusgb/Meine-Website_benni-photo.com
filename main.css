@@ -213,7 +213,7 @@ section {
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Animated Border Glow */
@@ -289,12 +289,13 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* KEIN Rahmen, KEIN Hintergrund, NUR das Logo */
+  gap: var(--space-sm);
   background: transparent;
   border: none;
   padding: 0;
   box-shadow: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
 }
 
 .logo:hover {
@@ -512,6 +513,26 @@ section {
     opacity: 1;
   }
 
+  /* PERFEKT: Stagger Animation für Mobile Menu Links */
+  .nav-menu .nav-link {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-menu.active .nav-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Gestaffelte Verzögerungen für smooth cascade effect */
+  .nav-menu.active .nav-link:nth-child(1) { transition-delay: 0.05s; }
+  .nav-menu.active .nav-link:nth-child(2) { transition-delay: 0.1s; }
+  .nav-menu.active .nav-link:nth-child(3) { transition-delay: 0.15s; }
+  .nav-menu.active .nav-link:nth-child(4) { transition-delay: 0.2s; }
+  .nav-menu.active .nav-link:nth-child(5) { transition-delay: 0.25s; }
+  .nav-menu.active .nav-link:nth-child(6) { transition-delay: 0.3s; }
+
   /* KORRIGIERT: Mobile Navigation Links */
   .nav-link {
     font-size: 1.125rem;
@@ -539,9 +560,26 @@ section {
 
   /* Logo auf Mobile optimieren */
   .logo {
-    font-size: 1.5rem;
-    padding: var(--space-xs) var(--space-sm);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+[data-theme="dark"] .logo:hover {
+  filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.3));
+}
 
   .logo-image {
     width: 28px;
@@ -1408,17 +1446,18 @@ section {
   }
 }
 
-/* === FOOTER === */
+/* === FOOTER KOMPLETT ÜBERARBEITET === */
 .footer {
-  background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  border-top: 2px solid var(--border-color);
-  padding: var(--space-4xl) 0 var(--space-xl);
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-4xl) 0 var(--space-md);
   position: relative;
+  margin-top: var(--space-4xl);
 }
 
 [data-theme="dark"] .footer {
-  background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  border-top-color: var(--gray-800);
+  background: var(--bg-primary);
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .footer::before {
@@ -1427,34 +1466,50 @@ section {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--text-primary) 50%, transparent 100%);
-  opacity: 0.3;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--text-primary) 50%,
+    transparent 100%
+  );
+  opacity: 0.2;
 }
 
 .footer-content {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: var(--space-2xl);
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
   border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl);
+  }
 }
 
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
+    text-align: center;
   }
 }
 
 .footer-logo {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 900;
-  margin-bottom: var(--space-md);
-  letter-spacing: -0.03em;
+  margin-bottom: var(--space-lg);
+  letter-spacing: -0.02em;
   color: var(--text-primary);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .footer-text {
@@ -1464,13 +1519,38 @@ section {
   max-width: 400px;
 }
 
+@media (max-width: 768px) {
+  .footer-text {
+    max-width: 100%;
+  }
+}
+
 .footer-title {
   font-size: 0.875rem;
-  font-weight: 800;
-  margin-bottom: var(--space-md);
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .footer-links {
@@ -1478,24 +1558,25 @@ section {
 }
 
 .footer-links li {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .footer-links a {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  transition: all var(--transition-fast);
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
   position: relative;
+  text-decoration: none;
 }
 
 .footer-links a::before {
   content: '→';
   opacity: 0;
   transform: translateX(-10px);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer-links a:hover {
@@ -1509,46 +1590,22 @@ section {
 }
 
 .footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: var(--space-xl);
-  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--space-xl) 0;
+  color: var(--text-secondary);
   font-size: 0.875rem;
-  flex-wrap: wrap;
-  gap: var(--space-md);
+}
+
+.footer-bottom p {
+  margin: 0;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
   .footer-bottom {
-    flex-direction: column;
-    text-align: center;
+    padding: var(--space-lg) 0;
+    font-size: 0.8rem;
   }
-}
-
-.footer-social {
-  display: flex;
-  gap: var(--space-md);
-  list-style: none;
-}
-
-.footer-social a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--border-color);
-  border-radius: 50%;
-  color: var(--text-secondary);
-  transition: all var(--transition-base);
-}
-
-.footer-social a:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border-color: var(--text-primary);
-  transform: translateY(-3px);
 }
 
 /* === UTILITIES === */
@@ -1920,6 +1977,26 @@ section {
     0 0 20px rgba(255, 255, 255, 0.1);
 }
 
+/* Mobile Optimierung für Progress Bar */
+@media (max-width: 480px) {
+  .preloader-progress {
+    bottom: 80px;
+    width: 320px;
+    max-width: 90vw;
+    height: 6px;
+  }
+
+  .preloader-percentage {
+    bottom: 120px;
+    font-size: clamp(1.25rem, 6vw, 1.75rem);
+  }
+
+  .preloader-text {
+    margin-top: 160px;
+    font-size: 0.7rem;
+  }
+}
+
 /* Innerer Progress Bar - wird von JavaScript über --progress CSS Variable gesteuert */
 .preloader-progress::before {
   content: '';
@@ -2044,9 +2121,12 @@ section {
 }
 
 /* KORRIGIERT: Percentage Counter - Responsive & Optimiert */
+/* PERFEKT KORRIGIERT: Percentage Display - zentriert & responsive */
 .preloader-percentage {
   position: absolute;
   bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%); /* Perfekt horizontal zentriert */
   font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive */
   font-weight: 900;
   color: rgba(255, 255, 255, 1);
@@ -2061,14 +2141,14 @@ section {
   transition: all 0.3s ease;
 }
 
-/* Glowing Effect bei Fortschritt */
+/* Glowing Effect bei Fortschritt - mit Zentrierung kombiniert */
 .preloader-percentage[data-progress="100"] {
   color: rgba(255, 255, 255, 1);
   text-shadow:
     0 0 30px rgba(255, 255, 255, 1),
     0 0 60px rgba(255, 255, 255, 0.8),
     0 0 90px rgba(255, 255, 255, 0.6);
-  transform: scale(1.1);
+  transform: translateX(-50%) scale(1.1); /* Zentrierung + Scale */
 }
 
 /* Partikel-Effekte um das Logo */
@@ -2905,5 +2985,311 @@ select.valid {
   .pwa-install-btn,
   .spinner {
     display: none !important;
+  }
+}
+
+/* ===========================================
+   PRELOADER DESIGN VERBESSERUNGEN
+   =========================================== */
+
+/* Verbesserte Zentrierung für alle Preloader-Elemente */
+.preloader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Percentage - Verbesserte Position */
+.preloader-percentage {
+  position: absolute;
+  bottom: 160px; /* Mehr Abstand zur Progress Bar */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Progress Bar - Garantiert zentriert */
+.preloader-progress {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Preloader Text - Verbessert */
+.preloader-text {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 480px) {
+  .preloader-percentage {
+    bottom: 140px;
+    font-size: 1.5rem;
+  }
+
+  .preloader-progress {
+    bottom: 80px;
+    width: 90vw;
+    max-width: 280px;
+  }
+
+  .preloader-text {
+    bottom: 40px;
+    font-size: 0.7rem;
+  }
+
+  .preloader-spinner {
+    width: 100px;
+    height: 100px;
+  }
+
+  .preloader-logo {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ===========================================
+   MENÜ VERBESSERUNGEN
+   =========================================== */
+
+/* Hamburger Menu Animation verbessern */
+.menu-toggle {
+  z-index: 1001;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle:focus {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+}
+
+.menu-toggle span {
+  display: block;
+  transform-origin: center;
+}
+
+/* Verbesserte Mobile Menu Animation */
+@media (max-width: 768px) {
+  .nav-menu {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="dark"] .nav-menu {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-menu.active {
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* Stagger Animation für Nav-Links */
+  .nav-menu.active .nav-link {
+    animation: fadeInUp 0.4s ease-out backwards;
+  }
+
+  .nav-menu.active .nav-link:nth-child(1) { animation-delay: 0.05s; }
+  .nav-menu.active .nav-link:nth-child(2) { animation-delay: 0.1s; }
+  .nav-menu.active .nav-link:nth-child(3) { animation-delay: 0.15s; }
+  .nav-menu.active .nav-link:nth-child(4) { animation-delay: 0.2s; }
+  .nav-menu.active .nav-link:nth-child(5) { animation-delay: 0.25s; }
+  .nav-menu.active .nav-link:nth-child(6) { animation-delay: 0.3s; }
+}
+
+/* ===========================================
+   CARD & BUTTON VERBESSERUNGEN
+   =========================================== */
+
+/* Cards - Einheitliches Design */
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+[data-theme="dark"] .card::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* Card Icon verbessern */
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-lg);
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Buttons - Verbesserte Transitions */
+.btn {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+/* ===========================================
+   GALLERY VERBESSERUNGEN
+   =========================================== */
+
+/* Gallery Items - Smoother Hover */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+}
+
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-item:hover::after {
+  opacity: 1;
+}
+
+.gallery-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-lg);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  z-index: 10;
+}
+
+.gallery-item:hover .gallery-info {
+  transform: translateY(0);
+}
+
+/* ===========================================
+   ACCESSIBILITY VERBESSERUNGEN
+   =========================================== */
+
+/* Keyboard Focus Improvements */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ===========================================
+   UTILITY CLASSES
+   =========================================== */
+
+/* Text Utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Margin Utilities */
+.mb-xl { margin-bottom: var(--space-xl); }
+.mb-2xl { margin-bottom: var(--space-2xl); }
+.mb-3xl { margin-bottom: var(--space-3xl); }
+.mt-xl { margin-top: var(--space-xl); }
+.mt-2xl { margin-top: var(--space-2xl); }
+
+/* Display Utilities */
+.hidden { display: none; }
+.block { display: block; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+
+/* Grid Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
   }
 }
