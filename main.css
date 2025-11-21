@@ -339,18 +339,19 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-secondary);
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.25rem; /* Symmetrisches Padding */
   display: inline-block;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-/* KORRIGIERT: Futuristic Animated Underline - korrekt positioniert */
+/* PERFEKT KORRIGIERT: Futuristic Animated Underline - präzise zentriert */
 .nav-link::before {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-150%); /* Start außerhalb links */
   width: 100%;
   height: 2px;
   background: linear-gradient(
@@ -359,17 +360,17 @@ section {
     var(--text-primary),
     transparent
   );
-  transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
 
-/* KORRIGIERT: Underline standardmäßig NICHT sichtbar */
+/* PERFEKT KORRIGIERT: Underline exakt unter Text, zentriert */
 .nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
   background: var(--text-primary);
@@ -383,14 +384,14 @@ section {
 }
 
 .nav-link:hover::before {
-  transform: translateX(100%);
+  transform: translateX(50%); /* Gleitet durch zur rechten Seite */
 }
 
 .nav-link:hover::after {
-  width: 100%;
+  width: 100%; /* Exakte Breite des Link-Textes */
 }
 
-/* KORRIGIERT: Active Link Underline */
+/* PERFEKT KORRIGIERT: Active Link Underline - genau zentriert */
 .nav-link.active {
   color: var(--text-primary);
   font-weight: 700;
@@ -402,7 +403,7 @@ section {
 }
 
 .nav-link.active::after {
-  width: 100%;
+  width: 100%; /* Volle Breite bei aktiven Links */
   background: var(--text-primary);
   box-shadow: 0 0 10px var(--text-primary);
 }
@@ -1900,16 +1901,18 @@ section {
   transition: none !important;
 }
 
-/* Progress Bar Container - KOMPLETT ÜBERARBEITET */
+/* PERFEKT KORRIGIERT: Progress Bar Container - zentriert & präzise */
 .preloader-progress {
   --progress: 0%;
   position: absolute;
   bottom: 100px;
-  width: 320px;
-  max-width: 80vw;
-  height: 6px;
+  left: 50%;
+  transform: translateX(-50%); /* Perfekt zentriert */
+  width: 400px; /* Größere, ausgewogenere Breite */
+  max-width: 85vw; /* Mehr Platz auf Mobile */
+  height: 8px; /* Etwas dicker für bessere Sichtbarkeit */
   background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  border-radius: 12px; /* Rundere Ecken */
   overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow:
@@ -1930,7 +1933,7 @@ section {
     rgba(255, 255, 255, 0.95) 50%,
     rgba(255, 255, 255, 1) 100%
   );
-  border-radius: 10px;
+  border-radius: 12px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
     0 0 15px rgba(255, 255, 255, 0.7),
@@ -2405,5 +2408,502 @@ section {
 
   .nav-link.active::after {
     height: 3px;
+  }
+}
+
+/* ===========================================
+   DURCHDACHTE ZUSÄTZLICHE VERBESSERUNGEN
+   =========================================== */
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Verbessertes Focus Styling für Accessibility */
+*:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+[data-theme="dark"] *:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Skip Link für bessere Accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 700;
+  z-index: 10000;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+  outline: 3px solid var(--bg-primary);
+}
+
+/* Smooth Loading States für Bilder */
+img {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+img:not([src]),
+img[src=""] {
+  opacity: 0;
+}
+
+img.loading {
+  opacity: 0.5;
+  filter: blur(5px);
+}
+
+img.loaded {
+  opacity: 1;
+  filter: blur(0);
+}
+
+img.error {
+  opacity: 0.3;
+  filter: grayscale(100%);
+}
+
+/* Hover Micro-Interactions für Buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+[data-theme="dark"] .btn::before {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Verbesserte Card Hover-Effekte */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2xl);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.15);
+}
+
+/* Selection Styling */
+::selection {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+[data-theme="dark"] ::selection {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000000;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 6px;
+  border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+
+/* Loading Spinner für asynchrone Inhalte */
+.spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--text-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Skeleton Loading Screens */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Pulse Animation für wichtige Elemente */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Slide In Animation */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-up {
+  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Zoom In Animation */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoom-in {
+  animation: zoomIn 0.4s ease-out;
+}
+
+/* Form Error States */
+input.invalid,
+textarea.invalid,
+select.invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+input.valid,
+textarea.valid,
+select.valid {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.error-message::before {
+  content: '⚠';
+  font-size: 1rem;
+}
+
+/* Success Message */
+.success-message {
+  color: #10b981;
+  font-size: 0.875rem;
+  margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.success-message::before {
+  content: '✓';
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Toast Notifications */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2xl);
+  border: 2px solid var(--border-color);
+  max-width: 400px;
+  z-index: 10000;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.notification-success {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.notification-error {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.notification-warning {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.notification-info {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+/* Cookie Consent Banner */
+.cookie-consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  padding: var(--space-xl);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  animation: slideInUp 0.4s ease-out;
+}
+
+[data-theme="dark"] .cookie-consent-banner {
+  box-shadow: 0 -10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.cookie-consent-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.cookie-consent-buttons {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Verbesserte Gallery Item Transitions */
+.gallery-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.gallery-item img {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: var(--shadow-lg);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* PWA Install Button */
+.pwa-install-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  animation: slideInUp 0.3s ease;
+}
+
+/* Optimierte Mobile Navigation Transitions */
+@media (max-width: 768px) {
+  .nav-menu {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .nav-menu.active {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  [data-theme="dark"] .nav-menu.active {
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Optimierte Performance für Animationen */
+.preloader,
+.preloader-spinner,
+.nav-link,
+.btn,
+.card,
+.gallery-item {
+  will-change: transform, opacity;
+}
+
+/* Hover-Effekte nur auf Non-Touch Devices */
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover,
+  .btn:hover,
+  .card:hover,
+  .gallery-item:hover {
+    cursor: pointer;
+  }
+}
+
+/* Dark Mode spezifische Verbesserungen */
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+[data-theme="dark"] .notification {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Print Optimierungen */
+@media print {
+  .notification,
+  .cookie-consent-banner,
+  .back-to-top,
+  .pwa-install-btn,
+  .spinner {
+    display: none !important;
   }
 }
