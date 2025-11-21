@@ -50,7 +50,7 @@ const ThemeManager = {
 };
 
 // ==========================================
-// NAVIGATION
+// NAVIGATION - VERBESSERT & OPTIMIERT
 // ==========================================
 const Navigation = {
   init() {
@@ -58,61 +58,160 @@ const Navigation = {
     this.menuToggle = document.querySelector('.menu-toggle');
     this.navMenu = document.querySelector('.nav-menu');
     this.navLinks = document.querySelectorAll('.nav-link');
+    this.isMenuOpen = false;
+    this.touchStartX = 0;
+    this.touchEndX = 0;
 
     this.bindEvents();
     this.setActiveLink();
+    this.initTouchGestures();
+    this.initKeyboardNav();
+  },
+
+  toggleMenu(forceClose = false) {
+    if (forceClose) {
+      this.isMenuOpen = false;
+    } else {
+      this.isMenuOpen = !this.isMenuOpen;
+    }
+
+    this.menuToggle?.classList.toggle('active', this.isMenuOpen);
+    this.navMenu?.classList.toggle('active', this.isMenuOpen);
+    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+
+    // Accessibility: Manage focus
+    if (this.isMenuOpen) {
+      this.navMenu?.setAttribute('aria-hidden', 'false');
+      // Fokussiere erstes Nav-Link
+      this.navLinks[0]?.focus();
+    } else {
+      this.navMenu?.setAttribute('aria-hidden', 'true');
+      this.menuToggle?.focus();
+    }
+
+    console.log(`Menu ${this.isMenuOpen ? 'geöffnet' : 'geschlossen'}`);
   },
 
   bindEvents() {
     // Mobile menu toggle
     if (this.menuToggle && this.navMenu) {
-      this.menuToggle.addEventListener('click', () => {
-        this.menuToggle.classList.toggle('active');
-        this.navMenu.classList.toggle('active');
-        document.body.style.overflow =
-          this.navMenu.classList.contains('active') ? 'hidden' : '';
+      this.menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleMenu();
       });
 
       // Close menu on link click
       this.navLinks.forEach(link => {
         link.addEventListener('click', () => {
-          this.menuToggle.classList.remove('active');
-          this.navMenu.classList.remove('active');
-          document.body.style.overflow = '';
+          this.toggleMenu(true);
         });
       });
 
       // Close on outside click
       document.addEventListener('click', (e) => {
-        if (this.navMenu.classList.contains('active') &&
+        if (this.isMenuOpen &&
             !this.navMenu.contains(e.target) &&
             !this.menuToggle.contains(e.target)) {
-          this.menuToggle.classList.remove('active');
-          this.navMenu.classList.remove('active');
-          document.body.style.overflow = '';
+          this.toggleMenu(true);
         }
       });
     }
 
-    // Scroll header effect
+    // Optimized scroll header effect with throttling
     let lastScroll = 0;
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+
+    const updateHeader = () => {
       const currentScroll = window.pageYOffset;
 
       if (this.header) {
         this.header.classList.toggle('scrolled', currentScroll > 50);
+
+        // Hide header on scroll down, show on scroll up (optional)
+        // if (currentScroll > lastScroll && currentScroll > 100) {
+        //   this.header.style.transform = 'translateY(-100%)';
+        // } else {
+        //   this.header.style.transform = 'translateY(0)';
+        // }
       }
 
       lastScroll = currentScroll;
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
     }, { passive: true });
+  },
+
+  // Touch Gestures für Mobile-Menü (Swipe to close)
+  initTouchGestures() {
+    if (!this.navMenu) return;
+
+    this.navMenu.addEventListener('touchstart', (e) => {
+      this.touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    this.navMenu.addEventListener('touchend', (e) => {
+      this.touchEndX = e.changedTouches[0].screenX;
+      this.handleSwipe();
+    }, { passive: true });
+  },
+
+  handleSwipe() {
+    // Swipe left to close (mindestens 100px)
+    if (this.touchStartX - this.touchEndX > 100) {
+      if (this.isMenuOpen) {
+        this.toggleMenu(true);
+        console.log('Menu closed via swipe gesture');
+      }
+    }
+  },
+
+  // Keyboard Navigation
+  initKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+      // ESC zum Schließen
+      if (e.key === 'Escape' && this.isMenuOpen) {
+        this.toggleMenu(true);
+      }
+
+      // Tab-Navigation innerhalb des Menüs
+      if (e.key === 'Tab' && this.isMenuOpen) {
+        const focusableElements = this.navMenu?.querySelectorAll(
+          'a[href], button:not([disabled])'
+        );
+        if (!focusableElements || focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        // Shift+Tab auf erstem Element -> springe zum letzten
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+        // Tab auf letztem Element -> springe zum ersten
+        else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    });
   },
 
   setActiveLink() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     this.navLinks.forEach(link => {
       link.classList.remove('active');
+      link.removeAttribute('aria-current');
+
       if (link.getAttribute('href') === currentPage) {
         link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
       }
     });
   }
@@ -169,7 +268,7 @@ const ScrollAnimations = {
 };
 
 // ==========================================
-// LIGHTBOX GALLERY
+// LIGHTBOX GALLERY - VERBESSERT & OPTIMIERT
 // ==========================================
 const Lightbox = {
   init() {
@@ -178,13 +277,32 @@ const Lightbox = {
 
     this.currentIndex = 0;
     this.lightbox = null;
+    this.touchStartX = 0;
+    this.touchEndX = 0;
+    this.touchStartY = 0;
+    this.touchEndY = 0;
+    this.isZoomed = false;
+
     this.bindGalleryItems();
+    console.log(`Lightbox initialisiert mit ${this.images.length} Bildern`);
   },
 
   bindGalleryItems() {
     this.images.forEach((img, index) => {
       img.style.cursor = 'pointer';
+      img.setAttribute('tabindex', '0'); // Keyboard accessible
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', `Bild ${index + 1} von ${this.images.length} öffnen`);
+
       img.addEventListener('click', () => this.open(index));
+
+      // Keyboard support
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.open(index);
+        }
+      });
     });
   },
 
@@ -306,15 +424,40 @@ const Lightbox = {
   },
 
   bindLightboxEvents() {
+    // Button clicks
     this.lightbox.querySelector('.lightbox-close').addEventListener('click', () => this.close());
     this.lightbox.querySelector('.lightbox-prev').addEventListener('click', () => this.navigate(-1));
     this.lightbox.querySelector('.lightbox-next').addEventListener('click', () => this.navigate(1));
 
+    // Click außerhalb des Bildes zum Schließen
     this.lightbox.addEventListener('click', (e) => {
       if (e.target === this.lightbox) this.close();
     });
 
+    // Keyboard Navigation
     document.addEventListener('keydown', this.handleKeydown.bind(this));
+
+    // Touch Gestures (Swipe)
+    const imgContainer = this.lightbox.querySelector('.lightbox-container');
+    imgContainer.addEventListener('touchstart', (e) => {
+      this.touchStartX = e.changedTouches[0].screenX;
+      this.touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    imgContainer.addEventListener('touchend', (e) => {
+      this.touchEndX = e.changedTouches[0].screenX;
+      this.touchEndY = e.changedTouches[0].screenY;
+      this.handleSwipe();
+    }, { passive: true });
+
+    // Doppelklick zum Zoomen
+    const lightboxImg = this.lightbox.querySelector('.lightbox-image');
+    lightboxImg.addEventListener('dblclick', () => {
+      this.toggleZoom();
+    });
+
+    // Preload nächstes und vorheriges Bild
+    this.preloadAdjacentImages();
   },
 
   handleKeydown(e) {
@@ -322,21 +465,104 @@ const Lightbox = {
     if (e.key === 'Escape') this.close();
     if (e.key === 'ArrowLeft') this.navigate(-1);
     if (e.key === 'ArrowRight') this.navigate(1);
+    if (e.key === 'Home') this.navigateToFirst();
+    if (e.key === 'End') this.navigateToLast();
+  },
+
+  handleSwipe() {
+    const swipeDistanceX = this.touchStartX - this.touchEndX;
+    const swipeDistanceY = this.touchStartY - this.touchEndY;
+    const minSwipeDistance = 50;
+
+    // Horizontaler Swipe (mehr als vertikal)
+    if (Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY)) {
+      // Swipe nach links -> nächstes Bild
+      if (swipeDistanceX > minSwipeDistance) {
+        this.navigate(1);
+        console.log('Swipe: Nächstes Bild');
+      }
+      // Swipe nach rechts -> vorheriges Bild
+      else if (swipeDistanceX < -minSwipeDistance) {
+        this.navigate(-1);
+        console.log('Swipe: Vorheriges Bild');
+      }
+    }
+    // Vertikaler Swipe nach unten -> schließen
+    else if (swipeDistanceY < -minSwipeDistance) {
+      this.close();
+      console.log('Swipe: Lightbox geschlossen');
+    }
+  },
+
+  toggleZoom() {
+    const img = this.lightbox.querySelector('.lightbox-image');
+    this.isZoomed = !this.isZoomed;
+
+    if (this.isZoomed) {
+      img.style.transform = 'scale(2)';
+      img.style.cursor = 'zoom-out';
+      img.style.transition = 'transform 0.3s ease';
+    } else {
+      img.style.transform = 'scale(1)';
+      img.style.cursor = 'zoom-in';
+    }
   },
 
   navigate(direction) {
     this.currentIndex = (this.currentIndex + direction + this.images.length) % this.images.length;
+    this.updateLightboxImage();
+  },
+
+  navigateToFirst() {
+    this.currentIndex = 0;
+    this.updateLightboxImage();
+  },
+
+  navigateToLast() {
+    this.currentIndex = this.images.length - 1;
+    this.updateLightboxImage();
+  },
+
+  updateLightboxImage() {
     const newImg = this.images[this.currentIndex];
     const img = this.lightbox.querySelector('.lightbox-image');
     const counter = this.lightbox.querySelector('.lightbox-counter');
 
+    // Fade out
     img.style.opacity = '0';
+    img.style.transform = 'scale(0.95)';
+
     setTimeout(() => {
+      // Update image
       img.src = newImg.src;
-      img.alt = newImg.alt || '';
+      img.alt = newImg.alt || `Bild ${this.currentIndex + 1}`;
       counter.textContent = `${this.currentIndex + 1} / ${this.images.length}`;
-      img.style.opacity = '1';
+
+      // Reset zoom
+      this.isZoomed = false;
+      img.style.transform = 'scale(1)';
+      img.style.cursor = 'zoom-in';
+
+      // Fade in
+      setTimeout(() => {
+        img.style.opacity = '1';
+      }, 50);
+
+      // Preload angrenzende Bilder
+      this.preloadAdjacentImages();
     }, 200);
+  },
+
+  preloadAdjacentImages() {
+    // Preload nächstes Bild
+    const nextIndex = (this.currentIndex + 1) % this.images.length;
+    const nextImg = new Image();
+    nextImg.src = this.images[nextIndex].src;
+
+    // Preload vorheriges Bild
+    const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    const prevImg = new Image();
+    prevImg.src = this.images[prevIndex].src;
   },
 
   close() {
@@ -473,32 +699,84 @@ const FormValidator = {
 };
 
 // ==========================================
-// LAZY LOADING
+// LAZY LOADING - VERBESSERT MIT PLACEHOLDER
 // ==========================================
 const LazyLoad = {
   init() {
+    // Fallback für alte Browser
     if (!('IntersectionObserver' in window)) {
-      // Fallback
       document.querySelectorAll('img[data-src]').forEach(img => {
-        img.src = img.dataset.src;
+        this.loadImage(img);
       });
       return;
     }
 
+    // IntersectionObserver mit optimierten Einstellungen
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.add('loaded');
+          this.loadImage(img);
           this.observer.unobserve(img);
         }
       });
+    }, {
+      // Bilder 50px vor dem Viewport laden (bessere UX)
+      rootMargin: '50px 0px',
+      threshold: 0.01
     });
 
-    document.querySelectorAll('img[data-src]').forEach(img => {
+    // Alle Lazy-Load Bilder observieren
+    const lazyImages = document.querySelectorAll('img[loading="lazy"], img[data-src]');
+    lazyImages.forEach(img => {
+      // Placeholder-Effekt hinzufügen
+      if (!img.src || img.src === '') {
+        img.style.backgroundColor = 'var(--bg-secondary)';
+        img.style.minHeight = '200px';
+      }
+
       this.observer.observe(img);
     });
+
+    console.log(`LazyLoad initialisiert für ${lazyImages.length} Bilder`);
+  },
+
+  loadImage(img) {
+    const src = img.dataset.src || img.src;
+    if (!src) return;
+
+    // Erstelle neues Image-Objekt zum Preloading
+    const imageLoader = new Image();
+
+    imageLoader.onload = () => {
+      // Fade-in Effekt
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.3s ease';
+
+      // Setze Source
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+      }
+
+      // Fade in
+      requestAnimationFrame(() => {
+        img.style.opacity = '1';
+        img.classList.add('loaded');
+      });
+
+      console.log(`Bild geladen: ${src.substring(0, 50)}...`);
+    };
+
+    imageLoader.onerror = () => {
+      console.error(`Fehler beim Laden: ${src}`);
+      img.classList.add('error');
+      // Fallback-Bild oder Platzhalter
+      img.style.backgroundColor = 'var(--bg-tertiary)';
+    };
+
+    // Starte Laden
+    imageLoader.src = src;
   }
 };
 
@@ -508,7 +786,18 @@ const LazyLoad = {
 const Preloader = {
   init() {
     const preloader = document.querySelector('.preloader');
-    if (!preloader) return;
+    if (!preloader) {
+      console.warn('Preloader element not found!');
+      return;
+    }
+
+    // WICHTIG: Body Overflow blockieren beim Start
+    document.body.style.overflow = 'hidden';
+
+    // Sicherstellen, dass Preloader sichtbar ist
+    preloader.style.display = 'flex';
+    preloader.style.opacity = '1';
+    preloader.style.visibility = 'visible';
 
     const percentageEl = document.querySelector('.preloader-percentage');
     const progressBar = document.querySelector('.preloader-progress');
@@ -518,6 +807,8 @@ const Preloader = {
     let targetProgress = 0;
     let isComplete = false;
     let animationFrameId = null;
+
+    console.log('✨ Preloader initialized - Starting loading sequence');
 
     // Smooth Progress Animation with easing
     const animateProgress = () => {
@@ -540,22 +831,25 @@ const Preloader = {
       }
 
       if (progressBar) {
+        // Korrekte Aktualisierung der Progress Bar via CSS Variable
         progressBar.style.setProperty('--progress', `${currentProgress}%`);
       }
 
-      // Update loading text
+      // Update loading text mit deutschen Texten
       if (textEl) {
-        if (displayProgress < 25) textEl.textContent = 'Initializing...';
-        else if (displayProgress < 50) textEl.textContent = 'Loading Assets...';
-        else if (displayProgress < 75) textEl.textContent = 'Preparing Interface...';
-        else if (displayProgress < 95) textEl.textContent = 'Almost Ready...';
-        else if (displayProgress >= 95 && displayProgress < 100) textEl.textContent = 'Finalizing...';
-        else textEl.textContent = 'Complete!';
+        if (displayProgress < 20) textEl.textContent = 'Initialisierung...';
+        else if (displayProgress < 40) textEl.textContent = 'Lade Assets...';
+        else if (displayProgress < 60) textEl.textContent = 'Bereite Interface vor...';
+        else if (displayProgress < 80) textEl.textContent = 'Fast fertig...';
+        else if (displayProgress < 95) textEl.textContent = 'Abschließende Schritte...';
+        else if (displayProgress >= 95 && displayProgress < 100) textEl.textContent = 'Finalisierung...';
+        else textEl.textContent = 'Bereit!';
       }
 
       // Check if we reached 100%
       if (currentProgress >= 99.9 && !isComplete) {
         isComplete = true;
+        console.log('✅ Preloader: 100% erreicht - Wird ausgeblendet');
         completeLoading();
         return;
       }
@@ -570,6 +864,11 @@ const Preloader = {
         cancelAnimationFrame(animationFrameId);
       }
 
+      // Zeige "Bereit!" für einen Moment
+      if (textEl) {
+        textEl.textContent = 'Bereit!';
+      }
+
       setTimeout(() => {
         preloader.classList.add('hidden');
         document.body.style.overflow = ''; // Re-enable scrolling
@@ -579,24 +878,26 @@ const Preloader = {
             preloader.remove();
           }
           document.body.classList.add('loaded');
+          console.log('🎉 Preloader erfolgreich entfernt - Seite geladen');
         }, 800);
-      }, 400);
+      }, 500); // 500ms damit User "Bereit!" sieht
     };
 
     // STRATEGIE 1: Zeitbasierte Stages (garantiert mindestens diesen Fortschritt)
     const timeBasedStages = [
       { delay: 0, progress: 0 },
-      { delay: 100, progress: 20 },
-      { delay: 300, progress: 35 },
-      { delay: 500, progress: 50 },
-      { delay: 800, progress: 65 },
-      { delay: 1200, progress: 80 }
+      { delay: 200, progress: 15 },
+      { delay: 400, progress: 30 },
+      { delay: 700, progress: 45 },
+      { delay: 1000, progress: 60 },
+      { delay: 1400, progress: 75 }
     ];
 
     timeBasedStages.forEach(stage => {
       setTimeout(() => {
         if (!isComplete) {
           targetProgress = Math.max(targetProgress, stage.progress);
+          console.log(`⏱️ Zeitbasiert: ${stage.progress}%`);
         }
       }, stage.delay);
     });
@@ -604,13 +905,17 @@ const Preloader = {
     // STRATEGIE 2: Ressourcen-basiertes Tracking
     let loadedResources = 0;
     const images = Array.from(document.images);
-    const totalImages = images.length;
+    const stylesheets = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+    const totalResources = images.length + stylesheets.length;
+
+    console.log(`📦 Tracking ${images.length} Bilder und ${stylesheets.length} Stylesheets`);
 
     const updateResourceProgress = () => {
       loadedResources++;
-      if (totalImages > 0) {
-        const resourceProgress = 50 + Math.floor((loadedResources / totalImages) * 35); // 50-85%
+      if (totalResources > 0) {
+        const resourceProgress = 60 + Math.floor((loadedResources / totalResources) * 25); // 60-85%
         targetProgress = Math.max(targetProgress, resourceProgress);
+        console.log(`📦 Ressource geladen: ${loadedResources}/${totalResources} (${resourceProgress}%)`);
       }
     };
 
@@ -624,15 +929,27 @@ const Preloader = {
       }
     });
 
+    // Track stylesheets
+    stylesheets.forEach(stylesheet => {
+      if (stylesheet.sheet) {
+        updateResourceProgress();
+      } else {
+        stylesheet.addEventListener('load', updateResourceProgress, { once: true });
+        stylesheet.addEventListener('error', updateResourceProgress, { once: true });
+      }
+    });
+
     // Track fonts
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
         if (!isComplete) {
-          targetProgress = Math.max(targetProgress, 85);
+          targetProgress = Math.max(targetProgress, 90);
+          console.log('🔤 Schriftarten geladen: 90%');
         }
       }).catch(() => {
         // Font loading failed, continue anyway
-        targetProgress = Math.max(targetProgress, 85);
+        targetProgress = Math.max(targetProgress, 90);
+        console.log('⚠️ Schriftarten-Fehler, fahre trotzdem fort');
       });
     }
 
@@ -641,43 +958,47 @@ const Preloader = {
       setTimeout(() => {
         if (!isComplete) {
           targetProgress = 100;
+          console.log('🏁 window.load Event - 100%');
         }
       }, 100);
     };
 
     if (document.readyState === 'complete') {
       // Page already loaded
+      console.log('📄 Seite bereits geladen');
       finishPreloader();
     } else {
       window.addEventListener('load', finishPreloader, { once: true });
     }
 
-    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 5 Sekunden
+    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 6 Sekunden
     setTimeout(() => {
       if (!isComplete) {
-        console.log('Preloader: Fallback triggered - forcing completion');
+        console.log('⚠️ Preloader: 6s Fallback triggered - Erzwinge Abschluss');
         targetProgress = 100;
       }
-    }, 5000);
+    }, 6000);
 
-    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 8 Sekunden
+    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 10 Sekunden
     setTimeout(() => {
       if (!isComplete) {
-        console.warn('Preloader: Emergency fallback - force removing preloader');
+        console.warn('🚨 Preloader: 10s Notfall-Fallback - Harte Entfernung');
         isComplete = true;
         preloader.classList.add('hidden');
+        document.body.style.overflow = '';
         setTimeout(() => {
           if (preloader.parentNode) {
             preloader.remove();
           }
+          document.body.classList.add('loaded');
         }, 800);
       }
-    }, 8000);
+    }, 10000);
 
     // Start animation loop
     animateProgress();
 
-    console.log('Preloader initialized with multiple strategies');
+    console.log('✅ Preloader mit 5 Strategien gestartet');
   }
 };
 
@@ -727,33 +1048,9 @@ const ScrollToTop = {
 };
 
 // ==========================================
-// INITIALIZE ALL
+// INITIALIZE ALL - wird später definiert
 // ==========================================
-const App = {
-  init() {
-    // Wait for DOM to be ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.initModules());
-    } else {
-      this.initModules();
-    }
-  },
-
-  initModules() {
-    ThemeManager.init();
-    Navigation.init();
-    SmoothScroll.init();
-    ScrollAnimations.init();
-    Lightbox.init();
-    FormValidator.init();
-    LazyLoad.init();
-    Preloader.init();
-    ScrollToTop.init();
-
-    // Add loaded class
-    document.body.classList.add('loaded');
-  }
-};
+// App wird nach allen Modulen definiert (siehe unten)
 
 // ==========================================
 // PERFORMANCE MONITORING

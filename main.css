@@ -1872,37 +1872,46 @@ section {
   transition: none !important;
 }
 
-/* Progress Bar - VERBESSERT mit echtem Progress */
+/* Progress Bar Container - KOMPLETT ÜBERARBEITET */
 .preloader-progress {
   --progress: 0%;
   position: absolute;
   bottom: 100px;
-  width: 300px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 320px;
+  max-width: 80vw;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.1);
 }
 
+/* Innerer Progress Bar - wird von JavaScript über --progress CSS Variable gesteuert */
 .preloader-progress::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--progress, 0%);
+  width: var(--progress, 0%); /* Verwendet CSS Variable --progress */
   height: 100%;
   background: linear-gradient(90deg,
-    rgba(255, 255, 255, 0.6) 0%,
-    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.95) 50%,
     rgba(255, 255, 255, 1) 100%
   );
-  transition: width 0.3s ease;
+  border-radius: 10px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
-    0 0 10px rgba(255, 255, 255, 0.6),
-    0 0 20px rgba(255, 255, 255, 0.4);
+    0 0 15px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.5),
+    0 2px 8px rgba(255, 255, 255, 0.3);
+  animation: progressGlow 2s ease-in-out infinite;
 }
 
+/* Gleitender Licht-Effekt */
 .preloader-progress::after {
   content: '';
   position: absolute;
@@ -1911,11 +1920,28 @@ section {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
   );
-  animation: progressSlide 1.5s ease-in-out infinite;
+  animation: progressSlide 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Glow-Animation für Progress Bar */
+@keyframes progressGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 15px rgba(255, 255, 255, 0.7),
+      0 0 30px rgba(255, 255, 255, 0.5),
+      0 2px 8px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.9),
+      0 0 40px rgba(255, 255, 255, 0.7),
+      0 2px 12px rgba(255, 255, 255, 0.5);
+  }
 }
 
 /* Futuristischer Text */
