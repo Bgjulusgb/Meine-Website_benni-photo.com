@@ -245,43 +245,41 @@ section {
   font-size: 1.75rem;
   font-weight: 900;
   letter-spacing: -0.05em;
-  /* Logo hat schwarzen Hintergrund mit weißer Schrift */
-  background: #000000;
-  color: #ffffff;
+  /* Transparentes Logo - kein Hintergrund */
+  background: transparent;
+  color: var(--text-primary);
   position: relative;
   /* Keine Hover-Effekte, keine Farbwechsel */
   transition: none;
-  padding: var(--space-xs) var(--space-md);
-  border: 2px solid #000000;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--space-xs) var(--space-sm);
+  /* Subtile Shadow für Sichtbarkeit in beiden Modes */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
 }
 
-/* Logo bleibt in Dark Mode auch schwarz */
+/* Logo im Dark Mode mit weißem Glow */
 [data-theme="dark"] .logo {
-  background: #000000;
-  color: #ffffff;
-  border-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: var(--text-primary);
+  filter: drop-shadow(0 1px 3px rgba(255, 255, 255, 0.15));
 }
 
 /* Kein Hover-Effekt - Logo bleibt konstant */
 .logo:hover {
-  background: #000000;
-  color: #ffffff;
+  background: transparent;
+  color: var(--text-primary);
   transform: none;
 }
 
 [data-theme="dark"] .logo:hover {
-  background: #000000;
-  color: #ffffff;
+  background: transparent;
+  color: var(--text-primary);
 }
 
 .logo-image {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  /* Kein Filter - Original SVG verwenden */
+  /* Kein Filter - Original transparentes SVG verwenden */
   filter: none;
   transition: none;
 }
