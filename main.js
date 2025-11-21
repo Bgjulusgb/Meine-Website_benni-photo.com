@@ -503,7 +503,7 @@ const LazyLoad = {
 };
 
 // ==========================================
-// PRELOADER - VERBESSERT MIT BACKEND & PERCENTAGE
+// PRELOADER - PERFEKTIONIERT BIS 100%
 // ==========================================
 const Preloader = {
   init() {
@@ -512,62 +512,120 @@ const Preloader = {
 
     const percentageEl = document.querySelector('.preloader-percentage');
     const progressBar = document.querySelector('.preloader-progress');
+    const textEl = document.querySelector('.preloader-text');
 
     let progress = 0;
-    const resources = document.images.length +
-                      document.styleSheets.length +
-                      document.scripts.length;
-    let loadedResources = 0;
+    let targetProgress = 0;
+    let isComplete = false;
 
-    // Simuliere Resource Loading
-    const updateProgress = () => {
-      loadedResources++;
-      progress = Math.min(Math.floor((loadedResources / Math.max(resources, 1)) * 100), 100);
+    // Smooth Progress Animation
+    const animateProgress = () => {
+      if (progress < targetProgress) {
+        progress += Math.min(2, targetProgress - progress);
+        if (percentageEl) {
+          percentageEl.textContent = `${Math.floor(progress)}%`;
+          percentageEl.style.transform = `scale(${1 + progress / 400})`;
 
-      if (percentageEl) {
-        percentageEl.textContent = `${progress}%`;
-        percentageEl.style.transform = `scale(${1 + progress / 500})`;
-      }
-
-      if (progressBar) {
-        progressBar.style.setProperty('--progress', `${progress}%`);
+          // Update text based on progress
+          if (textEl) {
+            if (progress < 30) textEl.textContent = 'Initializing...';
+            else if (progress < 60) textEl.textContent = 'Loading Assets...';
+            else if (progress < 90) textEl.textContent = 'Preparing Interface...';
+            else if (progress < 100) textEl.textContent = 'Almost Ready...';
+            else textEl.textContent = 'Complete!';
+          }
+        }
+        if (progressBar) {
+          progressBar.style.setProperty('--progress', `${progress}%`);
+        }
+        requestAnimationFrame(animateProgress);
+      } else if (progress >= 100 && !isComplete) {
+        isComplete = true;
+        completeLoading();
       }
     };
 
-    // Track Image Loading
-    Array.from(document.images).forEach(img => {
-      if (img.complete) {
-        updateProgress();
-      } else {
-        img.addEventListener('load', updateProgress);
-        img.addEventListener('error', updateProgress);
-      }
-    });
-
-    // Fallback Timer für schnelles Laden
-    const timer = setInterval(() => {
-      if (progress < 90) {
-        progress += Math.random() * 10;
-        progress = Math.min(progress, 90);
-        if (percentageEl) percentageEl.textContent = `${Math.floor(progress)}%`;
-      }
-    }, 100);
-
-    // On Complete
-    window.addEventListener('load', () => {
-      clearInterval(timer);
-      progress = 100;
-      if (percentageEl) percentageEl.textContent = '100%';
-
+    // Complete Loading Function
+    const completeLoading = () => {
       setTimeout(() => {
         preloader.classList.add('hidden');
         setTimeout(() => {
-          preloader.remove();
-          // Trigger Animations
+          if (preloader.parentNode) {
+            preloader.remove();
+          }
           document.body.classList.add('loaded');
         }, 800);
-      }, 500);
+      }, 300);
+    };
+
+    // Progressive Loading Stages
+    const loadingStages = [
+      { time: 100, progress: 15 },
+      { time: 300, progress: 30 },
+      { time: 500, progress: 45 },
+      { time: 700, progress: 60 },
+      { time: 900, progress: 75 }
+    ];
+
+    loadingStages.forEach(stage => {
+      setTimeout(() => {
+        if (!isComplete) {
+          targetProgress = Math.max(targetProgress, stage.progress);
+          animateProgress();
+        }
+      }, stage.time);
     });
+
+    // Track actual resources
+    let resourcesLoaded = 0;
+    const totalResources = document.images.length +
+                          document.styleSheets.length +
+                          (document.fonts ? document.fonts.size : 0);
+
+    const checkResources = () => {
+      resourcesLoaded++;
+      const resourceProgress = Math.min(90, Math.floor((resourcesLoaded / Math.max(totalResources, 1)) * 90));
+      targetProgress = Math.max(targetProgress, resourceProgress);
+      animateProgress();
+    };
+
+    // Track images
+    Array.from(document.images).forEach(img => {
+      if (img.complete) {
+        checkResources();
+      } else {
+        img.addEventListener('load', checkResources);
+        img.addEventListener('error', checkResources);
+      }
+    });
+
+    // Track fonts
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        targetProgress = Math.max(targetProgress, 85);
+        animateProgress();
+      });
+    }
+
+    // Window Load - GARANTIERT 100%
+    window.addEventListener('load', () => {
+      // Warte kurz, dann gehe zu 100%
+      setTimeout(() => {
+        targetProgress = 100;
+        animateProgress();
+      }, 200);
+    });
+
+    // Start initial animation
+    animateProgress();
+
+    // Fallback - force complete after 8 seconds
+    setTimeout(() => {
+      if (!isComplete) {
+        targetProgress = 100;
+        animateProgress();
+      }
+    }, 8000);
   }
 };
 
@@ -642,6 +700,244 @@ const App = {
 
     // Add loaded class
     document.body.classList.add('loaded');
+  }
+};
+
+// ==========================================
+// PERFORMANCE MONITORING
+// ==========================================
+const PerformanceMonitor = {
+  init() {
+    if ('PerformanceObserver' in window) {
+      // Monitor Largest Contentful Paint
+      try {
+        const lcpObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+        });
+        lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      } catch (e) {
+        // Silently fail if not supported
+      }
+
+      // Monitor First Input Delay
+      try {
+        const fidObserver = new PerformanceObserver((list) => {
+          list.getEntries().forEach((entry) => {
+            console.log('FID:', entry.processingStart - entry.startTime);
+          });
+        });
+        fidObserver.observe({ entryTypes: ['first-input'] });
+      } catch (e) {
+        // Silently fail
+      }
+    }
+
+    // Monitor Page Load Time
+    window.addEventListener('load', () => {
+      const perfData = performance.timing;
+      const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+      console.log(`Page Load Time: ${pageLoadTime}ms`);
+    });
+  }
+};
+
+// ==========================================
+// ERROR HANDLER & REPORTING
+// ==========================================
+const ErrorHandler = {
+  init() {
+    window.addEventListener('error', (event) => {
+      console.error('Error caught:', event.error);
+      // In production, send to error tracking service
+      // this.reportError(event.error);
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Unhandled Promise Rejection:', event.reason);
+      // In production, send to error tracking service
+      // this.reportError(event.reason);
+    });
+  },
+
+  reportError(error) {
+    // Send to error tracking service (Sentry, LogRocket, etc.)
+    // Example: Sentry.captureException(error);
+  }
+};
+
+// ==========================================
+// ACCESSIBILITY ENHANCEMENTS
+// ==========================================
+const AccessibilityManager = {
+  init() {
+    // Focus visible for keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+      }
+    });
+
+    document.addEventListener('mousedown', () => {
+      document.body.classList.remove('user-is-tabbing');
+    });
+
+    // Skip to main content
+    const skipLink = document.querySelector('.skip-link');
+    if (skipLink) {
+      skipLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const main = document.querySelector('#main');
+        if (main) {
+          main.setAttribute('tabindex', '-1');
+          main.focus();
+        }
+      });
+    }
+
+    // Add ARIA labels dynamically where needed
+    this.enhanceARIA();
+  },
+
+  enhanceARIA() {
+    // Add aria-current to active nav links
+    document.querySelectorAll('.nav-link.active').forEach(link => {
+      link.setAttribute('aria-current', 'page');
+    });
+
+    // Ensure all images have alt text
+    document.querySelectorAll('img:not([alt])').forEach(img => {
+      img.setAttribute('alt', '');
+      console.warn('Image missing alt text:', img.src);
+    });
+  }
+};
+
+// ==========================================
+// SERVICE WORKER REGISTRATION (PWA)
+// ==========================================
+const PWAManager = {
+  init() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch(error => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  }
+};
+
+// ==========================================
+// IMAGE OPTIMIZATION
+// ==========================================
+const ImageOptimizer = {
+  init() {
+    // Add loading="lazy" to all images if not set
+    document.querySelectorAll('img:not([loading])').forEach(img => {
+      img.setAttribute('loading', 'lazy');
+    });
+
+    // Use Intersection Observer for advanced lazy loading
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+            imageObserver.unobserve(img);
+          }
+        });
+      }, {
+        rootMargin: '50px 0px'
+      });
+
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+  }
+};
+
+// ==========================================
+// ANALYTICS (Placeholder for GA4, etc.)
+// ==========================================
+const Analytics = {
+  init() {
+    // Track page views
+    this.trackPageView();
+
+    // Track clicks on important elements
+    document.querySelectorAll('.btn, .nav-link, .card').forEach(element => {
+      element.addEventListener('click', () => {
+        this.trackEvent('click', element.className, element.textContent);
+      });
+    });
+  },
+
+  trackPageView() {
+    // Google Analytics 4 example
+    // gtag('config', 'G-XXXXXXXXXX', {
+    //   'page_path': window.location.pathname
+    // });
+    console.log('Page view tracked:', window.location.pathname);
+  },
+
+  trackEvent(action, category, label) {
+    // Google Analytics 4 example
+    // gtag('event', action, {
+    //   'event_category': category,
+    //   'event_label': label
+    // });
+    console.log('Event tracked:', { action, category, label });
+  }
+};
+
+// ==========================================
+// INITIALIZE ALL - ENHANCED
+// ==========================================
+const App = {
+  init() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.initModules());
+    } else {
+      this.initModules();
+    }
+  },
+
+  initModules() {
+    // Core modules
+    ThemeManager.init();
+    Navigation.init();
+    SmoothScroll.init();
+    ScrollAnimations.init();
+    Lightbox.init();
+    FormValidator.init();
+    LazyLoad.init();
+    Preloader.init();
+    ScrollToTop.init();
+
+    // Enhanced modules
+    PerformanceMonitor.init();
+    ErrorHandler.init();
+    AccessibilityManager.init();
+    PWAManager.init();
+    ImageOptimizer.init();
+    Analytics.init();
+
+    // Add loaded class
+    document.body.classList.add('loaded');
+
+    console.log('🚀 Benjamin Gillmann Photography - Loaded Successfully!');
   }
 };
 
