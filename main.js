@@ -883,14 +883,15 @@ const Preloader = {
       }, 500); // 500ms damit User "Bereit!" sieht
     };
 
-    // STRATEGIE 1: Zeitbasierte Stages (garantiert mindestens diesen Fortschritt)
+    // STRATEGIE 1: Zeitbasierte Stages (schneller - garantiert Abschluss in 4s)
     const timeBasedStages = [
       { delay: 0, progress: 0 },
-      { delay: 200, progress: 15 },
-      { delay: 400, progress: 30 },
-      { delay: 700, progress: 45 },
-      { delay: 1000, progress: 60 },
-      { delay: 1400, progress: 75 }
+      { delay: 100, progress: 20 },
+      { delay: 300, progress: 40 },
+      { delay: 600, progress: 60 },
+      { delay: 1000, progress: 80 },
+      { delay: 1500, progress: 90 },
+      { delay: 2500, progress: 95 }
     ];
 
     timeBasedStages.forEach(stage => {
@@ -971,18 +972,18 @@ const Preloader = {
       window.addEventListener('load', finishPreloader, { once: true });
     }
 
-    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 6 Sekunden
+    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 4 Sekunden
     setTimeout(() => {
       if (!isComplete) {
-        console.log('⚠️ Preloader: 6s Fallback triggered - Erzwinge Abschluss');
+        console.log('⚠️ Preloader: 4s Fallback triggered - Erzwinge Abschluss');
         targetProgress = 100;
       }
-    }, 6000);
+    }, 4000);
 
-    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 10 Sekunden
+    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 5 Sekunden (absolutes Maximum)
     setTimeout(() => {
       if (!isComplete) {
-        console.warn('🚨 Preloader: 10s Notfall-Fallback - Harte Entfernung');
+        console.warn('🚨 Preloader: 5s Notfall-Fallback - HARTE Entfernung');
         isComplete = true;
         preloader.classList.add('hidden');
         document.body.style.overflow = '';
@@ -993,7 +994,7 @@ const Preloader = {
           document.body.classList.add('loaded');
         }, 800);
       }
-    }, 10000);
+    }, 5000);
 
     // Start animation loop
     animateProgress();
