@@ -340,10 +340,12 @@ section {
   letter-spacing: 0.05em;
   color: var(--text-secondary);
   padding: 0.5rem 0;
-  overflow: hidden;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-/* Futuristic Animated Underline */
+/* KORRIGIERT: Futuristic Animated Underline - korrekt positioniert */
 .nav-link::before {
   content: '';
   position: absolute;
@@ -359,8 +361,10 @@ section {
   );
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
 
+/* KORRIGIERT: Underline standardmäßig NICHT sichtbar */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -370,10 +374,12 @@ section {
   height: 2px;
   background: var(--text-primary);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
+  text-decoration: none;
 }
 
 .nav-link:hover::before {
@@ -384,9 +390,15 @@ section {
   width: 100%;
 }
 
+/* KORRIGIERT: Active Link Underline */
 .nav-link.active {
   color: var(--text-primary);
   font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-link.active::before {
+  display: none; /* Keine Animation bei aktiven Links */
 }
 
 .nav-link.active::after {
@@ -499,6 +511,7 @@ section {
     opacity: 1;
   }
 
+  /* KORRIGIERT: Mobile Navigation Links */
   .nav-link {
     font-size: 1.125rem;
     /* Größerer Touch-Target */
@@ -506,6 +519,21 @@ section {
     min-height: 44px;
     display: flex;
     align-items: center;
+    width: 100%;
+  }
+
+  /* KORRIGIERT: Underline auf Mobile korrekt positionieren */
+  .nav-link::after,
+  .nav-link::before {
+    bottom: 0;
+    left: var(--space-sm);
+    right: var(--space-sm);
+    width: auto;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: auto;
   }
 
   /* Logo auf Mobile optimieren */
@@ -1944,18 +1972,23 @@ section {
   }
 }
 
-/* Futuristischer Text */
+/* KORRIGIERT: Futuristischer Text - Responsive & Optimiert */
 .preloader-text {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.875rem;
+  font-size: clamp(0.75rem, 2vw, 0.875rem); /* Responsive */
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: clamp(0.2em, 1vw, 0.3em); /* Responsive letter-spacing */
   margin-top: 200px;
   animation: textPulse 2s ease-in-out infinite;
   text-shadow:
     0 0 10px rgba(255, 255, 255, 0.5),
     0 0 20px rgba(255, 255, 255, 0.3);
+  user-select: none;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 var(--space-md);
+  max-width: 90vw;
 }
 
 /* Zusätzliche Partikel-Effekte */
@@ -2007,11 +2040,11 @@ section {
   }
 }
 
-/* Percentage Counter - FUTURISTIC */
+/* KORRIGIERT: Percentage Counter - Responsive & Optimiert */
 .preloader-percentage {
   position: absolute;
   bottom: 140px;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive */
   font-weight: 900;
   color: rgba(255, 255, 255, 1);
   font-family: var(--font-display);
@@ -2020,7 +2053,8 @@ section {
     0 0 40px rgba(255, 255, 255, 0.5),
     0 0 60px rgba(255, 255, 255, 0.3);
   letter-spacing: 0.1em;
-  /* Kein Pulsieren mehr - nur sanfte Glow-Transition */
+  user-select: none;
+  pointer-events: none;
   transition: all 0.3s ease;
 }
 
@@ -2077,5 +2111,299 @@ section {
   .preloader-percentage {
     font-size: 1.25rem;
     bottom: 120px;
+  }
+}
+
+/* ===========================================
+   ERWEITERTE RESPONSIVE BREAKPOINTS
+   Optimiert für alle Gerätegrößen
+   =========================================== */
+
+/* Kleine Mobile Geräte (320px - 480px) */
+@media (max-width: 480px) {
+  :root {
+    --space-xl: 2rem;
+    --space-2xl: 2.5rem;
+    --space-3xl: 3rem;
+    --space-4xl: 4rem;
+  }
+
+  .container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 3vw, 1rem) !important;
+  }
+
+  .btn {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    min-height: 44px;
+  }
+
+  .header {
+    height: 70px;
+  }
+
+  .nav {
+    height: 70px;
+  }
+
+  .nav-menu {
+    top: 70px;
+    max-height: calc(100vh - 70px);
+  }
+
+  .logo-image {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Karten responsiv */
+  .card {
+    padding: var(--space-lg);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  /* Footer responsiv */
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}
+
+/* Tablets im Hochformat (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 4rem) !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .gallery-grid,
+  .grid-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    padding: var(--space-xl);
+  }
+}
+
+/* Tablets im Querformat / Kleine Laptops (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 900px;
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 8vw, 5rem) !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .gallery-grid,
+  .grid-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .nav-menu {
+    gap: var(--space-lg);
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+  }
+}
+
+/* Große Bildschirme (1441px+) */
+@media (min-width: 1441px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .hero {
+    min-height: 90vh;
+  }
+
+  .hero-title {
+    font-size: 6rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+
+  .gallery-grid,
+  .grid-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Sehr große Bildschirme (1920px+) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1600px;
+  }
+
+  .gallery-grid,
+  .grid-gallery {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .hero-title {
+    font-size: 7rem !important;
+  }
+}
+
+/* Landscape Orientation Optimierung */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .preloader-spinner {
+    width: 100px;
+    height: 100px;
+  }
+
+  .preloader-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .preloader-percentage {
+    bottom: 80px;
+    font-size: 1.5rem;
+  }
+
+  .preloader-text {
+    margin-top: 120px;
+    font-size: 0.7rem;
+  }
+
+  .preloader-progress {
+    bottom: 60px;
+  }
+}
+
+/* Touch Device Optimierungen */
+@media (hover: none) and (pointer: coarse) {
+  /* Alle interaktiven Elemente mindestens 44x44px */
+  .btn,
+  .nav-link,
+  .menu-toggle,
+  .theme-toggle,
+  button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keine Hover-Effekte auf Touch-Geräten */
+  .nav-link:hover::before {
+    transform: translateX(-100%);
+  }
+
+  /* Touch Feedback */
+  .btn:active,
+  .nav-link:active,
+  button:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .header,
+  .footer,
+  .nav,
+  .menu-toggle,
+  .theme-toggle,
+  .preloader {
+    display: none !important;
+  }
+
+  .hero {
+    min-height: auto;
+    page-break-after: always;
+  }
+
+  .card {
+    page-break-inside: avoid;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .preloader-spinner::before,
+  .preloader-spinner::after,
+  .preloader-text {
+    animation: none !important;
+  }
+
+  .nav-link::before {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: #000000;
+  }
+
+  [data-theme="dark"] {
+    --border-color: #ffffff;
+  }
+
+  .nav-link,
+  .btn,
+  .card {
+    border-width: 2px;
+  }
+
+  .nav-link.active::after {
+    height: 3px;
   }
 }
