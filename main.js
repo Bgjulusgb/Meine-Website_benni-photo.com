@@ -514,60 +514,94 @@ const Preloader = {
     const progressBar = document.querySelector('.preloader-progress');
 
     let progress = 0;
-    const resources = document.images.length +
-                      document.styleSheets.length +
-                      document.scripts.length;
-    let loadedResources = 0;
+    let targetProgress = 0;
 
-    // Simuliere Resource Loading
-    const updateProgress = () => {
-      loadedResources++;
-      progress = Math.min(Math.floor((loadedResources / Math.max(resources, 1)) * 100), 100);
-
-      if (percentageEl) {
-        percentageEl.textContent = `${progress}%`;
-        percentageEl.style.transform = `scale(${1 + progress / 500})`;
-      }
-
-      if (progressBar) {
-        progressBar.style.setProperty('--progress', `${progress}%`);
+    // Smooth Progress Animation
+    const animateProgress = () => {
+      if (progress < targetProgress) {
+        progress += 1;
+        if (percentageEl) {
+          percentageEl.textContent = `${Math.floor(progress)}%`;
+          percentageEl.style.transform = `scale(${1 + progress / 500})`;
+        }
+        if (progressBar) {
+          progressBar.style.setProperty('--progress', `${progress}%`);
+        }
+        requestAnimationFrame(animateProgress);
       }
     };
 
-    // Track Image Loading
+    // Progressive Loading Simulation
+    const loadingStages = [
+      { time: 0, progress: 0 },
+      { time: 200, progress: 20 },
+      { time: 400, progress: 40 },
+      { time: 600, progress: 60 },
+      { time: 800, progress: 75 },
+      { time: 1000, progress: 85 },
+      { time: 1200, progress: 95 }
+    ];
+
+    loadingStages.forEach(stage => {
+      setTimeout(() => {
+        targetProgress = stage.progress;
+        animateProgress();
+      }, stage.time);
+    });
+
+    // Track actual resources
+    let resourcesLoaded = 0;
+    const totalResources = document.images.length + document.styleSheets.length;
+
+    const checkResources = () => {
+      resourcesLoaded++;
+      const resourceProgress = Math.floor((resourcesLoaded / Math.max(totalResources, 1)) * 100);
+      targetProgress = Math.max(targetProgress, resourceProgress);
+      animateProgress();
+    };
+
+    // Track images
     Array.from(document.images).forEach(img => {
       if (img.complete) {
-        updateProgress();
+        checkResources();
       } else {
-        img.addEventListener('load', updateProgress);
-        img.addEventListener('error', updateProgress);
+        img.addEventListener('load', checkResources);
+        img.addEventListener('error', checkResources);
       }
     });
 
-    // Fallback Timer für schnelles Laden
-    const timer = setInterval(() => {
-      if (progress < 90) {
-        progress += Math.random() * 10;
-        progress = Math.min(progress, 90);
-        if (percentageEl) percentageEl.textContent = `${Math.floor(progress)}%`;
-      }
-    }, 100);
-
-    // On Complete
+    // Complete on window load
     window.addEventListener('load', () => {
-      clearInterval(timer);
-      progress = 100;
-      if (percentageEl) percentageEl.textContent = '100%';
+      targetProgress = 100;
+      animateProgress();
 
       setTimeout(() => {
         preloader.classList.add('hidden');
         setTimeout(() => {
-          preloader.remove();
-          // Trigger Animations
+          if (preloader.parentNode) {
+            preloader.remove();
+          }
           document.body.classList.add('loaded');
         }, 800);
       }, 500);
     });
+
+    // Fallback - force complete after 5 seconds
+    setTimeout(() => {
+      if (!document.body.classList.contains('loaded')) {
+        targetProgress = 100;
+        animateProgress();
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+          setTimeout(() => {
+            if (preloader.parentNode) {
+              preloader.remove();
+            }
+            document.body.classList.add('loaded');
+          }, 800);
+        }, 500);
+      }
+    }, 5000);
   }
 };
 
