@@ -40,7 +40,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="enhancements.css">
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -113,16 +114,13 @@
     </script>
 </head>
 <body>
-    <!-- Preloader - Futuristic Modern -->
+    <!-- Preloader - Minimalistisch & Elegant -->
     <div class="preloader">
         <div class="preloader-spinner">
             <div class="preloader-logo">
                 <img src="Transparent_Logo.svg" alt="BG Logo">
             </div>
         </div>
-        <div class="preloader-percentage">0%</div>
-        <div class="preloader-progress"></div>
-        <div class="preloader-text">Loading Experience...</div>
     </div>
 
     <!-- Skip Link -->
@@ -163,11 +161,8 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-badge">
-                    📸 Professionelle Fotografie
-                </div>
-                <h1 class="hero-title">BENJAMIN GILLMANN</h1>
-                <p class="hero-subtitle">
+                <h1 class="hero-title text-gradient-animate">BENJAMIN GILLMANN</h1>
+                <p class="hero-subtitle text-split-reveal">
                     Capturing unforgettable moments<br>
                     Sport · Musik · Events
                 </p>
@@ -298,6 +293,42 @@
                             <p>Event Fotografie</p>
                         </div>
                     </div>
+
+                    <!-- Marathon Running - Black & White -->
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop&auto=format&q=80"
+                             style="filter: grayscale(100%) contrast(1.15);"
+                             alt="Marathon Lauf"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Marathon Berlin</h3>
+                            <p>Sport Fotografie</p>
+                        </div>
+                    </div>
+
+                    <!-- Rock Concert - Black & White -->
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop&auto=format&q=80"
+                             style="filter: grayscale(100%) contrast(1.2);"
+                             alt="Rock Konzert Gitarre"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Rock am Ring</h3>
+                            <p>Musik Fotografie</p>
+                        </div>
+                    </div>
+
+                    <!-- Business Event - Black & White -->
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop&auto=format&q=80"
+                             style="filter: grayscale(100%) contrast(1.1);"
+                             alt="Business Meeting"
+                             loading="lazy">
+                        <div class="gallery-info">
+                            <h3>Team Summit</h3>
+                            <p>Event Fotografie</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="text-center mt-xl">
@@ -365,5 +396,6 @@
 
     <!-- Scripts -->
     <script src="main.js"></script>
+    <script src="enhancements.js"></script>
 </body>
 </html>

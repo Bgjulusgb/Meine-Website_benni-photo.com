@@ -667,47 +667,12 @@ const initWritingEffects = () => {
 };
 
 // ==========================================
-// PRELOADER WITH PERCENTAGE
-// ==========================================
-
-const initPreloader = () => {
-  const preloader = document.querySelector('.preloader');
-  const percentageEl = document.querySelector('.preloader-percentage');
-
-  if (!preloader || !percentageEl) return;
-
-  let progress = 0;
-  const duration = 2000; // 2 seconds
-  const interval = 20; // Update every 20ms
-  const steps = duration / interval;
-  const increment = 100 / steps;
-
-  const updateProgress = setInterval(() => {
-    progress += increment;
-
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(updateProgress);
-
-      setTimeout(() => {
-        preloader.classList.add('hidden');
-        setTimeout(() => {
-          preloader.remove();
-        }, 800);
-      }, 300);
-    }
-
-    percentageEl.textContent = `${Math.round(progress)}%`;
-  }, interval);
-};
-
-// ==========================================
 // INITIALIZATION
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize in optimal order
-  initPreloader();
+  // Note: Preloader is handled by main.js
   initCookieConsent();
   initContactForm();
   initNewsletter();

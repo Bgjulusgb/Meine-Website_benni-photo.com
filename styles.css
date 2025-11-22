@@ -358,10 +358,10 @@ code {
   }
 }
 
-/* Grid System */
+/* Grid System - VERBESSERT für bessere Responsivität */
 .grid {
   display: grid;
-  gap: var(--space-6);
+  gap: clamp(1rem, 3vw, 2rem);
 }
 
 .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
@@ -369,18 +369,26 @@ code {
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-@media (max-width: 768px) {
+/* Responsive Grid mit besseren Breakpoints */
+@media (max-width: 640px) {
   .grid-cols-2,
   .grid-cols-3,
   .grid-cols-4 {
     grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 641px) and (max-width: 1024px) {
   .grid-cols-3,
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -537,33 +545,15 @@ code {
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-.navbar-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform var(--duration-normal) var(--ease-out);
-}
-
 .navbar-link:hover,
 .navbar-link.active {
   color: var(--text-primary);
 }
 
-.navbar-link:hover::after,
-.navbar-link.active::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-[data-theme="dark"] .navbar-link:hover::after,
-[data-theme="dark"] .navbar-link.active::after {
-  box-shadow: var(--glow-md);
+/* Einfacher Unterstrich-Effekt ohne störende Animationen */
+.navbar-link.active {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
 }
 
 /* Theme Toggle */
@@ -638,9 +628,11 @@ code {
   .menu-toggle {
     display: flex;
     /* Größerer Touch-Target für Mobile */
-    min-width: 44px;
-    min-height: 44px;
-    padding: var(--space-2);
+    min-width: 48px;
+    min-height: 48px;
+    padding: var(--space-3);
+    justify-content: center;
+    align-items: center;
   }
 
   .navbar-menu {
@@ -651,16 +643,15 @@ code {
     flex-direction: column;
     background: var(--bg-primary);
     border-bottom: 1px solid var(--border-primary);
-    padding: var(--space-8);
+    padding: var(--space-6) var(--space-4);
+    gap: var(--space-2);
     transform: translateY(-100%);
     opacity: 0;
-    transition: all var(--duration-normal) var(--ease-out);
+    transition: all 0.3s ease-in-out;
     pointer-events: none;
-    /* Performance-Optimierung für Mobile */
-    will-change: transform, opacity;
-    -webkit-overflow-scrolling: touch;
     max-height: calc(100vh - 80px);
     overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .navbar-menu.active {
@@ -669,12 +660,28 @@ code {
     pointer-events: all;
   }
 
+  .navbar-menu li {
+    width: 100%;
+  }
+
   .navbar-link {
     /* Größerer Touch-Target */
-    min-height: 44px;
+    min-height: 48px;
     display: flex;
     align-items: center;
-    padding: var(--space-3) var(--space-2);
+    padding: var(--space-4);
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  .navbar-link:hover,
+  .navbar-link.active {
+    background: var(--bg-tertiary);
+  }
+
+  .navbar-link.active {
+    border-bottom: none;
+    border-left: 3px solid var(--accent);
   }
 }
 
@@ -1381,9 +1388,166 @@ code {
   .theme-toggle {
     display: none;
   }
-  
+
   body {
     background: white;
     color: black;
+  }
+}
+
+/* ==========================================
+   16. PRELOADER - MINIMALISTISCH & ELEGANT
+   ========================================== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Spinner Container mit Rotation */
+.preloader-spinner {
+  position: relative;
+  width: clamp(100px, 20vw, 140px);
+  height: clamp(100px, 20vw, 140px);
+  animation: preloaderRotate 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Logo in der Mitte */
+.preloader-logo {
+  position: absolute;
+  inset: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: preloaderPulse 2s ease-in-out infinite;
+}
+
+.preloader-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+[data-theme="dark"] .preloader-logo img {
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+}
+
+/* Eleganter Spinner-Ring */
+.preloader-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid transparent;
+  border-top-color: var(--text-primary);
+  border-right-color: var(--text-primary);
+  border-radius: 50%;
+  animation: preloaderSpin 1.5s linear infinite;
+}
+
+/* Zweiter Ring für mehr Tiefe */
+.preloader-spinner::after {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  border: 2px solid transparent;
+  border-bottom-color: var(--text-secondary);
+  border-left-color: var(--text-secondary);
+  border-radius: 50%;
+  animation: preloaderSpin 2s linear infinite reverse;
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .preloader-spinner::before {
+  border-top-color: var(--neon-white);
+  border-right-color: var(--neon-white);
+  box-shadow: 0 0 20px var(--neon-intensity-3);
+}
+
+[data-theme="dark"] .preloader-spinner::after {
+  border-bottom-color: var(--neon-intensity-4);
+  border-left-color: var(--neon-intensity-4);
+  box-shadow: 0 0 15px var(--neon-intensity-2);
+}
+
+/* Animationen */
+@keyframes preloaderRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes preloaderSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes preloaderPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+/* Responsive Preloader */
+@media (max-width: 768px) {
+  .preloader-spinner {
+    width: clamp(80px, 25vw, 120px);
+    height: clamp(80px, 25vw, 120px);
+  }
+
+  .preloader-spinner::before {
+    border-width: 2px;
+  }
+
+  .preloader-spinner::after {
+    border-width: 1.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-spinner {
+    width: clamp(70px, 30vw, 100px);
+    height: clamp(70px, 30vw, 100px);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .preloader-spinner,
+  .preloader-logo,
+  .preloader-spinner::before,
+  .preloader-spinner::after {
+    animation: none !important;
+  }
+
+  .preloader-logo {
+    opacity: 1;
   }
 }
