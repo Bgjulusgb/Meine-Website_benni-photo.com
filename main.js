@@ -781,7 +781,7 @@ const LazyLoad = {
 };
 
 // ==========================================
-// PRELOADER - KOMPLETT NEU & ROBUST
+// PRELOADER - MINIMALISTISCH & VEREINFACHT
 // ==========================================
 const Preloader = {
   init() {
@@ -799,76 +799,18 @@ const Preloader = {
     preloader.style.opacity = '1';
     preloader.style.visibility = 'visible';
 
-    const percentageEl = document.querySelector('.preloader-percentage');
-    const progressBar = document.querySelector('.preloader-progress');
-    const textEl = document.querySelector('.preloader-text');
-
-    let currentProgress = 0;
-    let targetProgress = 0;
     let isComplete = false;
-    let animationFrameId = null;
 
-    console.log('✨ Preloader initialized - Starting loading sequence');
+    console.log('✨ Preloader initialized - Minimalistisches Design ohne Prozentanzeige');
 
-    // Smooth Progress Animation with easing
-    const animateProgress = () => {
-      if (isComplete) return;
+    // Keine Progress-Animation mehr nötig - nur Spinner läuft via CSS
 
-      // Smooth easing towards target
-      const diff = targetProgress - currentProgress;
-      if (Math.abs(diff) > 0.1) {
-        currentProgress += diff * 0.15; // Smooth easing
-      } else {
-        currentProgress = targetProgress;
-      }
-
-      const displayProgress = Math.floor(currentProgress);
-
-      // Update UI elements
-      if (percentageEl) {
-        percentageEl.textContent = `${displayProgress}%`;
-        percentageEl.setAttribute('data-progress', displayProgress);
-      }
-
-      if (progressBar) {
-        // Korrekte Aktualisierung der Progress Bar via CSS Variable
-        progressBar.style.setProperty('--progress', `${currentProgress}%`);
-      }
-
-      // Update loading text mit deutschen Texten
-      if (textEl) {
-        if (displayProgress < 20) textEl.textContent = 'Initialisierung...';
-        else if (displayProgress < 40) textEl.textContent = 'Lade Assets...';
-        else if (displayProgress < 60) textEl.textContent = 'Bereite Interface vor...';
-        else if (displayProgress < 80) textEl.textContent = 'Fast fertig...';
-        else if (displayProgress < 95) textEl.textContent = 'Abschließende Schritte...';
-        else if (displayProgress >= 95 && displayProgress < 100) textEl.textContent = 'Finalisierung...';
-        else textEl.textContent = 'Bereit!';
-      }
-
-      // Check if we reached 100%
-      if (currentProgress >= 99.9 && !isComplete) {
-        isComplete = true;
-        console.log('✅ Preloader: 100% erreicht - Wird ausgeblendet');
-        completeLoading();
-        return;
-      }
-
-      // Continue animation
-      animationFrameId = requestAnimationFrame(animateProgress);
-    };
-
-    // Complete Loading Function
+    // Complete Loading Function - Vereinfacht
     const completeLoading = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      if (isComplete) return;
+      isComplete = true;
 
-      // Zeige "Bereit!" für einen Moment
-      if (textEl) {
-        textEl.textContent = 'Bereit!';
-      }
-
+      // Kurze Verzögerung für sanften Übergang
       setTimeout(() => {
         preloader.classList.add('hidden');
         document.body.style.overflow = ''; // Re-enable scrolling
@@ -879,89 +821,25 @@ const Preloader = {
           }
           document.body.classList.add('loaded');
           console.log('🎉 Preloader erfolgreich entfernt - Seite geladen');
-        }, 800);
-      }, 500); // 500ms damit User "Bereit!" sieht
+        }, 600); // Wartet auf CSS Transition
+      }, 300);
     };
 
-    // STRATEGIE 1: Zeitbasierte Stages (schneller - garantiert Abschluss in 4s)
-    const timeBasedStages = [
-      { delay: 0, progress: 0 },
-      { delay: 100, progress: 20 },
-      { delay: 300, progress: 40 },
-      { delay: 600, progress: 60 },
-      { delay: 1000, progress: 80 },
-      { delay: 1500, progress: 90 },
-      { delay: 2500, progress: 95 }
-    ];
+    // STRATEGIE 1: Minimale Anzeigezeit (bessere UX)
+    const minDisplayTime = 800; // Mindestens 800ms anzeigen
+    const startTime = Date.now();
 
-    timeBasedStages.forEach(stage => {
-      setTimeout(() => {
-        if (!isComplete) {
-          targetProgress = Math.max(targetProgress, stage.progress);
-          console.log(`⏱️ Zeitbasiert: ${stage.progress}%`);
-        }
-      }, stage.delay);
-    });
-
-    // STRATEGIE 2: Ressourcen-basiertes Tracking
-    let loadedResources = 0;
-    const images = Array.from(document.images);
-    const stylesheets = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
-    const totalResources = images.length + stylesheets.length;
-
-    console.log(`📦 Tracking ${images.length} Bilder und ${stylesheets.length} Stylesheets`);
-
-    const updateResourceProgress = () => {
-      loadedResources++;
-      if (totalResources > 0) {
-        const resourceProgress = 60 + Math.floor((loadedResources / totalResources) * 25); // 60-85%
-        targetProgress = Math.max(targetProgress, resourceProgress);
-        console.log(`📦 Ressource geladen: ${loadedResources}/${totalResources} (${resourceProgress}%)`);
-      }
-    };
-
-    // Track all images
-    images.forEach(img => {
-      if (img.complete) {
-        updateResourceProgress();
-      } else {
-        img.addEventListener('load', updateResourceProgress, { once: true });
-        img.addEventListener('error', updateResourceProgress, { once: true });
-      }
-    });
-
-    // Track stylesheets
-    stylesheets.forEach(stylesheet => {
-      if (stylesheet.sheet) {
-        updateResourceProgress();
-      } else {
-        stylesheet.addEventListener('load', updateResourceProgress, { once: true });
-        stylesheet.addEventListener('error', updateResourceProgress, { once: true });
-      }
-    });
-
-    // Track fonts
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        if (!isComplete) {
-          targetProgress = Math.max(targetProgress, 90);
-          console.log('🔤 Schriftarten geladen: 90%');
-        }
-      }).catch(() => {
-        // Font loading failed, continue anyway
-        targetProgress = Math.max(targetProgress, 90);
-        console.log('⚠️ Schriftarten-Fehler, fahre trotzdem fort');
-      });
-    }
-
-    // STRATEGIE 3: window.load Event - TRIGGER ZU 100%
+    // STRATEGIE 2: window.load Event
     const finishPreloader = () => {
+      const elapsed = Date.now() - startTime;
+      const remainingTime = Math.max(0, minDisplayTime - elapsed);
+
       setTimeout(() => {
         if (!isComplete) {
-          targetProgress = 100;
-          console.log('🏁 window.load Event - 100%');
+          console.log('🏁 Seite vollständig geladen');
+          completeLoading();
         }
-      }, 100);
+      }, remainingTime);
     };
 
     if (document.readyState === 'complete') {
@@ -972,34 +850,15 @@ const Preloader = {
       window.addEventListener('load', finishPreloader, { once: true });
     }
 
-    // STRATEGIE 4: Fallback - garantiert Abschluss nach max. 4 Sekunden
+    // STRATEGIE 3: Fallback - garantiert Abschluss nach max. 3 Sekunden
     setTimeout(() => {
       if (!isComplete) {
-        console.log('⚠️ Preloader: 4s Fallback triggered - Erzwinge Abschluss');
-        targetProgress = 100;
+        console.log('⚠️ Preloader: 3s Fallback triggered');
+        completeLoading();
       }
-    }, 4000);
+    }, 3000);
 
-    // STRATEGIE 5: Notfall-Fallback - hart abbrechen nach 5 Sekunden (absolutes Maximum)
-    setTimeout(() => {
-      if (!isComplete) {
-        console.warn('🚨 Preloader: 5s Notfall-Fallback - HARTE Entfernung');
-        isComplete = true;
-        preloader.classList.add('hidden');
-        document.body.style.overflow = '';
-        setTimeout(() => {
-          if (preloader.parentNode) {
-            preloader.remove();
-          }
-          document.body.classList.add('loaded');
-        }, 800);
-      }
-    }, 5000);
-
-    // Start animation loop
-    animateProgress();
-
-    console.log('✅ Preloader mit 5 Strategien gestartet');
+    console.log('✅ Minimalistischer Preloader gestartet');
   }
 };
 

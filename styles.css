@@ -1388,9 +1388,166 @@ code {
   .theme-toggle {
     display: none;
   }
-  
+
   body {
     background: white;
     color: black;
+  }
+}
+
+/* ==========================================
+   16. PRELOADER - MINIMALISTISCH & ELEGANT
+   ========================================== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Spinner Container mit Rotation */
+.preloader-spinner {
+  position: relative;
+  width: clamp(100px, 20vw, 140px);
+  height: clamp(100px, 20vw, 140px);
+  animation: preloaderRotate 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Logo in der Mitte */
+.preloader-logo {
+  position: absolute;
+  inset: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: preloaderPulse 2s ease-in-out infinite;
+}
+
+.preloader-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+[data-theme="dark"] .preloader-logo img {
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+}
+
+/* Eleganter Spinner-Ring */
+.preloader-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid transparent;
+  border-top-color: var(--text-primary);
+  border-right-color: var(--text-primary);
+  border-radius: 50%;
+  animation: preloaderSpin 1.5s linear infinite;
+}
+
+/* Zweiter Ring für mehr Tiefe */
+.preloader-spinner::after {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  border: 2px solid transparent;
+  border-bottom-color: var(--text-secondary);
+  border-left-color: var(--text-secondary);
+  border-radius: 50%;
+  animation: preloaderSpin 2s linear infinite reverse;
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .preloader-spinner::before {
+  border-top-color: var(--neon-white);
+  border-right-color: var(--neon-white);
+  box-shadow: 0 0 20px var(--neon-intensity-3);
+}
+
+[data-theme="dark"] .preloader-spinner::after {
+  border-bottom-color: var(--neon-intensity-4);
+  border-left-color: var(--neon-intensity-4);
+  box-shadow: 0 0 15px var(--neon-intensity-2);
+}
+
+/* Animationen */
+@keyframes preloaderRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes preloaderSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes preloaderPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+/* Responsive Preloader */
+@media (max-width: 768px) {
+  .preloader-spinner {
+    width: clamp(80px, 25vw, 120px);
+    height: clamp(80px, 25vw, 120px);
+  }
+
+  .preloader-spinner::before {
+    border-width: 2px;
+  }
+
+  .preloader-spinner::after {
+    border-width: 1.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-spinner {
+    width: clamp(70px, 30vw, 100px);
+    height: clamp(70px, 30vw, 100px);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .preloader-spinner,
+  .preloader-logo,
+  .preloader-spinner::before,
+  .preloader-spinner::after {
+    animation: none !important;
+  }
+
+  .preloader-logo {
+    opacity: 1;
   }
 }
