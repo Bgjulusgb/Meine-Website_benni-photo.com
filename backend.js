@@ -667,6 +667,404 @@ const initWritingEffects = () => {
 };
 
 // ==========================================
+// ADVANCED GALLERY BACKEND
+// ==========================================
+
+const GalleryBackend = {
+  cache: new Map(),
+  favorites: new Set(),
+  currentFilter: 'all',
+  currentSort: 'date-desc',
+
+  init() {
+    this.loadFavorites();
+    this.initGalleryFilters();
+    this.initGallerySort();
+    this.initGallerySearch();
+    this.initLazyLoading();
+    this.initImageDownload();
+    this.initGalleryInfiniteScroll();
+    this.initImageMetadata();
+  },
+
+  // Load favorites from localStorage
+  loadFavorites() {
+    const saved = localStorage.getItem('gallery_favorites');
+    if (saved) {
+      this.favorites = new Set(JSON.parse(saved));
+      this.updateFavoriteUI();
+    }
+  },
+
+  saveFavorites() {
+    localStorage.setItem('gallery_favorites', JSON.stringify([...this.favorites]));
+  },
+
+  // Gallery filtering
+  initGalleryFilters() {
+    const filterButtons = document.querySelectorAll('[data-gallery-filter]');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    if (filterButtons.length === 0) return;
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.galleryFilter;
+        this.currentFilter = filter;
+
+        // Update active button
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter items with animation
+        galleryItems.forEach((item, index) => {
+          const category = item.dataset.category || 'all';
+          const shouldShow = filter === 'all' || category === filter;
+
+          setTimeout(() => {
+            if (shouldShow) {
+              item.style.display = '';
+              setTimeout(() => {
+                item.classList.add('revealed');
+              }, 50);
+            } else {
+              item.classList.remove('revealed');
+              setTimeout(() => {
+                item.style.display = 'none';
+              }, 300);
+            }
+          }, index * 30);
+        });
+
+        trackEvent('Gallery', 'Filter', filter);
+      });
+    });
+  },
+
+  // Gallery sorting
+  initGallerySort() {
+    const sortSelect = document.querySelector('[data-gallery-sort]');
+    if (!sortSelect) return;
+
+    sortSelect.addEventListener('change', (e) => {
+      const sortBy = e.target.value;
+      this.currentSort = sortBy;
+      this.sortGallery(sortBy);
+      trackEvent('Gallery', 'Sort', sortBy);
+    });
+  },
+
+  sortGallery(sortBy) {
+    const container = document.querySelector('.gallery-grid, .grid');
+    if (!container) return;
+
+    const items = Array.from(container.querySelectorAll('.gallery-item'));
+
+    items.sort((a, b) => {
+      switch(sortBy) {
+        case 'date-desc':
+          return (b.dataset.date || 0) - (a.dataset.date || 0);
+        case 'date-asc':
+          return (a.dataset.date || 0) - (b.dataset.date || 0);
+        case 'title-asc':
+          return (a.dataset.title || '').localeCompare(b.dataset.title || '');
+        case 'title-desc':
+          return (b.dataset.title || '').localeCompare(a.dataset.title || '');
+        case 'favorites':
+          const aFav = this.favorites.has(a.dataset.imageId);
+          const bFav = this.favorites.has(b.dataset.imageId);
+          return bFav - aFav;
+        default:
+          return 0;
+      }
+    });
+
+    // Re-append in new order with animation
+    items.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        container.appendChild(item);
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'scale(1)';
+        }, index * 30);
+      }, 50);
+    });
+  },
+
+  // Gallery search
+  initGallerySearch() {
+    const searchInput = document.querySelector('[data-gallery-search]');
+    if (!searchInput) return;
+
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      const query = e.target.value.toLowerCase().trim();
+
+      searchTimeout = setTimeout(() => {
+        this.searchGallery(query);
+        trackEvent('Gallery', 'Search', query);
+      }, 300);
+    });
+  },
+
+  searchGallery(query) {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach(item => {
+      const title = (item.dataset.title || '').toLowerCase();
+      const description = (item.dataset.description || '').toLowerCase();
+      const tags = (item.dataset.tags || '').toLowerCase();
+      const category = (item.dataset.category || '').toLowerCase();
+
+      const matches = !query ||
+        title.includes(query) ||
+        description.includes(query) ||
+        tags.includes(query) ||
+        category.includes(query);
+
+      if (matches) {
+        item.style.display = '';
+        setTimeout(() => item.classList.add('revealed'), 50);
+      } else {
+        item.classList.remove('revealed');
+        setTimeout(() => item.style.display = 'none', 300);
+      }
+    });
+  },
+
+  // Advanced lazy loading for gallery
+  initLazyLoading() {
+    if (!('IntersectionObserver' in window)) return;
+
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          const src = img.dataset.src || img.dataset.lazySrc;
+
+          if (src && !img.src) {
+            // Preload image
+            const tempImg = new Image();
+            tempImg.onload = () => {
+              img.src = src;
+              img.classList.add('loaded');
+              img.classList.add('fade-in');
+            };
+            tempImg.onerror = () => {
+              img.classList.add('error');
+              console.error('Failed to load image:', src);
+            };
+            tempImg.src = src;
+
+            imageObserver.unobserve(img);
+          }
+        }
+      });
+    }, {
+      rootMargin: '100px 0px',
+      threshold: 0.01
+    });
+
+    document.querySelectorAll('.gallery-item img[data-src], .gallery-item img[data-lazy-src]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  },
+
+  // Image download functionality
+  initImageDownload() {
+    document.addEventListener('click', async (e) => {
+      const downloadBtn = e.target.closest('[data-download-image]');
+      if (!downloadBtn) return;
+
+      e.preventDefault();
+      const imageUrl = downloadBtn.dataset.downloadImage;
+      const filename = downloadBtn.dataset.filename || 'image.jpg';
+
+      try {
+        showNotification('Downloading image...', 'info');
+
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        showNotification('✓ Image downloaded successfully!', 'success');
+        trackEvent('Gallery', 'Download', filename);
+      } catch (error) {
+        console.error('Download failed:', error);
+        showNotification('❌ Download failed. Please try again.', 'error');
+        trackEvent('Gallery', 'Download Error', filename);
+      }
+    });
+  },
+
+  // Infinite scroll for gallery
+  initGalleryInfiniteScroll() {
+    const gallery = document.querySelector('.gallery-grid, .grid');
+    if (!gallery || !gallery.dataset.infiniteScroll) return;
+
+    let page = 1;
+    let loading = false;
+    let hasMore = true;
+
+    const loadMore = async () => {
+      if (loading || !hasMore) return;
+
+      loading = true;
+      const loader = this.createLoader();
+      gallery.appendChild(loader);
+
+      try {
+        // Replace with your actual API endpoint
+        const response = await fetch(`/api/gallery?page=${page + 1}&limit=12`);
+        const data = await response.json();
+
+        if (data.images && data.images.length > 0) {
+          data.images.forEach(img => {
+            const item = this.createGalleryItem(img);
+            gallery.appendChild(item);
+          });
+          page++;
+          hasMore = data.hasMore;
+          trackEvent('Gallery', 'Load More', `Page ${page}`);
+        } else {
+          hasMore = false;
+          showNotification('No more images to load', 'info');
+        }
+      } catch (error) {
+        console.error('Failed to load more images:', error);
+        showNotification('Failed to load more images', 'error');
+      } finally {
+        loader.remove();
+        loading = false;
+      }
+    };
+
+    // Intersection Observer for infinite scroll
+    const sentinel = document.createElement('div');
+    sentinel.className = 'gallery-sentinel';
+    sentinel.style.height = '1px';
+    gallery.appendChild(sentinel);
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMore();
+      }
+    }, { rootMargin: '200px' });
+
+    observer.observe(sentinel);
+  },
+
+  createLoader() {
+    const loader = document.createElement('div');
+    loader.className = 'gallery-loader';
+    loader.innerHTML = `
+      <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+        <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid rgba(0,0,0,0.1); border-top-color: var(--text-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="margin-top: 16px; color: var(--text-secondary);">Loading more images...</p>
+      </div>
+    `;
+    return loader;
+  },
+
+  createGalleryItem(data) {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.dataset.category = data.category || '';
+    item.dataset.date = data.date || Date.now();
+    item.dataset.title = data.title || '';
+    item.dataset.imageId = data.id || '';
+
+    item.innerHTML = `
+      <img data-src="${data.url}" alt="${data.alt || ''}" loading="lazy">
+      <div class="gallery-info">
+        <h3>${data.title || 'Untitled'}</h3>
+        <p>${data.description || ''}</p>
+      </div>
+      <button class="gallery-favorite" data-image-id="${data.id}" aria-label="Add to favorites">
+        ♥
+      </button>
+    `;
+
+    return item;
+  },
+
+  // Image metadata viewer
+  initImageMetadata() {
+    document.addEventListener('click', (e) => {
+      const infoBtn = e.target.closest('[data-image-info]');
+      if (!infoBtn) return;
+
+      const imageId = infoBtn.dataset.imageInfo;
+      this.showImageMetadata(imageId);
+    });
+  },
+
+  async showImageMetadata(imageId) {
+    try {
+      // Replace with your actual API endpoint
+      const response = await fetch(`/api/images/${imageId}/metadata`);
+      const metadata = await response.json();
+
+      const modal = document.createElement('div');
+      modal.className = 'metadata-modal';
+      modal.innerHTML = `
+        <div class="metadata-modal-content">
+          <button class="metadata-close">&times;</button>
+          <h3>Image Information</h3>
+          <div class="metadata-grid">
+            ${metadata.camera ? `<div><strong>Camera:</strong> ${metadata.camera}</div>` : ''}
+            ${metadata.lens ? `<div><strong>Lens:</strong> ${metadata.lens}</div>` : ''}
+            ${metadata.iso ? `<div><strong>ISO:</strong> ${metadata.iso}</div>` : ''}
+            ${metadata.aperture ? `<div><strong>Aperture:</strong> f/${metadata.aperture}</div>` : ''}
+            ${metadata.shutter ? `<div><strong>Shutter:</strong> ${metadata.shutter}s</div>` : ''}
+            ${metadata.focal ? `<div><strong>Focal Length:</strong> ${metadata.focal}mm</div>` : ''}
+            ${metadata.date ? `<div><strong>Date:</strong> ${new Date(metadata.date).toLocaleDateString()}</div>` : ''}
+            ${metadata.location ? `<div><strong>Location:</strong> ${metadata.location}</div>` : ''}
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+      setTimeout(() => modal.classList.add('active'), 10);
+
+      modal.querySelector('.metadata-close').addEventListener('click', () => {
+        modal.classList.remove('active');
+        setTimeout(() => modal.remove(), 300);
+      });
+
+      trackEvent('Gallery', 'View Metadata', imageId);
+    } catch (error) {
+      console.error('Failed to load metadata:', error);
+      showNotification('Failed to load image information', 'error');
+    }
+  },
+
+  updateFavoriteUI() {
+    document.querySelectorAll('[data-image-id]').forEach(btn => {
+      const imageId = btn.dataset.imageId;
+      if (this.favorites.has(imageId)) {
+        btn.classList.add('favorited');
+      } else {
+        btn.classList.remove('favorited');
+      }
+    });
+  }
+};
+
+// ==========================================
 // INITIALIZATION
 // ==========================================
 
@@ -680,6 +1078,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPerformanceMonitoring();
   initErrorTracking();
   initWritingEffects();
+  GalleryBackend.init();
   trackPageView();
 });
 
