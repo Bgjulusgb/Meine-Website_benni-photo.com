@@ -1401,7 +1401,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 9998; /* FIXED: Unter Preloader (10000) aber über Lightbox (9999) */
   opacity: 0;
   transition: opacity 0.3s ease;
   padding: var(--space-lg);
@@ -2112,9 +2112,9 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10000;
   transition: opacity 0.8s ease, visibility 0.8s ease;
-  overflow: hidden;
+  overflow: visible; /* FIXED: Ermöglicht sichtbare Schatten */
 }
 
 /* Animierter Hintergrund-Grid */
@@ -2128,6 +2128,8 @@ section {
   background-size: 50px 50px;
   animation: gridMove 20s linear infinite;
   opacity: 0.5;
+  will-change: transform; /* OPTIMIERT: GPU-Beschleunigung */
+  z-index: 1; /* FIXED: Hintergrund bleibt hinten */
 }
 
 @keyframes gridMove {
@@ -2162,6 +2164,7 @@ section {
   box-shadow:
     0 0 20px rgba(255, 255, 255, 0.3),
     inset 0 0 20px rgba(255, 255, 255, 0.1);
+  will-change: transform; /* OPTIMIERT: GPU-Beschleunigung */
 }
 
 /* Mittlerer Ring */
@@ -2177,6 +2180,7 @@ section {
   box-shadow:
     0 0 15px rgba(255, 255, 255, 0.2),
     inset 0 0 15px rgba(255, 255, 255, 0.1);
+  will-change: transform; /* OPTIMIERT: GPU-Beschleunigung */
 }
 
 /* Logo in der Mitte mit Glow-Effekt - KOMPLETT STATISCH */
@@ -2258,6 +2262,7 @@ section {
   );
   border-radius: 12px;
   animation: progressSlide 1.8s ease-in-out infinite;
+  will-change: left; /* OPTIMIERT: GPU-Beschleunigung für Animation */
 }
 
 /* Futuristischer Text */
@@ -2350,23 +2355,11 @@ section {
   transform: scale(1.1);
 }
 
-/* Partikel-Effekte um das Logo */
-.preloader-spinner::after {
-  content: '';
-  position: absolute;
-  inset: -30px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-  animation: particleRotate 6s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes particleRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+/* ENTFERNT: Konflikt mit Mittlerem Ring - Partikel-Effekte werden durch den animierten Hintergrund-Grid ersetzt */
+/*
+FEHLER BEHOBEN: Diese Regel kollidierte mit .preloader-spinner::after (Zeile 2168)
+was den "Mittleren Ring" überschrieben hat. Die Animation particleRotate wurde ebenfalls entfernt.
+*/
 
 /* Mobile Optimierung für Preloader */
 @media (max-width: 768px) {
