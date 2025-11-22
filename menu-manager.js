@@ -1,115 +1,50 @@
 /**
  * ==========================================
- * MENU MANAGER - DYNAMISCHES MENÜ-SYSTEM BACKEND
+ * MENU MANAGER - VEREINFACHT & OPTIMIERT
  * ==========================================
  *
- * Umfassendes Backend für dynamisches Menü-Management
+ * Schlankes Backend für Menü-Management
  * Features:
- * - Dynamische Menü-Generierung aus Konfiguration
- * - Multi-Level Menü-Unterstützung (Submenüs)
- * - Aktive Seiten-Erkennung
  * - Mobile & Desktop Menü-Verwaltung
- * - Breadcrumb-Generierung
- * - Menü-Analytics & Tracking
+ * - Aktive Seiten-Erkennung
  * - Sticky Header Management
- * - Scroll-basierte Header-Anpassungen
- * - Keyboard Navigation (Tab, Arrow Keys)
- * - Touch Gestures für Mobile
+ * - Keyboard Navigation (ESC)
+ * - Touch-optimiert
  * - ARIA Accessibility
- * - Menu Item Highlighting
- * - Custom Menu Actions & Callbacks
- * - Menu State Persistence
  */
 
 const MenuManager = {
-  // Menü-Konfiguration
+  // Vereinfachte Konfiguration
   config: {
-    menuItems: [
-      {
-        id: 'home',
-        label: 'Home',
-        url: 'index.html',
-        icon: '🏠',
-        order: 1
-      },
-      {
-        id: 'about',
-        label: 'Über mich',
-        url: 'about.html',
-        icon: '👤',
-        order: 2
-      },
-      {
-        id: 'portfolio',
-        label: 'Portfolio',
-        url: 'portfolio.html',
-        icon: '📸',
-        order: 3,
-        submenu: [
-          { label: 'Sport', url: 'sports.html', category: 'sport' },
-          { label: 'Musik', url: 'music.html', category: 'musik' },
-          { label: 'Events', url: 'portfolio.html#events', category: 'event' }
-        ]
-      },
-      {
-        id: 'services',
-        label: 'Services',
-        url: 'services.html',
-        icon: '⚙️',
-        order: 4
-      },
-      {
-        id: 'contact',
-        label: 'Kontakt',
-        url: 'contact.html',
-        icon: '📧',
-        order: 5,
-        highlight: true
-      }
-    ],
-
     stickyHeader: true,
     scrollThreshold: 100,
-    mobileBreakpoint: 768,
-    enableSubmenus: true,
-    enableBreadcrumbs: true,
-    enableAnalytics: true,
-    persistState: true,
-    animationDuration: 300
+    mobileBreakpoint: 768
   },
 
-  // State Management
+  // Schlankes State Management
   state: {
     isOpen: false,
     isMobile: false,
     isSticky: false,
     currentPage: null,
-    activeSubmenu: null,
     scrollPosition: 0,
-    lastScrollDirection: 'down',
-    menuHistory: [],
-    clickCounts: new Map(),
-    lastInteraction: null,
+    lastScrollDirection: 'down'
   },
 
   // DOM Elements
   elements: {},
 
-  // Initialisierung
+  // Initialisierung - VEREINFACHT
   init() {
     console.log('[MenuManager] Initialisierung gestartet...');
 
     this.cacheElements();
     this.detectCurrentPage();
-    this.setupMenuStructure();
     this.bindEvents();
     this.initializeStickyHeader();
     this.setupKeyboardNavigation();
-    this.setupTouchGestures();
-    this.loadState();
     this.updateActiveStates();
-    this.generateBreadcrumbs();
-    this.trackMenuLoad();
+    this.checkIfMobile();
 
     console.log('[MenuManager] Initialisierung abgeschlossen.');
   },
@@ -139,138 +74,25 @@ const MenuManager = {
     console.log(`[MenuManager] Aktuelle Seite: ${this.state.currentPage}`);
   },
 
-  // Setup Menü-Struktur
-  setupMenuStructure() {
-    if (!this.elements.navMenu) return;
-
-    // Sortiere Menü-Items nach Order
-    const sortedItems = [...this.config.menuItems].sort((a, b) => a.order - b.order);
-
-    // Optional: Dynamisch Menü-Items generieren
-    // (Wenn gewünscht, können wir das vorhandene Menü ersetzen)
-    this.enhanceMenuItems(sortedItems);
+  // Mobile Check
+  checkIfMobile() {
+    this.state.isMobile = window.innerWidth < this.config.mobileBreakpoint;
   },
 
-  // Erweitere vorhandene Menü-Items
-  enhanceMenuItems(menuConfig) {
-    this.elements.navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      const menuItem = menuConfig.find(item => item.url === href);
-
-      if (menuItem) {
-        // Füge Icon hinzu wenn konfiguriert
-        if (menuItem.icon && !link.querySelector('.menu-icon')) {
-          const icon = document.createElement('span');
-          icon.className = 'menu-icon';
-          icon.textContent = menuItem.icon;
-          link.prepend(icon);
-        }
-
-        // Füge Highlight-Klasse hinzu
-        if (menuItem.highlight) {
-          link.classList.add('menu-highlight');
-        }
-
-        // Speichere Menü-Item-Daten
-        link.dataset.menuId = menuItem.id;
-
-        // Setup Submenu wenn vorhanden
-        if (menuItem.submenu && this.config.enableSubmenus) {
-          this.createSubmenu(link, menuItem.submenu);
-        }
-      }
-    });
-  },
-
-  // Erstelle Submenu
-  createSubmenu(parentLink, submenuItems) {
-    const li = parentLink.closest('li');
-    if (!li) return;
-
-    // Füge Submenu-Indikator hinzu
-    const indicator = document.createElement('span');
-    indicator.className = 'submenu-indicator';
-    indicator.innerHTML = '▼';
-    parentLink.appendChild(indicator);
-
-    // Erstelle Submenu
-    const submenu = document.createElement('ul');
-    submenu.className = 'submenu';
-
-    submenuItems.forEach(item => {
-      const submenuLi = document.createElement('li');
-      const submenuLink = document.createElement('a');
-      submenuLink.href = item.url;
-      submenuLink.textContent = item.label;
-      submenuLink.className = 'submenu-link';
-      submenuLink.dataset.category = item.category;
-
-      submenuLi.appendChild(submenuLink);
-      submenu.appendChild(submenuLi);
-    });
-
-    li.appendChild(submenu);
-    li.classList.add('has-submenu');
-
-    // Submenu Toggle
-    parentLink.addEventListener('click', (e) => {
-      if (this.state.isMobile) {
-        e.preventDefault();
-        this.toggleSubmenu(li);
-      }
-    });
-
-    // Hover für Desktop
-    if (!this.state.isMobile) {
-      li.addEventListener('mouseenter', () => {
-        this.showSubmenu(li);
-      });
-
-      li.addEventListener('mouseleave', () => {
-        this.hideSubmenu(li);
-      });
-    }
-  },
-
-  // Toggle Submenu
-  toggleSubmenu(submenuParent) {
-    const isActive = submenuParent.classList.contains('submenu-active');
-
-    // Schließe alle anderen Submenus
-    document.querySelectorAll('.has-submenu').forEach(item => {
-      item.classList.remove('submenu-active');
-    });
-
-    if (!isActive) {
-      submenuParent.classList.add('submenu-active');
-      this.state.activeSubmenu = submenuParent;
-    } else {
-      this.state.activeSubmenu = null;
-    }
-  },
-
-  // Zeige Submenu
-  showSubmenu(submenuParent) {
-    submenuParent.classList.add('submenu-active');
-  },
-
-  // Verstecke Submenu
-  hideSubmenu(submenuParent) {
-    submenuParent.classList.remove('submenu-active');
-  },
-
-  // Event Bindings
+  // Event Bindings - VEREINFACHT
   bindEvents() {
     // Menu Toggle
-    this.elements.menuToggle?.addEventListener('click', () => {
+    this.elements.menuToggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
       this.toggleMenu();
     });
 
-    // Menu Links Click Tracking
+    // Menu Links - Schließe Menü bei Klick auf Mobile
     this.elements.navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        this.trackMenuClick(link);
-        this.addToHistory(link.href);
+      link.addEventListener('click', () => {
+        if (this.state.isMobile && this.state.isOpen) {
+          this.closeMenu();
+        }
       });
     });
 
@@ -285,22 +107,26 @@ const MenuManager = {
 
     // Scroll Events für Sticky Header
     if (this.config.stickyHeader) {
-      window.addEventListener('scroll', this.throttle(() => {
-        this.handleScroll();
-      }, 100));
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            this.handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
     }
 
     // Resize Events
-    window.addEventListener('resize', this.debounce(() => {
-      this.handleResize();
-    }, 250));
-
-    // Before Unload - State speichern
-    if (this.config.persistState) {
-      window.addEventListener('beforeunload', () => {
-        this.saveState();
-      });
-    }
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.handleResize();
+      }, 250);
+    });
   },
 
   // Toggle Menu
@@ -336,7 +162,7 @@ const MenuManager = {
     console.log('[MenuManager] Menü geöffnet');
   },
 
-  // Schließe Menü
+  // Schließe Menü - VEREINFACHT
   closeMenu() {
     this.state.isOpen = false;
 
@@ -350,11 +176,6 @@ const MenuManager = {
     // ARIA
     this.elements.navMenu?.setAttribute('aria-hidden', 'true');
     this.elements.menuToggle?.setAttribute('aria-expanded', 'false');
-
-    // Schließe alle Submenus
-    document.querySelectorAll('.has-submenu').forEach(item => {
-      item.classList.remove('submenu-active');
-    });
 
     console.log('[MenuManager] Menü geschlossen');
   },
@@ -425,7 +246,7 @@ const MenuManager = {
     console.log(`[MenuManager] Resize: ${this.state.isMobile ? 'Mobile' : 'Desktop'} Modus`);
   },
 
-  // Keyboard Navigation
+  // Keyboard Navigation - VEREINFACHT
   setupKeyboardNavigation() {
     document.addEventListener('keydown', (e) => {
       // ESC zum Schließen
@@ -433,260 +254,7 @@ const MenuManager = {
         this.closeMenu();
         this.elements.menuToggle?.focus();
       }
-
-      // Tab Trap wenn Menü offen
-      if (e.key === 'Tab' && this.state.isOpen) {
-        this.handleTabTrap(e);
-      }
-
-      // Arrow Keys für Navigation
-      if (this.state.isOpen && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        e.preventDefault();
-        this.navigateWithArrows(e.key);
-      }
-
-      // Enter/Space für Menü-Toggle
-      if ((e.key === 'Enter' || e.key === ' ') &&
-          document.activeElement === this.elements.menuToggle) {
-        e.preventDefault();
-        this.toggleMenu();
-      }
     });
-  },
-
-  // Tab Trap für Accessibility
-  handleTabTrap(e) {
-    const focusableElements = this.elements.navMenu?.querySelectorAll(
-      'a, button, [tabindex]:not([tabindex="-1"])'
-    );
-
-    if (!focusableElements || focusableElements.length === 0) return;
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-
-    if (e.shiftKey) {
-      // Shift + Tab
-      if (document.activeElement === firstElement) {
-        e.preventDefault();
-        lastElement.focus();
-      }
-    } else {
-      // Tab
-      if (document.activeElement === lastElement) {
-        e.preventDefault();
-        firstElement.focus();
-      }
-    }
-  },
-
-  // Arrow Key Navigation
-  navigateWithArrows(key) {
-    const links = Array.from(this.elements.navLinks);
-    const currentIndex = links.indexOf(document.activeElement);
-
-    if (currentIndex === -1) {
-      links[0]?.focus();
-      return;
-    }
-
-    if (key === 'ArrowDown') {
-      const nextIndex = (currentIndex + 1) % links.length;
-      links[nextIndex]?.focus();
-    } else if (key === 'ArrowUp') {
-      const prevIndex = (currentIndex - 1 + links.length) % links.length;
-      links[prevIndex]?.focus();
-    }
-  },
-
-  // Touch Gestures Setup
-  setupTouchGestures() {
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    this.elements.navMenu?.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    this.elements.navMenu?.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      this.handleSwipe(touchStartX, touchEndX);
-    }, { passive: true });
-  },
-
-  // Handle Swipe Gesture
-  handleSwipe(startX, endX) {
-    const swipeDistance = startX - endX;
-    const minSwipeDistance = 100;
-
-    // Swipe left to close (nur wenn Menü offen)
-    if (swipeDistance > minSwipeDistance && this.state.isOpen) {
-      this.closeMenu();
-    }
-  },
-
-  // Breadcrumb-Generierung
-  generateBreadcrumbs() {
-    if (!this.config.enableBreadcrumbs || !this.elements.breadcrumbs) return;
-
-    const breadcrumbData = this.getBreadcrumbPath();
-
-    if (breadcrumbData.length <= 1) {
-      this.elements.breadcrumbs.style.display = 'none';
-      return;
-    }
-
-    this.elements.breadcrumbs.innerHTML = breadcrumbData.map((crumb, index) => {
-      if (index === breadcrumbData.length - 1) {
-        return `<span class="breadcrumb-current">${crumb.label}</span>`;
-      } else {
-        return `<a href="${crumb.url}" class="breadcrumb-link">${crumb.label}</a>`;
-      }
-    }).join(' <span class="breadcrumb-separator">›</span> ');
-
-    this.elements.breadcrumbs.style.display = 'block';
-  },
-
-  // Ermittle Breadcrumb-Pfad
-  getBreadcrumbPath() {
-    const path = [{ label: 'Home', url: 'index.html' }];
-
-    const currentMenuItem = this.config.menuItems.find(item =>
-      item.url === `${this.state.currentPage}.html`
-    );
-
-    if (currentMenuItem && currentMenuItem.id !== 'home') {
-      path.push({
-        label: currentMenuItem.label,
-        url: currentMenuItem.url
-      });
-    }
-
-    return path;
-  },
-
-  // History Management
-  addToHistory(url) {
-    this.state.menuHistory.push({
-      url,
-      timestamp: Date.now()
-    });
-
-    // Limitiere History auf 50 Einträge
-    if (this.state.menuHistory.length > 50) {
-      this.state.menuHistory.shift();
-    }
-  },
-
-  // State Persistence
-  saveState() {
-    if (!this.config.persistState) return;
-
-    try {
-      const state = {
-        clickCounts: Object.fromEntries(this.state.clickCounts),
-        menuHistory: this.state.menuHistory.slice(-20), // Nur letzte 20
-        lastInteraction: this.state.lastInteraction
-      };
-
-      localStorage.setItem('menu_state', JSON.stringify(state));
-      console.log('[MenuManager] State gespeichert');
-    } catch (error) {
-      console.error('[MenuManager] Fehler beim Speichern des States:', error);
-    }
-  },
-
-  loadState() {
-    if (!this.config.persistState) return;
-
-    try {
-      const stored = localStorage.getItem('menu_state');
-      if (stored) {
-        const state = JSON.parse(stored);
-        this.state.clickCounts = new Map(Object.entries(state.clickCounts || {}));
-        this.state.menuHistory = state.menuHistory || [];
-        this.state.lastInteraction = state.lastInteraction;
-
-        console.log('[MenuManager] State geladen');
-      }
-    } catch (error) {
-      console.error('[MenuManager] Fehler beim Laden des States:', error);
-    }
-  },
-
-  // Analytics & Tracking
-  trackMenuClick(link) {
-    const menuId = link.dataset.menuId || link.textContent;
-
-    // Erhöhe Click Count
-    const currentCount = this.state.clickCounts.get(menuId) || 0;
-    this.state.clickCounts.set(menuId, currentCount + 1);
-
-    // Track Event
-    this.trackEvent('menu_click', {
-      menuId,
-      label: link.textContent,
-      url: link.href,
-      clickCount: currentCount + 1
-    });
-
-    this.state.lastInteraction = Date.now();
-  },
-
-  trackMenuToggle() {
-    this.trackEvent('menu_toggle', {
-      action: this.state.isOpen ? 'open' : 'close',
-      isMobile: this.state.isMobile
-    });
-  },
-
-  trackMenuLoad() {
-    this.trackEvent('menu_loaded', {
-      currentPage: this.state.currentPage,
-      menuItemCount: this.config.menuItems.length
-    });
-  },
-
-  trackEvent(eventName, data = {}) {
-    if (!this.config.enableAnalytics) return;
-
-    const event = {
-      name: eventName,
-      timestamp: new Date().toISOString(),
-      page: this.state.currentPage,
-      ...data
-    };
-
-    console.log('[MenuManager] Analytics Event:', event);
-
-    // Google Analytics Integration
-    if (typeof gtag !== 'undefined') {
-      gtag('event', eventName, data);
-    }
-  },
-
-  // Utility Functions
-  debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  },
-
-  throttle(func, limit) {
-    let inThrottle;
-    return function(...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
   }
 };
 

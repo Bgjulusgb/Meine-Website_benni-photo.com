@@ -247,24 +247,19 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   transform: scale(1.1);
 }
 
-/* Overlay-Effekt beim Hover */
+/* Overlay-Effekt beim Hover - VEREINFACHT */
 .gallery-item::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.8) 100%
+    transparent 50%,
+    rgba(0, 0, 0, 0.6) 100%
   );
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  opacity: 1;
   z-index: 1;
   pointer-events: none;
-}
-
-.gallery-item:hover::before {
-  opacity: 1;
 }
 
 /* Galerie-Info Slide-Up Effekt */
@@ -318,7 +313,7 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
     0 0 60px rgba(255, 255, 255, 0.05);
 }
 
-/* Kategorie-Badge Effekt */
+/* Kategorie-Badge Effekt - VEREINFACHT (kein Slide-In mehr) */
 .gallery-category-badge {
   position: absolute;
   top: var(--space-md);
@@ -331,13 +326,7 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transform: translateX(120%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 3;
-}
-
-.gallery-item:hover .gallery-category-badge {
-  transform: translateX(0);
 }
 
 [data-theme="dark"] .gallery-category-badge {
@@ -346,30 +335,7 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
-/* Ripple Effect bei Click */
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-}
-
-.gallery-item::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-  pointer-events: none;
-}
-
-.gallery-item:active::after {
-  width: 300px;
-  height: 300px;
-}
+/* Ripple Effect bei Click - ENTFERNT (war störend) */
 
 /* Grid Layout Animation */
 @supports (display: grid) {
@@ -451,13 +417,12 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   }
 }
 
-/* Hover Glow Effect für Nav Links */
+/* Hover Glow Effect für Nav Links - VEREINFACHT */
 .nav-link::before {
   content: '';
   position: absolute;
   bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 0;
   height: 2px;
   background: var(--text-primary);
@@ -467,11 +432,6 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
 .nav-link:hover::before,
 .nav-link.active::before {
   width: 100%;
-}
-
-[data-theme="dark"] .nav-link:hover::before,
-[data-theme="dark"] .nav-link.active::before {
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 /* Mobile Menu Slide Animation */
@@ -553,36 +513,7 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Shine Effect auf Card Hover */
-.card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-}
-
-.card:hover::after {
-  transform: translateX(100%);
-}
-
-[data-theme="dark"] .card::after {
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.2) 50%,
-    transparent 70%
-  );
-}
+/* Shine Effect auf Card Hover - ENTFERNT (war störend) */
 
 /* Tilt-Effekt für Cards (3D) */
 .card-3d-tilt {
