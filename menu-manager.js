@@ -258,12 +258,15 @@ const MenuManager = {
   }
 };
 
-// Auto-Init
+// DEAKTIVIERT - Wird jetzt von main.js gehandhabt
+// Auto-Init auskommentiert um Konflikte zu vermeiden
+/*
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => MenuManager.init());
 } else {
   MenuManager.init();
 }
+*/
 
 // Export
 if (typeof module !== 'undefined' && module.exports) {
