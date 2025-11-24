@@ -1118,6 +1118,9 @@ const initGalleryModal = () => {
   });
 };
 
+// DEAKTIVIERT - main.js übernimmt jetzt die gesamte Initialisierung
+// Dies verhindert Konflikte mit mehrfachen Event-Listenern
+/*
 const init = () => {
   initTheme();
   initNavigation();
@@ -1148,3 +1151,7 @@ if (document.readyState === 'loading') {
 window.addEventListener('load', () => {
   document.body.classList.add('loaded');
 });
+*/
+
+// HINWEIS: Alle Funktionen werden jetzt von main.js initialisiert
+console.log('script.js geladen - Initialisierung erfolgt durch main.js');
