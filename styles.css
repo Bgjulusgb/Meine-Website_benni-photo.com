@@ -364,16 +364,27 @@ code {
   gap: clamp(1rem, 3vw, 2rem);
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+/* Unterstützung für beide Syntax-Varianten */
+.grid-cols-1,
+.grid-1 { grid-template-columns: repeat(1, 1fr); }
+
+.grid-cols-2,
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.grid-cols-3,
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+.grid-cols-4,
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
 
 /* Responsive Grid mit besseren Breakpoints */
 @media (max-width: 640px) {
   .grid-cols-2,
   .grid-cols-3,
-  .grid-cols-4 {
+  .grid-cols-4,
+  .grid-2,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
@@ -381,13 +392,16 @@ code {
 
 @media (min-width: 641px) and (max-width: 1024px) {
   .grid-cols-3,
-  .grid-cols-4 {
+  .grid-cols-4,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .grid-cols-4 {
+  .grid-cols-4,
+  .grid-4 {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -484,9 +498,9 @@ code {
 }
 
 /* ==========================================
-   6. NAVIGATION
+   6. NAVIGATION - RESPONSIVE OPTIMIERT
    ========================================== */
-.navbar {
+.header {
   position: fixed;
   top: 0;
   left: 0;
@@ -498,62 +512,77 @@ code {
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
-.navbar.scrolled {
+.header.scrolled {
   box-shadow: var(--shadow-lg);
 }
 
-.navbar.hidden {
+.header.hidden {
   transform: translateY(-100%);
 }
 
-.navbar-container {
+.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
-  padding: 0 var(--space-6);
+  min-height: clamp(60px, 10vw, 80px);
+  padding: var(--space-3) 0;
   max-width: 1600px;
   margin: 0 auto;
 }
 
-.navbar-logo {
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
   font-weight: var(--weight-black);
   color: var(--text-primary);
   letter-spacing: var(--tracking-tight);
+  text-decoration: none;
+  z-index: calc(var(--z-fixed) + 1);
 }
 
-[data-theme="dark"] .navbar-logo {
+.logo-image {
+  width: clamp(32px, 5vw, 48px);
+  height: auto;
+}
+
+[data-theme="dark"] .logo {
   text-shadow: var(--glow-sm);
 }
 
-.navbar-menu {
+.nav-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: clamp(var(--space-4), 3vw, var(--space-8));
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-link {
+.nav-link {
   position: relative;
-  font-size: var(--text-sm);
+  font-size: clamp(var(--text-xs), 1.5vw, var(--text-sm));
   font-weight: var(--weight-semibold);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
   transition: color var(--duration-fast) var(--ease-out);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
-.navbar-link:hover,
-.navbar-link.active {
+.nav-link:hover,
+.nav-link.active {
   color: var(--text-primary);
 }
 
 /* Einfacher Unterstrich-Effekt ohne störende Animationen */
-.navbar-link.active {
+.nav-link.active {
   border-bottom: 2px solid var(--accent);
-  padding-bottom: 2px;
 }
 
 /* Theme Toggle */
@@ -635,9 +664,9 @@ code {
     align-items: center;
   }
 
-  .navbar-menu {
+  .nav-menu {
     position: fixed;
-    top: 80px;
+    top: clamp(60px, 10vw, 80px);
     left: 0;
     right: 0;
     flex-direction: column;
@@ -649,22 +678,23 @@ code {
     opacity: 0;
     transition: all 0.3s ease-in-out;
     pointer-events: none;
-    max-height: calc(100vh - 80px);
+    max-height: calc(100vh - clamp(60px, 10vw, 80px));
     overflow-y: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: var(--z-fixed);
   }
 
-  .navbar-menu.active {
+  .nav-menu.active {
     transform: translateY(0);
     opacity: 1;
     pointer-events: all;
   }
 
-  .navbar-menu li {
+  .nav-menu li {
     width: 100%;
   }
 
-  .navbar-link {
+  .nav-link {
     /* Größerer Touch-Target */
     min-height: 48px;
     display: flex;
@@ -672,31 +702,53 @@ code {
     padding: var(--space-4);
     width: 100%;
     border-radius: var(--radius-md);
+    font-size: var(--text-base);
   }
 
-  .navbar-link:hover,
-  .navbar-link.active {
+  .nav-link:hover,
+  .nav-link.active {
     background: var(--bg-tertiary);
   }
 
-  .navbar-link.active {
+  .nav-link.active {
     border-bottom: none;
     border-left: 3px solid var(--accent);
+  }
+
+  /* Theme Toggle im Mobile Menu */
+  .theme-toggle {
+    margin-top: var(--space-4);
   }
 }
 
 /* ==========================================
-   7. HERO SECTION
+   7. HERO SECTION - RESPONSIVE OPTIMIERT
    ========================================== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: clamp(500px, 100vh, 1000px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-20) var(--space-6);
+  padding: clamp(var(--space-10), 10vw, var(--space-20)) var(--space-4);
   overflow: hidden;
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+}
+
+/* Mobile Hero Optimierung */
+@media (max-width: 768px) {
+  .hero {
+    min-height: clamp(400px, 80vh, 600px);
+    padding: var(--space-10) var(--space-4);
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: 60vh;
+    padding: var(--space-6) var(--space-4);
+  }
 }
 
 .hero::before {
@@ -1379,13 +1431,111 @@ code {
 }
 
 /* ==========================================
-   15. PRINT STYLES
+   15. FOOTER - RESPONSIVE
+   ========================================== */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-primary);
+  padding: clamp(var(--space-12), 8vw, var(--space-20)) 0 var(--space-8);
+  margin-top: var(--space-20);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(var(--space-8), 5vw, var(--space-12));
+  margin-bottom: var(--space-10);
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+  font-weight: var(--weight-black);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+.footer-text {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  margin-top: var(--space-4);
+}
+
+.footer-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: var(--space-3);
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  transition: color var(--duration-fast) var(--ease-out);
+  display: inline-block;
+  padding: var(--space-1) 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-links a:hover {
+  color: var(--text-primary);
+  transform: translateX(4px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border-primary);
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+/* Mobile Footer */
+@media (max-width: 768px) {
+  .footer {
+    padding: var(--space-10) 0 var(--space-6);
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-size: var(--text-2xl);
+  }
+
+  .footer-links a {
+    justify-content: center;
+  }
+}
+
+/* ==========================================
+   16. PRINT STYLES
    ========================================== */
 @media print {
-  .navbar,
+  .header,
   .hero-cta,
   .btn,
-  .theme-toggle {
+  .theme-toggle,
+  .footer {
     display: none;
   }
 
@@ -1396,7 +1546,60 @@ code {
 }
 
 /* ==========================================
-   16. PRELOADER - MINIMALISTISCH & ELEGANT
+   17. TOUCH-TARGETS OPTIMIERUNG (WCAG AAA: 44x44px)
+   ========================================== */
+/* Alle interaktiven Elemente müssen mindestens 44x44px sein */
+button,
+.btn,
+.nav-link,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.theme-toggle,
+.menu-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Card Links größere Touch-Area */
+.card,
+.gallery-item {
+  cursor: pointer;
+}
+
+.card a,
+.gallery-item a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* Verbessertes Tap-Feedback für Touch-Geräte */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  .btn,
+  a,
+  .card {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    touch-action: manipulation;
+  }
+
+  /* Größere Abstände zwischen Touch-Elementen */
+  .nav-link {
+    margin: var(--space-1) 0;
+  }
+
+  /* Vergrößerte Form-Inputs */
+  input,
+  textarea,
+  select {
+    min-height: 48px;
+    font-size: 16px; /* Verhindert Auto-Zoom auf iOS */
+  }
+}
+
+/* ==========================================
+   18. PRELOADER - MINIMALISTISCH & ELEGANT
    ========================================== */
 .preloader {
   position: fixed;

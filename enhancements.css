@@ -223,7 +223,7 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
 .gallery-item:nth-child(8) { transition-delay: 0.4s; }
 .gallery-item:nth-child(9) { transition-delay: 0.45s; }
 
-/* Hover-Effekt mit Parallax */
+/* Hover-Effekt mit Parallax - RESPONSIVE OPTIMIERT */
 .gallery-item {
   position: relative;
   overflow: hidden;
@@ -231,20 +231,41 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  aspect-ratio: 4/3;
 }
 
 .gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
-.gallery-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+/* Desktop Hover Effects */
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
 }
 
-.gallery-item:hover img {
-  transform: scale(1.1);
+/* Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+  .gallery-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Deaktiviere will-change auf Touch-Geräten für bessere Performance */
+  .gallery-item img {
+    will-change: auto;
+  }
 }
 
 /* Overlay-Effekt beim Hover - VEREINFACHT */
@@ -379,6 +400,28 @@ Neue Features: Buchstabeneffekte, Galerie-Animationen
 @media (max-width: 768px) {
   .gallery-grid-masonry {
     column-count: 1;
+  }
+
+  /* Kleinere Animationen auf Mobile für Performance */
+  .gallery-item {
+    border-radius: var(--radius-md);
+  }
+
+  .gallery-item img {
+    transition: none; /* Deaktiviere Transitions auf Mobile */
+  }
+
+  /* Reduziere Gallery Info Padding */
+  .gallery-info {
+    padding: var(--space-md);
+  }
+
+  .gallery-info h3 {
+    font-size: var(--text-lg);
+  }
+
+  .gallery-info p {
+    font-size: var(--text-xs);
   }
 }
 
