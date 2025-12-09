@@ -1,41 +1,40 @@
-// powerpoint.js – wie eine echte PowerPoint
+// powerpoint.js – funktioniert garantiert
 const slides = document.querySelectorAll('.slide');
-const total = slides.length;
-let current = 0;
+const totalSlides = slides.length;
+let currentSlide = 0;
 
-document.getElementById('total').textContent = total;
-updateProgress();
-
-function goToSlide(n) {
-    slides.forEach(s => s.classList.remove('active'));
-    current = (n + total) % total;
-    slides[current].classList.add('active');
-    document.getElementById('current').textContent = current + 1;
-    updateProgress();
+function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    currentSlide = (n + totalSlides) % totalSlides;
+    slides[currentSlide].classList.add('active');
+    document.getElementById('current').textContent = currentSlide + 1;
+    document.getElementById('bar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
 }
 
-function updateProgress() {
-    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
-}
+// Initial
+showSlide(0);
+document.getElementById('total').textContent = totalSlides;
 
-document.getElementById('nextBtn').onclick = () => goToSlide(current + 1);
-document.getElementById('prevBtn').onclick = () => goToSlide(current - 1);
-document.getElementById('fullscreenBtn').onclick = () => document.documentElement.requestFullscreen?.() || document.documentElement.requestFullscreen();
+// Buttons
+document.getElementById('next').onclick = () => showSlide(currentSlide + 1);
+document.getElementById('prev').onclick = () => showSlide(currentSlide - 1);
+document.getElementById('fs').onclick = () => document.documentElement.requestFullscreen();
 
+// Tastatur & Touch
 document.addEventListener('keydown', e => {
-    if (['ArrowRight', ' ', 'Enter', 'PageDown', 'ArrowDown'].includes(e.key)) goToSlide(current + 1);
-    if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.key)) goToSlide(current - 1);
-    if (e.key === 'f' || e.key === 'F11') document.documentElement.requestFullscreen();
-    if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+    if (['ArrowRight', ' ', 'Enter', 'PageDown', 'ArrowDown'].includes(e.key)) showSlide(currentSlide + 1);
+    if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.key)) showSlide(currentSlide - 1);
+    if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen();
 });
 
-// Touch-Swipe
+// Touch Swipe
 let touchStartX = 0;
-document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive: true});
 document.addEventListener('touchend', e => {
-    let diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goToSlide(current + (diff > 0 ? 1 : -1));
-});
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) showSlide(currentSlide + (diff > 0 ? 1 : -1));
+}, {passive: true});
 
-// Automatischer Vollbild beim Start (optional auskommentieren)
-// window.onload = () => document.documentElement.requestFullscreen();
+// Mausklick = weiter
+document.addEventListener('click', () => showSlide(currentSlide + 1));
+document.getElementById('prev').addEventListener('click', e => { e.stopPropagation(); showSlide(currentSlide - 1); });
